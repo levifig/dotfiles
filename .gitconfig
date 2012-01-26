@@ -1,0 +1,32 @@
+[user]
+	name = Levi Figueira
+	email = levifig@gmail.com
+[alias]
+  # From http://mikewest.org/2011/04/a-quick-git-vim-workflow-tip
+  fshow = ! sh -c 'git show --pretty="format:" --name-only $1 | grep -v "^$" | uniq | sed -e "s#^#`git rev-parse --show-toplevel`/#"' -
+  edit  = ! sh -c '$EDITOR `git fshow $1`' -
+	co = checkout
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+  interactive = auto
+  ui = auto
+[core]
+	excludesfile = $HOME/.gitignore.global
+	editor = mvim -w 
+	autocrlf = input
+[apply]
+	whitespace = nowarn
+[format]
+	pretty = %C(yellow)%h%Creset %s %C(red)(%cr)%Creset
+[difftool "Kaleidoscope"]
+	cmd = ksdiff-wrapper git \"$LOCAL\" \"$REMOTE\"
+[difftool]
+	prompt = false
+[diff]
+	tool = Kaleidoscope
+[mergetool]
+	keepBackup = true
+[github]
+	user = levifig
