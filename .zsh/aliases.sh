@@ -1,3 +1,3 @@
-for file in $ZSH_CONFIG_ROOT/config/aliases/*.sh; do
+for file in $ZSH_CONFIG/aliases/*.sh; do
   source $file
 done
