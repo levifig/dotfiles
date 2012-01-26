@@ -1,0 +1,1 @@
+Note: don't forget to edit .gitconfig with your info (name, email, github, etc)
