@@ -13,7 +13,7 @@
   interactive = auto
   ui = auto
 [core]
-	excludesfile = $HOME/.gitignore.global
+	excludesfile = ~/.gitignore.global
 	editor = mvim -w 
 	autocrlf = input
 [apply]

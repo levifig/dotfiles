@@ -7,8 +7,7 @@
 !.profile
 !.vim
 !.vimrc
-!.zsh/aliases.sh
-!.zsh/aliases/ruby-rails.sh
+!.zsh/*
 !.zshrc
 !.oh-my-zsh
-!.README.markdown
+!README.md
