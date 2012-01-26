@@ -1,4 +1,12 @@
-*.swp
-*.swo
-.DS_Store
-.unicorn*
+# Ignore all files except tracked ones
+*
+!.gemrc
+!.gitconfig
+!.gitignore
+!.gitignore.global
+!.profile
+!.vim
+!.vimrc
+!.zsh/aliases.sh
+!.zsh/aliases/ruby-rails.sh
+!.zshrc
