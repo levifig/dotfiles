@@ -20,9 +20,6 @@ alias m='mvim'
 alias vi='vim'
 
 BUNDLED_COMMANDS="ruby rails"
-# eval "$(rbenv init -)"
+eval "$(rbenv init -)"
 
 export EDITOR='mvim -f -c "au VimLeave * !open -a iTerm"'
-
-# RVM
-[[ -s "/Users/levifig/.rvm/scripts/rvm" ]] && source "/Users/levifig/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
