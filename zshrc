@@ -22,4 +22,4 @@ alias vi='vim'
 BUNDLED_COMMANDS="ruby rails"
 eval "$(rbenv init -)"
 
-export EDITOR='mvim -f -c "au VimLeave * !open -a iTerm"'
+export EDITOR='mvim -f --nomru -c "au VimLeave * !open -a Terminal"'
