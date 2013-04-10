@@ -30,3 +30,5 @@
 	keepBackup = true
 [github]
 	user = levifig
+[push]
+	default = simple
