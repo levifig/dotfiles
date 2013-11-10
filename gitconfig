@@ -32,3 +32,5 @@
 	user = levifig
 [http]
 	sslVerify = false
+[push]
+	default = simple

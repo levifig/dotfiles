@@ -29,7 +29,8 @@ BUNDLED_COMMANDS="ruby rails"
 eval "$(rbenv init -)"
 
 export TERM='screen-256color'
-export EDITOR='mvim -f --nomru'
+#export EDITOR='mvim -f --nomru'
+export EDITOR='vim -f'
 export PYTHONPATH='/usr/local/lib/python2.7/site-packages/'
 export NODE_PATH='/usr/local/lib/node'
 export SSL_CERT_FILE='/usr/local/opt/curl-ca-bundle/share/ca-bundle.crt'
