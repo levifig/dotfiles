@@ -30,7 +30,10 @@
 	keepBackup = true
 [github]
 	user = levifig
+<<<<<<< HEAD:gitconfig
 [http]
 	sslVerify = false
+=======
+>>>>>>> 9e5e8ecc598d38cad966249b5471d2930a922b76:system/gitconfig
 [push]
 	default = simple
