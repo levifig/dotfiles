@@ -1,6 +1,6 @@
 [user]
 	name = Levi Figueira
-	email = levifig@gmail.com
+	email = me@levifig.com
 [alias]
   # From http://mikewest.org/2011/04/a-quick-git-vim-workflow-tip
   fshow = ! sh -c 'git show --pretty="format:" --name-only $1 | grep -v "^$" | uniq | sed -e "s#^#`git rev-parse --show-toplevel`/#"' -
@@ -30,3 +30,5 @@
 	keepBackup = true
 [github]
 	user = levifig
+[http]
+	sslVerify = false
