@@ -120,3 +120,13 @@ else
   ln -s ~/.dotfiles/system/gitignore.global ~/.gitignore.global
   echo Linking .gitignore.global...
 fi
+
+if [ -f ~/.irssi ]
+then
+  mv ~/.irssi ~/.irssi.before
+  ln -s ~/.dotfiles/irssi ~/.irssi
+  echo Backing up old .irssi and linking new one...
+else
+  ln -s ~/.dotfiles/irssi ~/.irssi
+  echo Linking .irssi...
+fi
