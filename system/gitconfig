@@ -32,5 +32,6 @@
 	user = levifig
 [http]
 	sslVerify = false
+  sslCAinfo=/usr/share/curl/curl-ca-bundle.crt
 [push]
 	default = simple
