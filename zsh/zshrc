@@ -19,7 +19,7 @@ unsetopt correct_all
 
 alias m='mvim'
 alias v='vim'
-alias weechat='weechat-curses'
+#alias weechat='weechat-curses'
 alias twitter='ttytter'
 alias adn='texapp'
 alias t='tmux -2'
@@ -30,10 +30,11 @@ alias zr='source ~/.zshrc'
 export RBENV_ROOT=/usr/local/var/rbenv
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
-export TERM='screen-256color'
+#export TERM='screen-256color'
 export EDITOR='vim'
 export NODE_PATH="/usr/local/lib/node"
 export CURL_CA_BUNDLE='/usr/local/certs/cacert.pem'
 export GOPATH="$HOME/.go"
 
 [[ -s "$HOME/.tmuxifier/init.sh" ]] && source "$HOME/.tmuxifier/init.sh"
+source ~/.fzf.zsh
