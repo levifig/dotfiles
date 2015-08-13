@@ -8,9 +8,12 @@ ZSH_THEME="gentoo"
 COMPLETION_WAITING_DOTS="true"
 plugins=(brew bundler colorized-man capistrano colorize rbenv mosh tmux ssh-agent sublime pow powder forklift cp postgres gem git git-flow github npm osx pow rails ruby extract tmux tmuxinator vagrant chef)
 
+fpath=(/usr/local/share/zsh-completions $fpath)
+
 source $ZSH/oh-my-zsh.sh
 source $ZSH_CONFIG/*.sh
-
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/local/share/zsh/site-functions/_aws
 
 # Customize to your needs...
 export PATH=$PATH:/usr/local/bin:/bin:/usr/sbin:/sbin:/usr/bin:/usr/X11/bin:/usr/local:./node_modules/.bin:/usr/local/share/npm/bin:/usr/local/opt/go/libexec/bin:/usr/local/opt/go/libexec/bin
@@ -33,13 +36,13 @@ alias pip='pip3'
 #BUNDLED_COMMANDS="ruby rails"
 
 #export TERM='screen-256color'
-export EDITOR='vimr -w'
+export EDITOR='vim -w'
 export NODE_PATH="/usr/local/lib/node"
 export GOPATH="$HOME/.go"
 
 [[ -s "$HOME/.tmuxifier/init.sh" ]] && source "$HOME/.tmuxifier/init.sh"
-source ~/.fzf.zsh # https://github.com/junegunn/fzf
 
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 #export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
