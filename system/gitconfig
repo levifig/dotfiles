@@ -11,7 +11,7 @@
   status = auto
   branch = auto
   interactive = auto
-  ui = auto
+  ui = true
 [core]
 	excludesfile = /Users/levifig/.gitignore.global
 	editor = vim 
@@ -20,26 +20,24 @@
 	whitespace = nowarn
 [format]
 	pretty = %C(yellow)%h%Creset %s %C(red)(%cr)%Creset
-[difftool "Kaleidoscope"]
-	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+[github]
+	user = levifig
+	token = f4d27dd592b6a1c3082731db75ed325c5cb01a72
+[push]
+	default = simple
+[diff]
+  tool = Kaleidoscope
 [difftool]
   prompt = false
 	keepBackup = true
-[diff]
-  tool = Kaleidoscope
-[mergetool "Kaleidoscope"]
-  cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" \"$REMOTE\"
-[mergetool]
-  prompt = false
+[difftool "Kaleidoscope"]
+	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 [merge]
   tool = Kaleidoscope
-[github]
-	user = levifig
-#[http]
-#	sslVerify = true
-#  sslCAinfo=/usr/share/curl/curl-ca-bundle.crt
-[push]
-	default = simple
+[mergetool]
+  prompt = false
+[mergetool "Kaleidoscope"]
+  cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" \"$REMOTE\"
 [filter "media"]
 	clean = git media clean %f
 	smudge = git media smudge %f
