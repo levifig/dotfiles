@@ -20,9 +20,6 @@
 	whitespace = nowarn
 [format]
 	pretty = %C(yellow)%h%Creset %s %C(red)(%cr)%Creset
-[github]
-	user = levifig
-	token = f4d27dd592b6a1c3082731db75ed325c5cb01a72
 [push]
 	default = simple
 [diff]
@@ -46,3 +43,4 @@
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f
 	required = true
+
