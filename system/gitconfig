@@ -13,7 +13,7 @@
   interactive = auto
   ui = true
 [core]
-	excludesfile = /Users/levifig/.gitignore.global
+	excludesfile = ~/.gitignore.global
 	editor = vim 
 	autocrlf = input
 [apply]
@@ -40,7 +40,8 @@
 	smudge = git media smudge %f
 	required = true
 [filter "lfs"]
-	clean = git-lfs clean %f
-	smudge = git-lfs smudge %f
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
 	required = true
 
