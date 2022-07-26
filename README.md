@@ -13,5 +13,4 @@ A few notes:
 - Fork it away. Submit bug fixes and suggestions.
 - Enjoy. :)
 
-
-*For comments and feedback, ping me on [Twitter](http://twitter.com/levifig) or [App.net](http://alpha.app.net/levifig).*
+*For comments and feedback, ping me on [Twitter](http://twitter.com/levifig).*
