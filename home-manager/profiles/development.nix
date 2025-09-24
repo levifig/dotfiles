@@ -1,0 +1,174 @@
+{ config, pkgs, lib, ... }:
+
+{
+  home.packages = with pkgs; [
+    # Version control
+    git-lfs
+    git-crypt
+    git-filter-repo
+    tig
+
+    # Build tools
+    cmake
+    ninja
+    meson
+    autoconf
+    automake
+    libtool
+    pkg-config
+
+    # Language-specific tools
+    # Ruby
+    ruby_3_2
+    rubyPackages.solargraph
+
+    # Python
+    python311
+    python311Packages.pip
+    python311Packages.virtualenv
+    poetry
+    pipenv
+
+    # Node.js
+    nodejs_20
+    nodePackages.pnpm
+    nodePackages.yarn
+    nodePackages.typescript
+    nodePackages.eslint
+
+    # Go
+    go_1_21
+    gopls
+    gotools
+    golangci-lint
+
+    # Rust
+    rustc
+    cargo
+    rustfmt
+    clippy
+
+    # Containers
+    docker-client
+    docker-compose
+    podman
+    buildah
+    skopeo
+
+    # Cloud tools
+    awscli2
+    google-cloud-sdk
+    azure-cli
+    (terraform.withPlugins (p: with p; [
+      aws
+      google
+      azurerm
+      kubernetes
+    ]))
+    terraform-docs
+    tflint
+    terragrunt
+
+    # Kubernetes
+    kubectl
+    kubectx
+    kubernetes-helm
+    helmfile
+    kustomize
+    k9s
+    stern
+    kubeval
+    kubeconform
+
+    # Database tools
+    postgresql
+    mysql
+    redis
+    sqlite
+
+    # API tools
+    curl
+    httpie
+    wget
+    postman
+    grpcurl
+
+    # Debugging/Profiling
+    gdb
+    lldb
+    perf-tools
+    hyperfine
+    tokei
+
+    # Documentation
+    mdbook
+    pandoc
+    graphviz
+
+    # CI/CD
+    gh
+    gitlab
+    act  # Run GitHub Actions locally
+
+    # Development utilities
+    direnv
+    watchman
+    entr
+    just
+    mkcert
+    ngrok
+  ];
+
+  # Development-specific shell aliases
+  home.shellAliases = {
+    # Docker
+    d = "docker";
+    dc = "docker-compose";
+    dps = "docker ps";
+    di = "docker images";
+
+    # Kubernetes
+    k = "kubectl";
+    kx = "kubectx";
+    kn = "kubens";
+    kg = "kubectl get";
+    kd = "kubectl describe";
+    kl = "kubectl logs";
+    ke = "kubectl exec -it";
+
+    # Terraform
+    tf = "terraform";
+    tfi = "terraform init";
+    tfp = "terraform plan";
+    tfa = "terraform apply";
+    tfd = "terraform destroy";
+
+    # Git shortcuts
+    gs = "git status";
+    ga = "git add";
+    gc = "git commit";
+    gp = "git push";
+    gl = "git log";
+    gd = "git diff";
+  };
+
+  # Enable direnv
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
+    enableBashIntegration = true;
+    nix-direnv.enable = true;
+  };
+
+  # Configure language-specific environments
+  programs.go = {
+    enable = true;
+    goPath = "Development/go";
+    goBin = "Development/go/bin";
+  };
+
+  programs.java = {
+    enable = true;
+    package = pkgs.jdk17;
+  };
+}

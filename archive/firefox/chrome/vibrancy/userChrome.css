@@ -1,0 +1,43 @@
+/**
+ * Most of the UI modifications come from https://www.reddit.com/r/FirefoxCSS/comments/a9vgxl/minimalist_theme/ by u/griam
+ */
+
+@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
+
+:root{ background: transparent !important }
+/**
+  VIBRANCY
+**/
+
+#TabsToolbar, .tab-background, #nav-bar, .theme-dark,
+.theme-light,slider, .CodeMirror, .devtools-toolbar, .message,
+.theme-body, .table-widget-empty-text {
+  -moz-appearance: -moz-mac-vibrancy-dark !important;
+}
+
+#TabsToolbar {
+  position: relative;
+  z-index: 1;
+}
+
+#TabsToolbar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(0,0,0,.3);
+  background: linear-gradient(rgba(0,0,0,.1), rgba(0,0,0,.3));
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+.tabbrowser-tab .tab-background-inner {
+  /*background: rgba(0,0,0,.1); */
+  background-image: linear-gradient(rgba(255,255,255,0), rgba(0,0,0,.2));
+}
+
+.tabbrowser-tab[visuallyselected="true"] .tab-background-inner {
+  background-color: transparent;
+  background-image: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,.1))
+}

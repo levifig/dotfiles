@@ -1,0 +1,166 @@
+/*
+ * Moz-Mac Firefox Theme
+ * by Thomas McMahon / @twistermc / twistermc.com
+ * v 2.1.0
+ */
+
+/* Theme variables */
+:root {
+  /* Transparency settings (0 = transparent, 1 = opaque) */
+  --window-transparency: 0.0;
+  --toolbar-transparency: 0.6;
+  --content-transparency: 0.5;
+  --urlbar-transparency: 0.0;
+  --bookmark-transparency: 0.7;
+
+  /* Blur effect settings */
+  --blur-strength: 10px;          /* Strength of the blur effect */
+  --glass-saturation: 1.8;        /* Color saturation for glass effect */
+  --glass-brightness: 1.1;        /* Brightness for glass effect */
+
+  /* Common theme properties */
+  --toolbox-border-bottom-color: transparent !important;
+  --chrome-content-separator-color: transparent !important;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: 40, 40, 40;
+    --text-color: 255, 255, 255;
+    --urlbar-bg: 50, 50, 50;
+    --tab-selected-bg: 60, 60, 60;
+  }
+}
+
+/* Light mode */
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg-color: 255, 255, 255;
+    --text-color: 0, 0, 0;
+    --urlbar-bg: 245, 245, 245;
+    --tab-selected-bg: 230, 230, 230;
+  }
+}
+
+/* Basic window setup */
+/* Toolbar and content areas */
+#main-window,
+#browser,
+#navigator-toolbox,
+#nav-bar,
+#TabsToolbar,
+#PersonalToolbar,
+#sidebar-main,
+#sidebar-box  {
+  appearance: none !important;
+  -moz-appearance: none !important;
+  background-color: rgba(var(--bg-color), var(--toolbar-transparency)) !important;
+  color: rgb(var(--text-color)) !important;
+  backdrop-filter: blur(var(--blur-strength)) saturate(var(--glass-saturation)) brightness(var(--glass-brightness)) !important;
+  -webkit-backdrop-filter: blur(var(--blur-strength)) saturate(var(--glass-saturation)) brightness(var(--glass-brightness)) !important;
+}
+
+menupopup {
+  background-color: rgba(var(--bg-color), var(--bookmark-transparency)) !important;
+  --panel-background: rgba(var(--bg-color), var(--bookmark-transparency)) !important;
+  color: rgb(var(--text-color)) !important;
+  backdrop-filter: blur(var(--blur-strength)) saturate(var(--glass-saturation)) brightness(var(--glass-brightness)) !important;
+  -webkit-backdrop-filter: blur(var(--blur-strength)) saturate(var(--glass-saturation)) brightness(var(--glass-brightness)) !important;
+  border-radius: 10px !important;
+} 
+
+
+/* Content area */
+#content-deck {
+  background-color: rgba(var(--bg-color), var(--content-transparency)) !important;
+}
+
+
+/* Remove any box shadows or borders from URL bar */
+#urlbar {
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* Tabs */
+.tabbrowser-tab {
+  color: rgb(var(--text-color)) !important;
+}
+
+/* Remove borders */
+.tab-background,
+.tabbrowser-tab,
+#nav-bar,
+#navigator-toolbox,
+#PersonalToolbar,
+#urlbar,
+#TabsToolbar {
+  border: none !important;
+}
+
+/* Favicon styling */
+.tab-icon-image {
+  opacity: 0.7;
+}
+
+.tabbrowser-tab:hover .tab-icon-image,
+.tabbrowser-tab[selected="true"] .tab-icon-image {
+  opacity: 1;
+}
+
+/* Hide close button until hover */
+.tabbrowser-tab:not(:hover) .tab-close-button {
+  display: none;
+}
+
+.tabbrowser-tab:not([pinned]):hover .tab-close-button {
+  display: block !important;
+}
+
+#tabbrowser-tabs {
+    --tab-line-color: -moz-menuhover !important;
+}
+
+.tab-line:not([selected=true]) {
+    background-color: -moz-mac-focusring !important;
+}
+
+#main-window[lwthemetextcolor="bright"] tab[selected] .tab-content{
+    background-color: rgba(255, 255, 255, .1) !important;
+}
+
+#main-window[lwthemetextcolor="dark"] tab[selected] .tab-content{
+    background-color: rgba(255, 255, 255, .25) !important;
+}
+
+.theme-body {
+   background: transparent !important;
+}
+
+#main-window{ background-color: transparent !important }
+
+/* Bookmarks and Sidebar specific styles */
+.bookmark-item,
+.sidebar-panel,
+#sidebar-header {
+  background-color: transparent !important;
+  color: rgb(var(--text-color)) !important;
+}
+
+:root:not([privatebrowsingmode]) :is(toolbarbutton, toolbarpaletteitem) ~ #tabbrowser-tabs, :root[privatebrowsingmode] :is(toolbarbutton:not(#firefox-view-button), toolbarpaletteitem:not(#wrapper-firefox-view-button)) ~ #tabbrowser-tabs {
+  border-inline-start: none !important;
+  padding-inline-start: none !important;
+  margin-inline-start: none !important;
+}
+
+/* Change tab text color when window is not in focus */
+:root:-moz-window-inactive #TabsToolbar .tabbrowser-tab .tab-label {
+  opacity: .5 !important; 
+}
+
+/* Rounded corners for web pages */
+/* #tabbrowser-tabbox {
+  border-top-left-radius: 10px !important;
+  overflow: hidden  !important; 
+} */

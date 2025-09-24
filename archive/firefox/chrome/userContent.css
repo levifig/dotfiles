@@ -1,0 +1,7 @@
+@namespace url(http://www.w3.org/1999/xhtml);
+@-moz-document url-prefix(chrome://devtools/content/) {
+  * {
+      font-family: "PragmataPro Liga" !important;
+      font-size: 15px !important;
+    }
+}
