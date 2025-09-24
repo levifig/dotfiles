@@ -119,6 +119,7 @@
     ./modules/shell/bash.nix
     ./modules/shell/starship.nix
     ./modules/terminal/tmux.nix
+    ./modules/terminal/alacritty.nix
     ./modules/editors/nvim.nix
   ];
 }
