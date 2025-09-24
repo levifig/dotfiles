@@ -1,0 +1,51 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Nix
+result
+result-*
+.direnv/
+.envrc
+
+# Home Manager
+home-manager-generation
+
+# Editor directories and files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.vim/
+
+# Logs
+*.log
+
+# Migration/Planning (not tracked)
+*MIGRATION*
+*migration*
+*.plan
+*.todo
+NIX-MIGRATION.md
+
+# Secrets
+*.key
+*.pem
+*.crt
+secrets/
+.env
+.env.*
+
+# Temporary files
+*.tmp
+*.bak
+*.backup
+*.old
+tmp/
+temp/
+
+# Archive specific ignores
+archive/.DS_Store
+archive/**/.DS_Store
