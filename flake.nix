@@ -58,6 +58,21 @@
           ];
         };
 
+        # LFX001 - Primary macOS machine
+        "${user}@LFX001" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs-darwin.legacyPackages.aarch64-darwin;
+          modules = [
+            ./home-manager/home.nix
+            ./home-manager/hosts/LFX001.nix
+            {
+              home = {
+                username = user;
+                homeDirectory = "/Users/${user}";
+              };
+            }
+          ];
+        };
+
         # Work MacBook (Apple Silicon)
         "${user}@macbook-work" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs-darwin.legacyPackages.aarch64-darwin;
