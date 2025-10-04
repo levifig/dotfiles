@@ -3,12 +3,6 @@
 {
   # macOS-specific packages
   home.packages = with pkgs; [
-    # macOS utilities
-    darwin.apple_sdk.frameworks.Security
-    darwin.apple_sdk.frameworks.CoreServices
-    darwin.apple_sdk.frameworks.CoreFoundation
-    darwin.apple_sdk.frameworks.SystemConfiguration
-
     # macOS-friendly tools
     mas # Mac App Store CLI
     duti # Set default applications
