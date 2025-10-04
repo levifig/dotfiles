@@ -164,7 +164,6 @@
   programs.go = {
     enable = true;
     goPath = "Development/go";
-    goBin = "Development/go/bin";
   };
 
   programs.java = {
