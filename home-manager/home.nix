@@ -86,11 +86,11 @@
     "..." = "cd ../..";
     "...." = "cd ../../..";
 
-    # ls replacements
-    ls = "eza";
-    ll = "eza -la";
-    la = "eza -a";
-    lt = "eza --tree";
+    # ls replacements (can be overridden in profiles)
+    ls = lib.mkDefault "eza";
+    ll = lib.mkDefault "eza -la";
+    la = lib.mkDefault "eza -a";
+    lt = lib.mkDefault "eza --tree";
 
     # Safety nets
     cp = "cp -i";
@@ -102,10 +102,10 @@
     v = "nvim";
     t = "tmux";
 
-    # Colorize
-    grep = "grep --color=auto";
-    fgrep = "fgrep --color=auto";
-    egrep = "egrep --color=auto";
+    # Colorize (can be overridden in profiles)
+    grep = lib.mkDefault "grep --color=auto";
+    fgrep = lib.mkDefault "fgrep --color=auto";
+    egrep = lib.mkDefault "egrep --color=auto";
 
     # System
     reload = "source ~/.zshrc";
