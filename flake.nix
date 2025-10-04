@@ -179,24 +179,24 @@
 
           ruby = pkgs.mkShell {
             buildInputs = with pkgs; [
-              ruby_3_2
+              ruby_3_4
               bundler
-              rubyPackages.solargraph
+              rubyPackages_3_4.solargraph
             ];
           };
 
           python = pkgs.mkShell {
             buildInputs = with pkgs; [
-              python311
-              python311Packages.pip
-              python311Packages.virtualenv
+              python313
+              python313Packages.pip
+              python313Packages.virtualenv
               poetry
             ];
           };
 
           node = pkgs.mkShell {
             buildInputs = with pkgs; [
-              nodejs_20
+              nodejs_24
               nodePackages.pnpm
               nodePackages.yarn
             ];
@@ -204,7 +204,7 @@
 
           go = pkgs.mkShell {
             buildInputs = with pkgs; [
-              go_1_21
+              go
               gopls
               gotools
             ];

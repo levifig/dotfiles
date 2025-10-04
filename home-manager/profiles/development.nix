@@ -19,25 +19,25 @@
 
     # Language-specific tools
     # Ruby
-    ruby_3_2
-    rubyPackages.solargraph
+    ruby_3_4
+    rubyPackages_3_4.solargraph
 
     # Python
-    python311
-    python311Packages.pip
-    python311Packages.virtualenv
+    python313
+    python313Packages.pip
+    python313Packages.virtualenv
     poetry
     pipenv
 
     # Node.js
-    nodejs_20
+    nodejs_24
     nodePackages.pnpm
     nodePackages.yarn
     nodePackages.typescript
     nodePackages.eslint
 
     # Go
-    go_1_21
+    go
     gopls
     gotools
     golangci-lint
