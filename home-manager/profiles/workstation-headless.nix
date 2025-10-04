@@ -7,6 +7,11 @@
 
   imports = [
     ./server.nix  # Inherit all server tools
+    ../modules/shell/zsh.nix
+    ../modules/editors/nvim.nix
+    ../modules/terminal/tmux.nix
+    ../modules/terminal/starship.nix
+    ../modules/git/config.nix
   ];
 
   home.packages = with pkgs; [
@@ -150,16 +155,6 @@
     # Cloud
     AWS_PAGER = "";  # Disable AWS CLI pager
   };
-
-  # Import full configuration modules
-  imports = [
-    ./server.nix  # Already included above, but making it explicit
-    ../modules/shell/zsh.nix
-    ../modules/editors/nvim.nix
-    ../modules/terminal/tmux.nix
-    ../modules/terminal/starship.nix
-    ../modules/git/config.nix
-  ];
 
   # Enable direnv for project-specific environments
   programs.direnv = {
