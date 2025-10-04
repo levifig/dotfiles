@@ -73,6 +73,21 @@
           ];
         };
 
+        # LFX004 - Linux laptop (NixOS ready)
+        "${user}@LFX004" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          modules = [
+            ./home-manager/home.nix
+            ./home-manager/hosts/LFX004.nix
+            {
+              home = {
+                username = user;
+                homeDirectory = "/home/${user}";
+              };
+            }
+          ];
+        };
+
         # Work MacBook (Apple Silicon)
         "${user}@macbook-work" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs-darwin.legacyPackages.aarch64-darwin;
@@ -156,6 +171,22 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.${user} = import ./home-manager/hosts/macbook-work.nix;
+            }
+          ];
+        };
+      };
+
+      # NixOS system configurations
+      nixosConfigurations = {
+        LFX004 = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./nixos/hosts/LFX004/configuration.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.${user} = import ./home-manager/hosts/LFX004.nix;
             }
           ];
         };
