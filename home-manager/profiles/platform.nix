@@ -37,7 +37,7 @@
     # CI/CD Tools
     jenkins
     argocd
-    # tekton-cli  # Not available in current nixpkgs
+    tektoncd-cli
 
     # Cloud CLIs
     awscli2
@@ -48,7 +48,7 @@
     # Monitoring & Observability
     prometheus
     grafana-loki
-    promtool
+    # promtool  # Not available as standalone package
 
     # Policy & Compliance
     open-policy-agent
@@ -59,7 +59,7 @@
 
     # Secrets Management
     vault
-    sealed-secrets-kubeseal
+    kubeseal  # Was: sealed-secrets-kubeseal
     sops
     age
 
@@ -76,17 +76,16 @@
     netcat
 
     # Cloud Native Tools
-    buildpacks
-    pack
+    pack  # Cloud Native Buildpacks
     skaffold
     tilt
 
     # Data Tools
     postgresql
-    mysql80
+    mariadb
     redis
     clickhouse
-    apache-kafka
+    apacheKafka
 
     # Backup & Disaster Recovery
     velero
