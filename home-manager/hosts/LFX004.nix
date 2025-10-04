@@ -74,14 +74,17 @@
   # SSH configuration
   programs.ssh = {
     enable = true;
-    hashKnownHosts = true;
-    serverAliveInterval = 60;
-    serverAliveCountMax = 120;
-    controlMaster = "auto";
-    controlPath = "~/.ssh/control/%C";
-    controlPersist = "10m";
 
     matchBlocks = {
+      # Default settings for all hosts
+      "*" = {
+        serverAliveInterval = 60;
+        serverAliveCountMax = 120;
+        controlMaster = "auto";
+        controlPath = "~/.ssh/control/%C";
+        controlPersist = "10m";
+      };
+
       # Personal servers
       "github.com" = {
         hostname = "github.com";

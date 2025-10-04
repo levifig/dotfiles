@@ -37,7 +37,7 @@
     # CI/CD Tools
     jenkins
     argocd
-    tekton-cli
+    # tekton-cli  # Not available in current nixpkgs
 
     # Cloud CLIs
     awscli2
