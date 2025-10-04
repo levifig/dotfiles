@@ -1,0 +1,189 @@
+# Reference: https://github.com/i3/i3/blob/next/etc/config
+
+# You can use it to add commands that run after login to macOS user session.
+# 'start-at-login' needs to be 'true' for 'after-login-command' to work
+# Available commands: https://nikitabobko.github.io/AeroSpace/commands
+after-login-command = []
+
+# You can use it to add commands that run after AeroSpace startup.
+# 'after-startup-command' is run after 'after-login-command'
+# Available commands : https://nikitabobko.github.io/AeroSpace/commands
+
+# Start AeroSpace at login
+start-at-login = false
+
+# Normalizations. See: https://nikitabobko.github.io/AeroSpace/guide#normalization
+enable-normalization-flatten-containers = false
+enable-normalization-opposite-orientation-for-nested-containers = false
+
+# See: https://nikitabobko.github.io/AeroSpace/guide#layouts
+# The 'accordion-padding' specifies the size of accordion padding
+# You can set 0 to disable the padding feature
+accordion-padding = 0
+
+# Possible values: tiles|accordion
+default-root-container-layout = 'tiles'
+
+# Possible values: horizontal|vertical|auto
+# 'auto' means: wide monitor (anything wider than high) gets horizontal orientation,
+#               tall monitor (anything higher than wide) gets vertical orientation
+default-root-container-orientation = 'auto'
+
+# Mouse follows focus when focused monitor changes
+# Drop it from your config, if you don't like this behavior
+# See https://nikitabobko.github.io/AeroSpace/guide#on-focus-changed-callbacks
+# See https://nikitabobko.github.io/AeroSpace/commands#move-mouse
+# Fallback value (if you omit the key): on-focused-monitor-changed = []
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+
+# You can effectively turn off macOS "Hide application" (cmd-h) feature by toggling this flag
+# Useful if you don't use this macOS feature, but accidentally hit cmd-h or cmd-ctrl-shift-cmd-alt-h key
+# Also see: https://nikitabobko.github.io/AeroSpace/goodies#disable-hide-app
+automatically-unhide-macos-hidden-apps = true
+
+on-focus-changed = [
+  "exec-and-forget osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-index-jsx\"'",
+]
+
+exec-on-workspace-change = [
+  '/bin/zsh',
+  '-c',
+  '/usr/bin/osascript -e "tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-index-jsx\""',
+]
+
+# exec-on-workspace-change = [
+#   '/bin/bash',
+#   '-c',
+#   'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE PREV_WORKSPACE=$AEROSPACE_PREV_WORKSPACE',
+# ]
+
+
+# Possible values: (qwerty|dvorak)
+# See https://nikitabobko.github.io/AeroSpace/guide#key-mapping
+key-mapping.preset = 'qwerty'
+
+#[key-mapping.key-notation-to-key-code]
+#hyper = 'ctrl-alt-cmd-shift'
+
+# Gaps between windows (inner-*) and between monitor edges (outer-*).
+# Possible values:
+# - Constant:     gaps.outer.top = 8
+# - Per monitor:  gaps.outer.top = [{ monitor.main = 16 }, { monitor."some-pattern" = 32 }, 24]
+#                 In this example, 24 is a default value when there is no match.
+#                 Monitor pattern is the same as for 'workspace-to-monitor-force-assignment'.
+#                 See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
+[gaps]
+inner.horizontal = 20
+inner.vertical = 20
+outer.top = [{ monitor."built-in" = 20 }, 50]
+outer.bottom = 20
+outer.left = 20
+outer.right = 20
+
+[mode.main.binding]
+# See: https://nikitabobko.github.io/AeroSpace/goodies#open-a-new-window-with-applescript
+ctrl-shift-alt-cmd-enter = '''exec-and-forget osascript -e '
+      tell application "Ghostty"
+          do script
+          activate
+      end tell'
+      '''
+
+# i3 wraps focus by default
+ctrl-cmd-h = 'focus --boundaries-action wrap-around-the-workspace left'
+ctrl-cmd-j = 'focus --boundaries-action wrap-around-the-workspace down'
+ctrl-cmd-k = 'focus --boundaries-action wrap-around-the-workspace up'
+ctrl-cmd-l = 'focus --boundaries-action wrap-around-the-workspace right'
+
+ctrl-shift-h = 'move left'
+ctrl-shift-j = 'move down'
+ctrl-shift-k = 'move up'
+ctrl-shift-l = 'move right'
+
+# Consider using 'join-with' command as a 'split' replacement if you want to enable
+# normalizations
+# ctrl-shift-alt-cmd-s = 'split horizontal'
+# ctrl-shift-alt-cmd-v = 'split vertical'
+
+ctrl-shift-alt-cmd-w = 'focus left'
+ctrl-shift-alt-cmd-e = 'focus right'
+
+
+ctrl-shift-alt-cmd-f = 'fullscreen'
+ctrl-shift-alt-cmd-v = 'layout v_accordion'               # 'layout stacking' in i3
+ctrl-shift-alt-cmd-h = 'layout h_accordion'               # 'layout tabbed' in i3
+ctrl-shift-alt-cmd-t = 'layout tiles horizontal vertical' # 'layout toggle split' in i3
+ctrl-shift-alt-cmd-g = 'layout floating tiling'           # 'floating toggle' in i3
+
+# Not supported, because this command is redundant in AeroSpace mental model.
+# See: https://nikitabobko.github.io/AeroSpace/guide#floating-windows
+#alt-space = 'focus toggle_tiling_floating'
+
+# `focus parent`/`focus child` are not yet supported, and it's not clear whether they
+# should be supported at all https://github.com/nikitabobko/AeroSpace/issues/5
+# alt-a = 'focus parent'
+
+
+ctrl-shift-alt-cmd-1 = 'workspace 1'
+ctrl-shift-alt-cmd-2 = 'workspace 2'
+ctrl-shift-alt-cmd-3 = 'workspace 3'
+ctrl-shift-alt-cmd-4 = 'workspace 4'
+ctrl-shift-alt-cmd-5 = 'workspace 5'
+ctrl-shift-alt-cmd-6 = 'workspace 6'
+ctrl-shift-alt-cmd-7 = 'workspace 7'
+ctrl-shift-alt-cmd-8 = 'workspace 8'
+ctrl-shift-alt-cmd-9 = 'workspace 9'
+ctrl-shift-alt-cmd-0 = 'workspace 10'
+
+ctrl-alt-1 = 'move-node-to-workspace 1'
+ctrl-alt-2 = 'move-node-to-workspace 2'
+ctrl-alt-3 = 'move-node-to-workspace 3'
+ctrl-alt-4 = 'move-node-to-workspace 4'
+ctrl-alt-5 = ['layout floating', 'move-node-to-workspace 5']
+ctrl-alt-6 = 'move-node-to-workspace 6'
+ctrl-alt-7 = 'move-node-to-workspace 7'
+ctrl-alt-8 = 'move-node-to-workspace 8'
+ctrl-alt-9 = 'move-node-to-workspace 9'
+ctrl-alt-0 = 'move-node-to-workspace 10'
+
+ctrl-alt-s = 'move-workspace-to-monitor --wrap-around next'
+
+# ctrl-shift-alt-cmd-a = 'workspace prev'
+# ctrl-shift-alt-cmd-s = 'workspace next'
+ctrl-shift-alt-cmd-q = 'workspace-back-and-forth'
+ctrl-shift-alt-cmd-z = 'reload-config'
+ctrl-shift-alt-cmd-r = 'mode resize'
+
+# [workspace-to-monitor-force-assignment]
+# 1 = 'main'
+# 2 = 'main'
+# 3 = 'main'
+# 4 = 'main'
+# 5 = 'main'
+# 6 = ['secondary', 'main']
+# 7 = ['secondary', 'main']
+# 8 = ['secondary', 'main']
+# 9 = ['secondary', 'main']
+# 10 = ['secondary', 'main']
+
+[mode.resize.binding]
+h = 'resize width -50'
+j = 'resize height +50'
+k = 'resize height -50'
+l = 'resize width +50'
+enter = 'mode main'
+esc = 'mode main'
+
+[[on-window-detected]]
+if.workspace = '5'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'app.zen-browser.zen'
+if.window-title-regex-substring = 'Picture-in-Picture'
+run = ['layout floating']
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'CleanShot'
+check-further-callbacks = false
+run = ['layout floating']

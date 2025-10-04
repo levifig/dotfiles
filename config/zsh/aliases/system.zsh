@@ -1,0 +1,8 @@
+alias zr='source ~/.config/zsh/zshrc'
+alias l='eza -lagF --icons --git'
+alias ll='eza -lagTL2 -F --icons --git'
+#alias ssh='TERM=xterm-256color ssh'
+alias mv='mv -iv'
+alias cp='cp -riv'
+alias mkdir='mkdir -vp'
+alias cat='bat'

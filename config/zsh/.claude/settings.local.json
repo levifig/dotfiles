@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cp:*)",
+      "Bash(zsh:*)",
+      "Bash(ZPROF=true zsh -c \"source /Users/levifig/.config/zsh/zshrc\")",
+      "Bash(time:*)",
+      "Bash(grep:*)",
+      "Bash(ZDOTDIR=/Users/levifig/.config/zsh zsh -c \"\nsource /Users/levifig/.config/zsh/zshrc >/dev/null 2>&1\nchuck_cow\n\")",
+      "Bash(mkdir:*)",
+      "Bash(aws:*)"
+    ],
+    "deny": []
+  }
+}
