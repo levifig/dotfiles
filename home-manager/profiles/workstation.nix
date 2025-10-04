@@ -7,6 +7,8 @@
 
   imports = [
     ./workstation-headless.nix  # Inherit all headless workstation tools
+    ../modules/terminal/alacritty.nix
+    # Add other GUI-specific modules here
   ];
 
   home.packages = with pkgs; [
@@ -21,13 +23,6 @@
 
     # Additional GUI utilities that work well via Nix
     # (Most GUI apps on macOS are better as casks in nix-darwin)
-  ];
-
-  # Import GUI-related configuration modules
-  imports = [
-    ./workstation-headless.nix  # Already included above
-    ../modules/terminal/alacritty.nix
-    # Add other GUI-specific modules here
   ];
 
   # GUI-specific environment variables
