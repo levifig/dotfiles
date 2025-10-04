@@ -1,0 +1,54 @@
+[general]
+import = ["/Users/levifig/.config/alacritty/themes/ayu-mirage.toml"]
+
+[env]
+TERM = "xterm-256color"
+WINIT_X11_SCALE_FACTOR = "1"
+
+[font]
+size = 19.0
+
+[font.bold]
+family = "PragmataPro Liga"
+style = "Bold"
+
+[font.bold_italic]
+family = "PragmataPro Liga"
+style = "Bold Italic"
+
+[font.italic]
+family = "PragmataPro Liga"
+style = "Italic"
+
+[font.normal]
+family = "PragmataPro Liga"
+style = "Regular"
+
+[font.offset]
+x = 0
+y = 2
+
+[window]
+decorations = "buttonless"
+dynamic_padding = true
+dynamic_title = true
+opacity = 0.97
+title = "Alacritty"
+
+[window.class]
+general = "Alacritty"
+instance = "Alacritty"
+
+[window.padding]
+x = 25
+y = 15
+
+[colors]
+draw_bold_text_with_bright_colors = true
+
+[keyboard]
+
+[[keyboard.bindings]]
+action = "CreateNewWindow"
+key = "Return"
+mods = "Super"
