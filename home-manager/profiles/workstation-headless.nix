@@ -90,7 +90,7 @@
 
     # Utilities
     gh
-    git-delta
+    delta  # git-delta
     git-filter-repo
     tig
     lazygit
@@ -141,16 +141,12 @@
 
   # Development environment variables
   home.sessionVariables = {
-    EDITOR = "nvim";
-    VISUAL = "nvim";
+    EDITOR = lib.mkForce "nvim";  # Override server.nix vim setting
+    VISUAL = lib.mkForce "nvim";
 
     # Language-specific
     GOPATH = "${config.home.homeDirectory}/go";
     CARGO_HOME = "${config.home.homeDirectory}/.cargo";
-
-    # Kubernetes
-    KUBECONFIG = "${config.home.homeDirectory}/.kube/config";
-    KUBE_EDITOR = "nvim";
 
     # Cloud
     AWS_PAGER = "";  # Disable AWS CLI pager
