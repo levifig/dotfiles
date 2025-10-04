@@ -82,7 +82,7 @@
 
     # Database tools
     postgresql
-    mysql
+    mariadb
     redis
     sqlite
 
@@ -161,10 +161,7 @@
   };
 
   # Configure language-specific environments
-  programs.go = {
-    enable = true;
-    goPath = "Development/go";
-  };
+  programs.go.enable = true;
 
   programs.java = {
     enable = true;
