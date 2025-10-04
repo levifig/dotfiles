@@ -3,6 +3,7 @@
 {
   # Platform Engineering profile
   home.packages = with pkgs; [
+    # Cross-platform packages
     # Infrastructure as Code
     terraform
     terragrunt
@@ -32,10 +33,10 @@
     # Service Mesh & Networking
     istioctl
     consul
-    envoy
+    # envoy is Linux-only
 
     # CI/CD Tools
-    jenkins
+    # jenkins  # Not available on aarch64-darwin
     argocd
     tektoncd-cli
 

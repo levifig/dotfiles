@@ -96,7 +96,7 @@
     # Debugging/Profiling
     gdb
     lldb
-    perf-tools
+    # perf-tools  # Linux-only
     hyperfine
     tokei
 
@@ -107,7 +107,7 @@
 
     # CI/CD
     gh
-    gitlab
+    # gitlab  # Linux-only
     act  # Run GitHub Actions locally
 
     # Development utilities
