@@ -239,7 +239,7 @@
         # Bootstrap installer
         bootstrap = {
           type = "app";
-          program = ./scripts/bootstrap.sh;
+          program = toString ./scripts/bootstrap.sh;
         };
       });
     };
