@@ -28,7 +28,7 @@
 
     # Additional utilities
     speedtest-cli
-    youtube-dl
+    yt-dlp  # Modern youtube-dl replacement
     tldr
   ];
 
