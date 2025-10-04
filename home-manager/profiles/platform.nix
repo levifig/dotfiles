@@ -32,7 +32,7 @@
 
     # Service Mesh & Networking
     istioctl
-    consul
+    # consul  # Requires building from source
     # envoy is Linux-only
 
     # CI/CD Tools
@@ -85,7 +85,7 @@
     postgresql
     mariadb
     redis
-    clickhouse
+    # clickhouse  # Requires building from source
     apacheKafka
 
     # Backup & Disaster Recovery
