@@ -8,6 +8,9 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
+  # Allow unfree packages (needed for terraform, vscode, etc.)
+  nixpkgs.config.allowUnfree = true;
+
   # Enable XDG compliance
   xdg = {
     enable = true;

@@ -6,7 +6,7 @@
     # macOS-friendly tools
     mas # Mac App Store CLI
     duti # Set default applications
-    trash # Move files to trash instead of rm
+    trash-cli # Move files to trash instead of rm
   ];
 
   # macOS-specific environment variables
