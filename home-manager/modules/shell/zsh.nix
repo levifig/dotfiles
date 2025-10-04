@@ -20,13 +20,4 @@
     source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/zsh";
     recursive = true;
   };
-
-  # Ensure .zshenv points to XDG directory
-  home.file.".zshenv".text = ''
-    # Set ZDOTDIR to use XDG-compliant location
-    export ZDOTDIR="$HOME/.config/zsh"
-
-    # Source the main zshrc if it exists
-    [[ -f "$ZDOTDIR/.zshrc" ]] && source "$ZDOTDIR/.zshrc"
-  '';
 }
