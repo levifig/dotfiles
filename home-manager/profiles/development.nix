@@ -65,7 +65,7 @@
       azurerm
       kubernetes
     ]))
-    terraform-docs
+    # terraform-docs  # Build failure in current nixpkgs
     tflint
     terragrunt
 

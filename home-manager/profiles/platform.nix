@@ -7,7 +7,7 @@
     # Infrastructure as Code
     terraform
     terragrunt
-    terraform-docs
+    # terraform-docs  # Build failure in current nixpkgs
     tflint
     checkov
     infracost
