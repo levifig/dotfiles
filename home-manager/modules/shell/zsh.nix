@@ -124,21 +124,8 @@
 
     # Plugins from nixpkgs
     plugins = [
-      {
-        name = "zsh-nix-shell";
-        file = "nix-shell.plugin.zsh";
-        src = pkgs.fetchFromGitHub {
-          owner = "chisui";
-          repo = "zsh-nix-shell";
-          rev = "v0.8.0";
-          sha256 = "1lzrn0n4fxfcgg65v0qhnj7nvqfj6fnnwww1q6kkf5girjqxlipw";
-        };
-      }
-      {
-        name = "powerlevel10k";
-        src = pkgs.zsh-powerlevel10k;
-        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-      }
+      # Removed custom GitHub fetches to avoid hash mismatches
+      # oh-my-zsh provides most needed functionality
     ];
   };
 
