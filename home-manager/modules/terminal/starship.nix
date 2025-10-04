@@ -7,6 +7,6 @@
   # Deploy your Starship configuration from the repository
   # Note: Starship looks for config at ~/.config/starship.toml
   xdg.configFile."starship.toml" = {
-    source = ../../config/starship/starship.toml;
+    source = ../../../config/starship/starship.toml;
   };
 }

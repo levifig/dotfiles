@@ -6,7 +6,7 @@
 
   # Deploy your Alacritty configuration from the repository
   xdg.configFile."alacritty" = {
-    source = ../../config/alacritty;
+    source = ../../../config/alacritty;
     recursive = true;
   };
 }

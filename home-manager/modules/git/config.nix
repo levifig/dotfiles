@@ -6,10 +6,10 @@
 
   # Deploy your Git configuration files from the repository
   xdg.configFile."git/config" = {
-    source = ../../config/git/config;
+    source = ../../../config/git/config;
   };
 
   xdg.configFile."git/ignore" = {
-    source = ../../config/git/ignore;
+    source = ../../../config/git/ignore;
   };
 }
