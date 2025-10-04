@@ -52,7 +52,7 @@
     # promtool  # Not available as standalone package
 
     # Policy & Compliance
-    open-policy-agent
+    # open-policy-agent  # Build failure in current nixpkgs
     conftest
     cosign
     syft
