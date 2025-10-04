@@ -16,7 +16,7 @@
 
   # Deploy your ZSH configuration from the repository
   xdg.configFile."zsh" = {
-    source = ../../config/zsh;
+    source = ../../../config/zsh;
     recursive = true;
   };
 }

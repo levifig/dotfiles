@@ -161,7 +161,7 @@
 
   # Deploy your Neovim configuration from the repository
   xdg.configFile."nvim" = {
-    source = ../../config/nvim;
+    source = ../../../config/nvim;
     recursive = true;
   };
 }
