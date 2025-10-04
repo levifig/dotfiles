@@ -52,7 +52,7 @@
     docker-client
     docker-compose
     podman
-    buildah
+    # buildah  # Build failure on macOS
     skopeo
 
     # Cloud tools
