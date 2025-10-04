@@ -120,9 +120,6 @@
       dl = "cd ~/Downloads";
       dt = "cd ~/Desktop";
       dev = "cd ~/Development";
-
-      # Quick edits
-      dots = "cd ~/.dotfiles && nvim";
     };
 
     # Plugins from nixpkgs
