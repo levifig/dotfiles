@@ -1,23 +1,22 @@
 { config, pkgs, lib, ... }:
 
 {
-  # Use existing ZSH configuration from ~/.config/zsh
-  # This preserves your current setup without modification
+  # Deploy ZSH configuration from repository
+  # Your config is version controlled in config/zsh/
 
   programs.zsh = {
     enable = true;
     enableCompletion = true;
 
-    # Minimal session variables
+    # Session variables
     sessionVariables = {
       ZDOTDIR = "${config.xdg.configHome}/zsh";
     };
   };
 
-  # Link to your existing ZSH configuration
-  # This keeps your current config exactly as-is
+  # Deploy your ZSH configuration from the repository
   xdg.configFile."zsh" = {
-    source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/zsh";
+    source = ../../config/zsh;
     recursive = true;
   };
 }

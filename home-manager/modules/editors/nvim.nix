@@ -159,17 +159,9 @@
   # Create nvim directories
   xdg.dataFile."nvim/undo/.keep".text = "";
 
-  # Link existing nvim config if it exists
-  # This can be replaced with a full Nix configuration later
-  xdg.configFile."nvim".source =
-    let
-      nvimConfigPath = "${config.home.homeDirectory}/.config/nvim";
-    in
-      if builtins.pathExists nvimConfigPath
-      then config.lib.file.mkOutOfStoreSymlink nvimConfigPath
-      else pkgs.writeTextDir "init.lua" ''
-        -- Minimal init.lua
-        -- TODO: Migrate full nvim configuration
-        vim.notify("Neovim configuration needs to be migrated to Nix", vim.log.levels.INFO)
-      '';
+  # Deploy your Neovim configuration from the repository
+  xdg.configFile."nvim" = {
+    source = ../../config/nvim;
+    recursive = true;
+  };
 }
