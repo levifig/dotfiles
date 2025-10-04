@@ -198,13 +198,7 @@
     };
   };
 
-  # Create themes directory and link theme files
-  xdg.configFile."alacritty/themes" = {
-    source = ./alacritty-themes;
-    recursive = true;
-  };
-
-  # Or if you want to keep using existing themes
-  # xdg.configFile."alacritty/themes".source =
-  #   config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/alacritty/themes";
+  # Use existing themes from user's config directory
+  xdg.configFile."alacritty/themes".source =
+    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/alacritty/themes";
 }
