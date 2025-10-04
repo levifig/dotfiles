@@ -90,7 +90,7 @@
     curl
     httpie
     wget
-    postman
+    # postman  # Requires building from source
     grpcurl
 
     # Debugging/Profiling
@@ -116,7 +116,7 @@
     entr
     just
     mkcert
-    ngrok
+    # ngrok  # Requires building from source
   ];
 
   # Development-specific shell aliases
