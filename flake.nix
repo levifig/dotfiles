@@ -58,11 +58,14 @@
           ];
         };
 
-        # LFX001 - Primary macOS machine
+        # LFX001 - Primary macOS machine (Workstation)
         "${user}@LFX001" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs-darwin.legacyPackages.aarch64-darwin;
           modules = [
             ./home-manager/home.nix
+            ./home-manager/platform/darwin-base.nix
+            ./home-manager/profiles/workstation.nix  # Full workstation with GUI
+            ./home-manager/profiles/platform.nix      # Platform engineering tools
             ./home-manager/hosts/LFX001.nix
             {
               home = {
@@ -148,8 +151,7 @@
           modules = [
             ./home-manager/home.nix
             ./home-manager/platform/linux-base.nix
-            ./home-manager/profiles/minimal.nix
-            ./home-manager/hosts/linux-server.nix
+            ./home-manager/profiles/server.nix  # Minimal server profile
             {
               home = {
                 username = user;
@@ -162,6 +164,19 @@
 
       # Darwin (macOS) system configurations
       darwinConfigurations = {
+        "LFX001" = darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+          modules = [
+            ./darwin/configuration.nix
+            home-manager.darwinModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.${user} = import ./home-manager/hosts/LFX001.nix;
+            }
+          ];
+        };
+
         "macbook-work" = darwin.lib.darwinSystem {
           system = "aarch64-darwin";
           modules = [
