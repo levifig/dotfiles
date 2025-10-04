@@ -31,43 +31,140 @@ experimental-features = nix-command flakes
 
 ### Installation
 
-#### Option 1: Clone and Switch
+#### Step-by-Step Setup
+
+1. **Clone the repository:**
 ```bash
 git clone https://github.com/levifig/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
-nix run .#switch  # Auto-detects your machine configuration
 ```
 
-#### Option 2: Direct from GitHub
+2. **Verify the flake:**
 ```bash
-nix run github:levifig/dotfiles#switch
+nix flake check
+nix flake show
 ```
 
-#### Option 3: Bootstrap Script
+3. **Install Home Manager:**
 ```bash
-curl -L https://raw.githubusercontent.com/levifig/dotfiles/main/scripts/bootstrap.sh | bash
+nix run home-manager/master -- init --switch
+```
+
+4. **Apply your configuration:**
+```bash
+# Auto-detect based on hostname
+home-manager switch --flake ~/.dotfiles
+
+# Or specify explicitly
+home-manager switch --flake ~/.dotfiles#levifig@LFX001
+```
+
+#### Quick Setup (Bootstrap)
+```bash
+curl -L https://raw.githubusercontent.com/levifig/dotfiles/nix-migration/scripts/bootstrap.sh | bash
 ```
 
 ### Usage
 
-#### Switch to Configuration
-```bash
-# Use hostname-based config
-home-manager switch --flake ~/.dotfiles
+#### Daily Commands
 
-# Use specific machine config
-home-manager switch --flake ~/.dotfiles#levifig@macbook-work
+**Apply Configuration:**
+```bash
+# Quick apply
+nix run ~/.dotfiles#switch
+
+# Or manual
+home-manager switch --flake ~/.dotfiles#levifig@LFX001
 ```
 
-#### Update Packages
+**Update All Packages:**
 ```bash
-nix flake update ~/.dotfiles
-home-manager switch --flake ~/.dotfiles
+cd ~/.dotfiles
+nix flake update
+home-manager switch --flake .
 ```
 
-#### Rollback Changes
+**Rollback Changes:**
 ```bash
 home-manager rollback
+```
+
+**List Generations:**
+```bash
+home-manager generations
+```
+
+**Test Before Applying:**
+```bash
+home-manager build --flake ~/.dotfiles#levifig@LFX001
+```
+
+#### Development Shells
+
+**Enter a shell with specific language version:**
+```bash
+# Python 3.13 environment
+nix develop ~/.dotfiles#python
+python --version
+
+# Ruby 3.4 environment
+nix develop ~/.dotfiles#ruby
+ruby --version
+
+# Node.js 24 environment
+nix develop ~/.dotfiles#node
+node --version
+
+# Go 1.24 environment
+nix develop ~/.dotfiles#go
+go version
+```
+
+**Project-Specific Versions:**
+
+For projects needing different versions, create a `flake.nix` in the project:
+
+```nix
+{
+  description = "Project with Python 3.11";
+
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
+    flake-utils.url = "github:numtide/flake-utils";
+  };
+
+  outputs = { self, nixpkgs, flake-utils }:
+    flake-utils.lib.eachDefaultSystem (system:
+      let pkgs = nixpkgs.legacyPackages.${system};
+      in {
+        devShells.default = pkgs.mkShell {
+          buildInputs = with pkgs; [
+            python311
+            python311Packages.pip
+          ];
+        };
+      }
+    );
+}
+```
+
+Then use: `nix develop` in that project directory.
+
+#### Package Management
+
+**Search for packages:**
+```bash
+nix search nixpkgs python
+```
+
+**Install package temporarily:**
+```bash
+nix shell nixpkgs#ripgrep
+```
+
+**See what's installed:**
+```bash
+home-manager packages
 ```
 
 ## Configuration Structure
@@ -111,13 +208,15 @@ Each layer can add or override settings from previous layers.
 
 ## Available Configurations
 
-| Machine | Description | Command |
-|---------|-------------|---------|
-| `levifig` | Auto-detected based on hostname | `home-manager switch --flake .` |
-| `levifig@macbook-work` | Work MacBook (Apple Silicon) | `home-manager switch --flake .#levifig@macbook-work` |
-| `levifig@macbook-personal` | Personal MacBook | `home-manager switch --flake .#levifig@macbook-personal` |
-| `levifig@linux-desktop` | Linux desktop with GUI | `home-manager switch --flake .#levifig@linux-desktop` |
-| `levifig@linux-server` | Minimal Linux server | `home-manager switch --flake .#levifig@linux-server` |
+| Machine | Description | Platform | Command |
+|---------|-------------|----------|---------|
+| `levifig` | Auto-detected based on hostname | Any | `home-manager switch --flake .` |
+| `levifig@LFX001` | Primary macOS machine (Apple Silicon) | Darwin | `home-manager switch --flake .#levifig@LFX001` |
+| `levifig@LFX004` | Linux laptop (NixOS ready) | Linux | `home-manager switch --flake .#levifig@LFX004` |
+| `levifig@macbook-work` | Work MacBook template | Darwin | `home-manager switch --flake .#levifig@macbook-work` |
+| `levifig@macbook-personal` | Personal MacBook template | Darwin | `home-manager switch --flake .#levifig@macbook-personal` |
+| `levifig@linux-desktop` | Linux desktop template | Linux | `home-manager switch --flake .#levifig@linux-desktop` |
+| `levifig@linux-server` | Minimal Linux server template | Linux | `home-manager switch --flake .#levifig@linux-server` |
 
 ## Development Shells
 
