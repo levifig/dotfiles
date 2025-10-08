@@ -126,6 +126,7 @@
             ./home-manager/platform/darwin-base.nix
             ./home-manager/profiles/workstation.nix  # Full workstation with GUI
             ./home-manager/profiles/platform.nix      # Platform engineering tools
+            ./home-manager/profiles/cli-tools.nix     # Language package manager tools
             ./home-manager/hosts/LFX001.nix
             {
               home = {
