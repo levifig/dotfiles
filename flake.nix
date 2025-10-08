@@ -74,14 +74,17 @@
       homeConfigurations = let
         # Package overrides for all configurations
         packageOverrides = final: prev: {
-          # Override dulwich to skip failing GPG tests
-          python3Packages = prev.python3Packages.override {
-            overrides = self: super: {
-              dulwich = super.dulwich.overridePythonAttrs (old: {
+          # Override python3 to include dulwich without tests
+          python3 = prev.python3.override {
+            packageOverrides = pyfinal: pyprev: {
+              dulwich = pyprev.dulwich.overridePythonAttrs (old: {
                 doCheck = false;  # Skip tests due to GPG signing failures in sandbox
               });
             };
           };
+
+          # Also update python3Packages to use the overridden python3
+          python3Packages = final.python3.pkgs;
         };
       in {
         # Default configuration (auto-detected)
