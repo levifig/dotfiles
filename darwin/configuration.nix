@@ -4,6 +4,11 @@
   # Nix-Darwin configuration for macOS
   # This replaces Homebrew for system-level package management
 
+  imports = [
+    ./modules/homebrew.nix
+    ./modules/dock.nix
+  ];
+
   # System packages (formulae equivalent)
   environment.systemPackages = with pkgs; [
     # Core utilities (some of these may already be in home-manager)
@@ -13,48 +18,7 @@
     wget
   ];
 
-  # Homebrew integration for casks and formulae not in nixpkgs
-  homebrew = {
-    enable = true;
-
-    # Automatically run brew update/upgrade/cleanup
-    onActivation = {
-      autoUpdate = true;
-      upgrade = true;
-      cleanup = "zap";
-    };
-
-    # Taps
-    taps = [
-      "dagger/tap"
-      "dracula/install"
-      "felixkratz/formulae"
-      "hashicorp/tap"
-      "jack ielii/tap"
-      "koekeishiya/formulae"
-      "nikitabobko/tap"
-      "sst/tap"
-    ];
-
-    # Casks (GUI applications)
-    casks = [
-      "1password"
-      "1password-cli"
-      "aerospace"
-      "alacritty"
-      "alfred"
-      "arc"
-      "aws-vault"
-      "beekeeper-studio"
-      "docker"
-      # Add more casks as needed
-    ];
-
-    # Mas App Store apps
-    masApps = {
-      # "App Name" = app_id;
-    };
-  };
+  # Homebrew configuration moved to ./modules/homebrew.nix
 
   # Nix settings
   nix = {
@@ -64,11 +28,13 @@
       experimental-features = [ "nix-command" "flakes" ];
       trusted-users = [ "root" "@admin" ];
 
-      # Optimizations
-      auto-optimise-store = true;
+      # Build optimizations
       max-jobs = "auto";
       cores = 0;  # Use all available cores
     };
+
+    # Store optimisation
+    optimise.automatic = true;
 
     # Garbage collection
     gc = {
@@ -80,6 +46,9 @@
 
   # macOS system settings
   system = {
+    # Primary user for system defaults
+    primaryUser = "levifig";
+
     defaults = {
       # Dock settings
       dock = {
@@ -138,7 +107,7 @@
 
   # Services
   services = {
-    nix-daemon.enable = true;
+    # nix-daemon is now managed automatically by nix-darwin when nix.enable = true
 
     # Sketchybar (if using)
     # sketchybar.enable = true;
