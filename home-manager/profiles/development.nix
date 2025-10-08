@@ -33,13 +33,15 @@
     python313Packages.virtualenv
     poetry
     pipenv
+    uv                       # Fast Python package installer (Rust-based pip replacement)
 
-    # Node.js
+    # Node.js & JavaScript runtimes
     nodejs_24
     nodePackages.pnpm
     nodePackages.yarn
     nodePackages.typescript
     nodePackages.eslint
+    bun                      # Fast JavaScript runtime and package manager
 
     # Go
     go
@@ -53,7 +55,7 @@
     clippy
 
     # Nix
-    nil  # Nix language server
+    nixd  # Nix language server
 
     # Containers
     docker-client

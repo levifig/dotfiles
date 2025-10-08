@@ -11,24 +11,43 @@ Guide for managing global tools installed via npm, pip, gem, cargo, etc.
 
 ## Installation Strategies
 
-### 1. Available in nixpkgs (Preferred)
+### 1. Available in nixpkgs (Preferred) ✅
 
-Add to appropriate profile:
+**Always check nixpkgs first!** Many popular CLI tools are already packaged:
+
+```bash
+# Search for the tool
+nix search nixpkgs bun
+nix search nixpkgs uv
+nix search nixpkgs claude-code
+
+# Check specific package managers
+nix search nixpkgs nodePackages.
+nix search nixpkgs python3Packages.
+```
+
+If found, add to `home-manager/profiles/development.nix`:
 
 ```nix
-# home-manager/profiles/development.nix
 home.packages = with pkgs; [
-  nodePackages.typescript
+  # Language runtimes/package managers
+  bun                      # Fast JS runtime (better than npm install -g bun)
+  uv                       # Fast Python installer (better than pip install uv)
+
+  # Node packages
+  nodePackages.typescript  # Better than npm install -g typescript
   nodePackages.prettier
+
+  # Python packages
   python3Packages.httpie
 ];
 ```
 
-**Check availability:**
-```bash
-nix search nixpkgs typescript
-nix search nixpkgs python3Packages.httpie
-```
+**Why prefer nixpkgs:**
+- ✅ Reproducible across machines
+- ✅ Rollback support
+- ✅ No version conflicts
+- ✅ Automatically updated with `nix flake update`
 
 ### 2. Not in nixpkgs → Use language package managers
 
@@ -79,12 +98,32 @@ The `cli-tools.nix` profile configures:
 2. **PATH additions**: Adds all language package manager bin directories
 3. **Helper functions**: `npm-list`, `pip-list-user`, `gem-list-user`
 
-## Example: Installing AI CLI Tools
+## Quick Reference: Common CLI Tools
+
+### Package Manager Tools (✅ In nixpkgs - add to Nix config)
+
+```nix
+home.packages = with pkgs; [
+  # JavaScript/TypeScript
+  bun                    # All-in-one JavaScript runtime
+  deno                   # Secure JavaScript/TypeScript runtime
+
+  # Python
+  uv                     # Ultra-fast Python package installer
+  poetry                 # Python dependency management
+  pipenv                 # Python virtual environments
+
+  # Others
+  cargo                  # Rust package manager (comes with rustc)
+];
+```
+
+### AI/LLM CLI Tools (❌ Not in nixpkgs - use language package managers)
 
 ```bash
 # After applying home-manager configuration with cli-tools profile
 
-# Claude Code (if not in nixpkgs)
+# Claude Code (Anthropic)
 npm install -g @anthropics/claude-code
 
 # OpenAI Codex
@@ -95,6 +134,9 @@ pip install --user google-generativeai
 
 # Anthropic SDK
 pip install --user anthropic
+
+# GitHub Copilot CLI
+npm install -g @githubnext/github-copilot-cli
 ```
 
 ## Managing Updates
