@@ -105,7 +105,6 @@
 
     # Utilities
     yq-go
-    jsonnet
     cue
     dhall
     vendir
