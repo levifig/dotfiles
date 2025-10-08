@@ -37,17 +37,12 @@ RUBY_GEMS=(
 # =============================================================================
 # Bun Global Packages
 # =============================================================================
-# Note: Most AI CLI tools are not npm/bun packages. Check their official docs!
 BUN_PACKAGES=(
-  # Examples:
-  # "some-real-package"
-
-  # AI Tools - Check official installation methods:
-  # - Claude Code: Not yet public as npm package
-  # - OpenCode: https://github.com/OpenCode-ai/OpenCode
-  # - Gemini CLI: pip install google-generativeai (Python, not npm)
-  # - Codex: OpenAI Codex API (not a CLI tool)
-  # - Codeium: https://codeium.com/download (IDE extension, not npm)
+  "opencode-ai"
+  "@anthropic-ai/claude-code"
+  "@openai/codex"
+  "@google/gemini-cli"
+  "@sourcegraph/amp"
 )
 
 # =============================================================================
@@ -109,12 +104,9 @@ install_bun() {
 
   echo -e "${BLUE}Installing Bun global packages...${NC}"
   for package in "${BUN_PACKAGES[@]}"; do
-    if [[ $package == \#* ]] || [[ -z "$package" ]]; then continue; fi  # Skip comments/empty
+    if [[ $package == \#* ]]; then continue; fi  # Skip comments
     echo -e "  ${GREEN}→${NC} $package"
-    if ! bun install -g "$package" 2>&1; then
-      echo -e "  ${RED}✗${NC} Failed to install: $package"
-      echo -e "  ${YELLOW}Note: Verify package name at https://www.npmjs.com${NC}"
-    fi
+    bun install -g "$package"
   done
 }
 
