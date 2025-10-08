@@ -8,6 +8,9 @@
     # Include the results of the hardware scan
     ./hardware-configuration.nix
 
+    # Declarative disk configuration
+    ./disk-config.nix
+
     # Include common NixOS modules
     ../../modules/common.nix
   ];
@@ -118,6 +121,31 @@
     # Power management
     tlp.enable = true;
     power-profiles-daemon.enable = false;  # Conflicts with TLP
+
+    # BTRFS maintenance
+    btrfs.autoScrub = {
+      enable = true;
+      interval = "weekly";
+      fileSystems = [ "/" ];
+    };
+  };
+
+  # BTRFS balance service (monthly)
+  systemd.services.btrfs-balance = {
+    description = "Balance BTRFS filesystem";
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.btrfs-progs}/bin/btrfs balance start -dusage=50 -musage=50 /";
+    };
+  };
+
+  systemd.timers.btrfs-balance = {
+    description = "Monthly BTRFS balance";
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "monthly";
+      Persistent = true;
+    };
   };
 
   # Virtualisation
