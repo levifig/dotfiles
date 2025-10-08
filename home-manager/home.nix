@@ -117,9 +117,6 @@
 
   # Import core modules
   imports = [
-    ../user-info/module.nix
-    # Note: Import actual user-info in host config (see hosts/LFX001.nix)
-    # user-info/personal.nix is gitignored - each host imports its own
     ./modules/core/git.nix
     ./modules/shell/zsh.nix
     ./modules/shell/bash.nix

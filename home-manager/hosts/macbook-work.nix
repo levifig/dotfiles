@@ -5,10 +5,15 @@
   home.username = "levifig";
   home.homeDirectory = "/Users/levifig";
 
-  # Override user info for work (optional - can also use git includes below)
-  # userInfo.email = "levi@work.com";
-  # userInfo.fullName = "Levi Figueira";
-  # userInfo.gitSigningKey = "~/.ssh/work_id_ed25519.pub";
+  # ============================================
+  # 🔧 CUSTOMIZE: Your Work Git Identity
+  # ============================================
+  programs.git = {
+    userName = "Levi Figueira";
+    userEmail = "levi@work.com";  # Work email
+    signing.key = "~/.ssh/work_id_ed25519.pub";  # Work SSH key
+  };
+  # ============================================
 
   # Work-specific packages
   home.packages = with pkgs; [
