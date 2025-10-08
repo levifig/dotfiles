@@ -84,6 +84,13 @@
                   then "/Users/${user}"
                   else "/home/${user}";
               };
+
+              # Disable manual generation to avoid builtins.toFile warnings
+              manual = {
+                html.enable = false;
+                json.enable = false;
+                manpages.enable = false;
+              };
             }
           ];
         };
@@ -101,6 +108,13 @@
               home = {
                 username = user;
                 homeDirectory = "/Users/${user}";
+              };
+
+              # Disable manual generation to avoid builtins.toFile warnings
+              manual = {
+                html.enable = false;
+                json.enable = false;
+                manpages.enable = false;
               };
             }
           ];
@@ -135,6 +149,13 @@
                 username = user;
                 homeDirectory = "/Users/${user}";
               };
+
+              # Disable manual generation to avoid builtins.toFile warnings
+              manual = {
+                html.enable = false;
+                json.enable = false;
+                manpages.enable = false;
+              };
             }
           ];
         };
@@ -152,6 +173,13 @@
               home = {
                 username = user;
                 homeDirectory = "/Users/${user}";
+              };
+
+              # Disable manual generation to avoid builtins.toFile warnings
+              manual = {
+                html.enable = false;
+                json.enable = false;
+                manpages.enable = false;
               };
             }
           ];
@@ -171,6 +199,13 @@
                 username = user;
                 homeDirectory = "/home/${user}";
               };
+
+              # Disable manual generation to avoid builtins.toFile warnings
+              manual = {
+                html.enable = false;
+                json.enable = false;
+                manpages.enable = false;
+              };
             }
           ];
         };
@@ -186,6 +221,13 @@
               home = {
                 username = user;
                 homeDirectory = "/home/${user}";
+              };
+
+              # Disable manual generation to avoid builtins.toFile warnings
+              manual = {
+                html.enable = false;
+                json.enable = false;
+                manpages.enable = false;
               };
             }
           ];
