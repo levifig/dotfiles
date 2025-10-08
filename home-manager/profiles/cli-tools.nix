@@ -1,5 +1,10 @@
 { config, pkgs, lib, ... }:
 
+let
+  # Dynamically determine Ruby version from the package
+  # Ruby's version attribute is a set with majMin (e.g., "3.4")
+  rubyMajorMinor = pkgs.ruby.version.majMin or "3.4";
+in
 {
   # CLI tools installed via language-specific package managers
   # These are managed outside of Nix but with Nix-provided runtimes
@@ -20,10 +25,10 @@
 
   # Add language package manager prefixes to PATH
   home.sessionPath = [
-    "${config.home.homeDirectory}/.npm-global/bin"  # npm global packages
-    "${config.home.homeDirectory}/.local/bin"       # pip --user packages
-    "${config.home.homeDirectory}/.cargo/bin"       # cargo install
-    "${config.home.homeDirectory}/.gem/ruby/3.4.0/bin"  # gem install --user-install
+    "${config.home.homeDirectory}/.npm-global/bin"                 # npm global packages
+    "${config.home.homeDirectory}/.local/bin"                      # pip --user packages
+    "${config.home.homeDirectory}/.cargo/bin"                      # cargo install
+    "${config.home.homeDirectory}/.gem/ruby/${rubyMajorMinor}.0/bin"  # gem install --user-install (dynamic version)
   ];
 
   # Create npm prefix directory
