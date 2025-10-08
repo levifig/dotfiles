@@ -23,6 +23,9 @@ secrets/
 .env
 .env.*
 
+# Note: .fonts/private is a git submodule pointing to private repo
+# The submodule reference must be tracked, but the actual fonts are restricted
+
 # Temporary files (unlikely, but just in case)
 *.tmp
 *.bak

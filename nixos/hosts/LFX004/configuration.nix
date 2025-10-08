@@ -73,14 +73,18 @@
     # X11/Desktop
     xserver = {
       enable = true;
-      displayManager.gdm.enable = true;  # Or lightdm
-      desktopManager.gnome.enable = true;  # Or none for WM-only
-      # windowManager.i3.enable = true;  # Uncomment if using i3
 
       # Keyboard layout
       xkb.layout = "us";
       xkb.variant = "";
     };
+
+    # Display Manager
+    displayManager.gdm.enable = true;  # Or lightdm
+
+    # Desktop Manager
+    desktopManager.gnome.enable = true;  # Or none for WM-only
+    # windowManager.i3.enable = true;  # Uncomment if using i3
 
     # Sound
     pipewire = {
@@ -93,12 +97,14 @@
     # SSH
     openssh.enable = true;
 
-    # Docker
-    docker.enable = true;
-
     # Power management
     tlp.enable = true;
     power-profiles-daemon.enable = false;  # Conflicts with TLP
+  };
+
+  # Virtualisation
+  virtualisation = {
+    docker.enable = true;
   };
 
   # Hardware
@@ -107,10 +113,8 @@
     bluetooth.enable = true;
     bluetooth.powerOnBoot = true;
 
-    # Enable OpenGL
-    opengl.enable = true;
-    opengl.driSupport = true;
-    opengl.driSupport32Bit = true;
+    # Enable graphics
+    graphics.enable = true;
   };
 
   # Security
@@ -123,11 +127,13 @@
   # Fonts
   fonts.packages = with pkgs; [
     noto-fonts
-    noto-fonts-cjk
+    noto-fonts-cjk-sans
     noto-fonts-emoji
     liberation_ttf
     fira-code
     fira-code-symbols
-    (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" "Meslo" ]; })
+    nerd-fonts.fira-code
+    nerd-fonts.droid-sans-mono
+    nerd-fonts.meslo-lg
   ];
 }
