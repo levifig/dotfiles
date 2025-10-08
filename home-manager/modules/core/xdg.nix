@@ -17,6 +17,7 @@
     XDG_PUBLICSHARE_DIR = "${config.home.homeDirectory}/Public";
     XDG_VIDEOS_DIR = "${config.home.homeDirectory}/Movies";  # macOS uses "Movies"
     XDG_BIN_HOME = "${config.home.homeDirectory}/.local/bin";
+    XDG_BIN_DIR = "${config.home.homeDirectory}/.local/bin";  # Alias for XDG_BIN_HOME
 
     # Language/Tool-specific XDG-compliant paths
     CARGO_HOME = "${config.xdg.dataHome}/cargo";
