@@ -1,10 +1,15 @@
 {
   description = "Levi's Nix + Home Manager Configuration";
 
-  # Enable git submodules
+  # Binary cache configuration
   nixConfig = {
-    extra-substituters = [];
-    extra-trusted-public-keys = [];
+    # Uncomment to enable nix-community cache for faster builds
+    # extra-substituters = [
+    #   "https://nix-community.cachix.org"
+    # ];
+    # extra-trusted-public-keys = [
+    #   "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    # ];
   };
 
   inputs = {
