@@ -22,3 +22,6 @@
 [submodule "zsh/pure"]
 	path = zsh/pure
 	url = git@github.com:sindresorhus/pure
+[submodule ".fonts/private"]
+	path = .fonts/private
+	url = git@github.com:levifig/fonts.git
