@@ -23,12 +23,6 @@ secrets/
 .env
 .env.*
 
-# User Information (keep personal data private)
-# Only .example files are committed - actual user data stays out of git
-user-info/*.nix
-!user-info/*.nix.example
-!user-info/module.nix
-
 # Note: .fonts/private is a git submodule pointing to private repo
 # The submodule reference must be tracked, but the actual fonts are restricted
 

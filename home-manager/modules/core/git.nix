@@ -4,12 +4,13 @@
   programs.git = {
     enable = true;
 
-    # User info from centralized configuration
-    userName = lib.mkDefault config.userInfo.fullName;
-    userEmail = lib.mkDefault config.userInfo.email;
+    # User info - Override in host-specific configs
+    # Default values provided for reference
+    userName = lib.mkDefault "Your Name";
+    userEmail = lib.mkDefault "you@example.com";
 
     signing = {
-      key = lib.mkDefault config.userInfo.gitSigningKey;
+      key = lib.mkDefault "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAA...";
       signByDefault = lib.mkDefault true;
     };
 

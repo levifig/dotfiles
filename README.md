@@ -358,37 +358,38 @@ nix develop ~/.dotfiles#go
 
 ## User Information
 
-User details are centralized in the `userInfo` module and configured per-host:
+Configure your git identity in your host-specific configuration:
 
-### Setup Your User Info
+### Setup Your Git Identity
 
-Edit your host configuration file and add a `userInfo` block:
+Edit your host configuration file:
 
 ```nix
 # home-manager/hosts/your-machine.nix
 {
-  userInfo = {
-    fullName = "Your Name";
-    email = "you@example.com";
-    githubUser = "yourusername";
-    gitSigningKey = "ssh-ed25519 AAAA...";
+  programs.git = {
+    userName = "Your Name";
+    userEmail = "you@example.com";
+    signing.key = "ssh-ed25519 AAAA...";  # Your SSH public key
   };
 }
 ```
 
+Host files have clear `🔧 CUSTOMIZE` markers to help you find what to edit.
+
 ### Multiple Identities
 
-**Per-Host:** Different machines can have different user info
+**Different per machine:**
 
 ```nix
-# Personal machine
-userInfo.email = "me@example.com";
+# Personal machine (hosts/macbook-personal.nix)
+programs.git.userEmail = "me@example.com";
 
-# Work machine
-userInfo.email = "work@company.com";
+# Work machine (hosts/macbook-work.nix)
+programs.git.userEmail = "work@company.com";
 ```
 
-**Per-Directory:** Use git conditional includes for same machine
+**Directory-based on same machine:**
 
 ```nix
 programs.git.includes = [
@@ -399,7 +400,56 @@ programs.git.includes = [
 ];
 ```
 
-See [user-info/README.md](user-info/README.md) for detailed documentation.
+This is the standard Home-Manager pattern - simple and conventional.
+
+## Forking This Repository
+
+Want to use these dotfiles as a starting point? Here's how:
+
+### Quick Start
+
+1. **Fork this repository** on GitHub
+2. **Clone your fork:**
+   ```bash
+   git clone https://github.com/YOUR-USERNAME/dotfiles.git ~/.dotfiles
+   cd ~/.dotfiles
+   ```
+
+3. **Customize your identity** - Look for `🔧 CUSTOMIZE` markers in host files:
+   ```bash
+   # Edit your host file
+   nvim home-manager/hosts/your-machine.nix
+
+   # Update these fields:
+   programs.git = {
+     userName = "Your Name";      # ← Change this
+     userEmail = "you@email.com"; # ← Change this
+     signing.key = "ssh-ed25519 AAAA..."; # ← Change this
+   };
+   ```
+
+4. **Apply configuration:**
+   ```bash
+   nix run .#switch
+   ```
+
+### What to Customize
+
+The information in this repo (name, email, SSH public key) is **already public** on GitHub - it's not sensitive data. But you'll want to change it to yours:
+
+- ✅ Git username/email (in host files)
+- ✅ SSH public keys (it's called "public" for a reason!)
+- ✅ GitHub usernames
+- ✅ Machine-specific settings
+
+### Security Note
+
+**Nothing sensitive is in this repo:**
+- SSH **private** keys are in 1Password (never in git)
+- API tokens should use 1Password/environment variables
+- Passwords are never committed
+
+The data in host files is the same information already on every git commit you make.
 
 ## Customization
 

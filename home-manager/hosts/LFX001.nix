@@ -11,14 +11,16 @@
     ../platform/darwin-base.nix
   ];
 
-  # User information for this machine
-  # These override the defaults from user-info/module.nix
-  userInfo = {
-    fullName = "Levi Figueira";
-    email = "me@levifig.com";
-    githubUser = "levifig";
-    gitSigningKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBT8O1BCE6d5mjzD+k4VLeCyM5hjZ2kWnAr+p7XlMsmy";
+  # ============================================
+  # 🔧 CUSTOMIZE: Your Git Identity
+  # If you forked this repo, update these values
+  # ============================================
+  programs.git = {
+    userName = "Levi Figueira";
+    userEmail = "me@levifig.com";
+    signing.key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBT8O1BCE6d5mjzD+k4VLeCyM5hjZ2kWnAr+p7XlMsmy";
   };
+  # ============================================
 
   # Machine-specific packages
   home.packages = with pkgs; [
