@@ -17,10 +17,12 @@
   # boot.kernelModules = [ ];
   # boot.extraModulePackages = [ ];
 
-  # fileSystems."/" = {
-  #   device = "/dev/disk/by-uuid/...";
-  #   fsType = "ext4";
-  # };
+  # Placeholder filesystem configuration for flake validation
+  # Replace with actual configuration during installation
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/placeholder";
+    fsType = "ext4";
+  };
 
   # swapDevices = [ ];
 

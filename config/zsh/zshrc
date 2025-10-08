@@ -52,6 +52,7 @@ export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship/starship.toml"
 export BAT_CONFIG_PATH="$XDG_CONFIG_HOME/bat/bat.conf"
 export CLAUDE_CONFIG_DIR="$XDG_CONFIG_HOME/claude/"
 export SERENA_MANAGED_DIR_IN_HOME="$XDG_CONFIG_HOME/serena"
+export ZCACHEDIR="$XDG_CACHE_HOME/zsh"
 
 ##
 ## env keys
@@ -115,13 +116,16 @@ bindkey '^[[H' beginning-of-line
 bindkey '^[[F' end-of-line
 bindkey '^[[3~' delete-char
 
-## zsh plugins via homebrew
-if type brew &>/dev/null; then
+## zsh plugins via homebrew (for non-Nix systems)
+if type brew &>/dev/null && [[ ! -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]; then
   FPATH="$BREW_PREFIX/share/zsh-completions:$FPATH"
   FPATH="$BREW_PREFIX/share/zsh/site-functions:$FPATH"
-  source $BREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-  source $BREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  [[ -f "$BREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && \
+    source "$BREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+  [[ -f "$BREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && \
+    source "$BREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 fi
+# Note: On Nix systems, plugins are managed by home-manager in modules/shell/zsh.nix
 
 
 ##
@@ -133,7 +137,7 @@ for dir in functions aliases; do
 done
 
 # completion cache optimization (must run before any compdef calls)
-_update_zcomp "$zcachedir"
+_update_zcomp "$ZCACHEDIR"
 unfunction _update_zcomp
 
 # Cached completions for faster startup
