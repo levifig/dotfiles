@@ -358,49 +358,48 @@ nix develop ~/.dotfiles#go
 
 ## User Information
 
-User details are centralized in the `userInfo` module for easy configuration:
+User details are centralized in the `userInfo` module and configured per-host:
+
+### Setup Your User Info
+
+Edit your host configuration file and add a `userInfo` block:
 
 ```nix
-# home-manager/modules/user-info.nix
-userInfo = {
-  fullName = "Levi Figueira";           # Git commits, etc.
-  email = "me@levifig.com";              # Primary email
-  githubUser = "levifig";                # GitHub username
-  gitSigningKey = "ssh-ed25519 AAAA..."; # SSH signing key
-};
-```
-
-### Override Per Host
-
-Override user info in host-specific configs:
-
-```nix
-# home-manager/hosts/macbook-work.nix
+# home-manager/hosts/your-machine.nix
 {
   userInfo = {
-    email = "levi@work.com";
-    gitSigningKey = "~/.ssh/work_id_ed25519.pub";
+    fullName = "Your Name";
+    email = "you@example.com";
+    githubUser = "yourusername";
+    gitSigningKey = "ssh-ed25519 AAAA...";
   };
 }
 ```
 
-### Conditional Git Config
+### Multiple Identities
 
-Use git includes for directory-specific settings:
+**Per-Host:** Different machines can have different user info
+
+```nix
+# Personal machine
+userInfo.email = "me@example.com";
+
+# Work machine
+userInfo.email = "work@company.com";
+```
+
+**Per-Directory:** Use git conditional includes for same machine
 
 ```nix
 programs.git.includes = [
   {
     condition = "gitdir:~/Work/";
-    contents = {
-      user.email = "levi@work.com";
-      user.signingKey = "~/.ssh/work_id_ed25519.pub";
-    };
+    contents.user.email = "work@company.com";
   }
 ];
 ```
 
-All modules (git, ssh, etc.) automatically reference `config.userInfo`.
+See [user-info/README.md](user-info/README.md) for detailed documentation.
 
 ## Customization
 
