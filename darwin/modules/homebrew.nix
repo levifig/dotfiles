@@ -29,25 +29,32 @@
     # Homebrew formulas (CLI tools)
     # Note: Prefer Nix packages when available, use Homebrew for macOS-specific tools
     brews = [
-      # Platform/Infrastructure tools not in Nix or better via Homebrew
+      # Platform/Infrastructure tools
+      "ansible"
       "argocd"
+      "awscli"
       "helm"
       "k9s"
       "kubernetes-cli"
       "krew"
       "lazydocker"
       "talosctl"
+      "terraform"
       "velero"
+
+      # Shell/System utilities
+      "atuin"  # Shell history sync
+      "cowsay"
+      "fortune"
+      "mise"   # Project-specific version management
+      "zoxide"  # Smart cd
 
       # macOS-specific tools
       "mas"  # Mac App Store CLI
       "terminal-notifier"
 
-      # Development tools (if not in Nix)
-      # Commented out - prefer Nix versions when available
-      # "awscli"
-      # "terraform"
-      # "go"
+      # Database
+      "postgresql@14"  # Development database (brew services start postgresql@14)
     ];
 
     # Homebrew Casks (GUI applications)
@@ -58,21 +65,17 @@
 
       # Window Management
       "aerospace"  # Current window manager
-      # "hammerspoon"  # Alternative window manager
-      # "rectangle-pro"  # Alternative window manager
 
-      # Terminal & Development
+      # Terminal Emulators
       "alacritty"
-      "ghostty"
-      # "iterm2"
-      # "wezterm@nightly"
+      "ghostty"  # Primary terminal
 
-      # Browsers
+      # Browsers (multiple for testing/preferences)
       "arc"
       "brave-browser"
-      # "firefox@developer-edition"
-      # "librewolf"
-      # "zen-browser"
+      "firefox@beta"
+      "zen-browser"
+      # Safari is included with macOS
 
       # Productivity & Utilities
       "alfred"
@@ -107,7 +110,8 @@
 
       # Design & Creative
       "figma"
-      # "blender"
+      # "blender"  # 3D modeling - install when needed
+      # "godot"    # Game engine - install when needed
       # "obs"
 
       # Media & Entertainment
@@ -115,10 +119,13 @@
       # "spotify"
       # "vlc"
 
-      # Virtualization & Testing
-      "utm"
-      # "vagrant"
-      # "vmware-fusion"
+      # Virtualization & Container Tools
+      "colima"        # Container runtime
+      "orbstack"      # Docker/Linux VMs
+      "utm"           # Virtual machines
+      "vagrant"       # VM orchestration
+      # "vmware-fusion"     # Commercial - install manually if needed
+      # "parallels-desktop" # Commercial - install manually if needed
 
       # File Management & Sync
       "google-drive"
