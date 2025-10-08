@@ -2,6 +2,27 @@
 
 > Portable, reproducible development environment configuration using Nix and Home Manager
 
+## Quick Start
+
+```bash
+# Install Nix with Determinate installer (enables flakes automatically)
+curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
+
+# Clone repository
+git clone --recurse-submodules https://github.com/levifig/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
+
+# Verify configuration
+nix flake check
+
+# Apply configuration (replace LFX001 with your machine name)
+home-manager switch --flake .#levifig@LFX001 --impure
+```
+
+For headless systems (no fonts): `home-manager switch --flake .#levifig@linux-server`
+
+---
+
 ## Features
 
 - 🔄 **Reproducible** - Exact same environment on any machine
@@ -11,27 +32,25 @@
 - 📦 **Self-contained** - All dependencies managed by Nix
 - ⚡ **Fast setup** - One command to configure a new machine
 
-## Quick Start
+## Installation
 
 ### Prerequisites
 
-1. Install Nix:
+Install Nix using the **Determinate Nix Installer** (recommended):
+
 ```bash
-# macOS
-sh <(curl -L https://nixos.org/nix/install)
-
-# Linux
-sh <(curl -L https://nixos.org/nix/install) --daemon
+curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 ```
 
-2. Enable flakes (add to `~/.config/nix/nix.conf`):
-```
-experimental-features = nix-command flakes
-```
+**Why Determinate installer?**
+- ✅ Enables flakes automatically (no manual config needed)
+- ✅ Better uninstall support
+- ✅ Optimized defaults for modern Nix usage
+- ✅ Works on macOS (Intel & Apple Silicon) and Linux
 
-### Installation
+After installation, restart your shell or run: `. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh`
 
-#### Step-by-Step Setup
+### Step-by-Step Setup
 
 1. **Clone the repository:**
 ```bash
@@ -50,12 +69,7 @@ nix flake check
 nix flake show
 ```
 
-3. **Install Home Manager:**
-```bash
-nix run home-manager/master -- init --switch
-```
-
-4. **Apply your configuration:**
+3. **Apply your configuration:**
 ```bash
 # For GUI workstations (includes fonts)
 home-manager switch --flake ~/.dotfiles#levifig@LFX001 --impure
@@ -79,10 +93,9 @@ cd ~/.dotfiles && nix run .#bootstrap
 ```
 
 The bootstrap script will:
-- Install Nix with flakes enabled
+- Install Nix using Determinate installer (flakes enabled automatically)
 - Clone this repository to `~/.dotfiles`
 - Backup existing configurations
-- Install Home Manager
 - Apply your configuration automatically
 
 ### Usage
@@ -643,12 +656,13 @@ home-manager switch --flake .#levifig@LFX001 --impure
 ## Troubleshooting
 
 ### Nix command not found
+After installing Nix, restart your shell or run:
 ```bash
 . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 ```
 
 ### Flakes not enabled
-Add to `~/.config/nix/nix.conf`:
+If using the Determinate Nix installer, flakes are enabled by default. For manual installations, add to `~/.config/nix/nix.conf`:
 ```
 experimental-features = nix-command flakes
 ```
