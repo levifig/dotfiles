@@ -100,9 +100,7 @@
     EDITOR = lib.mkForce "nvim";  # Override server.nix vim setting
     VISUAL = lib.mkForce "nvim";
 
-    # Language-specific
-    GOPATH = "${config.home.homeDirectory}/go";
-    CARGO_HOME = "${config.home.homeDirectory}/.cargo";
+    # Note: Language-specific XDG paths (GOPATH, CARGO_HOME, etc.) are set in modules/core/xdg.nix
 
     # Cloud
     AWS_PAGER = "";  # Disable AWS CLI pager

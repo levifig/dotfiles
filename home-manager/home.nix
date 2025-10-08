@@ -118,6 +118,7 @@
   # Import core modules
   imports = [
     ./modules/core/git.nix
+    ./modules/core/xdg.nix
     ./modules/shell/zsh.nix
     ./modules/shell/bash.nix
     ./modules/shell/starship.nix
