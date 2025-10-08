@@ -16,6 +16,10 @@
 
     # macOS specific paths
     XML_CATALOG_FILES = "/usr/local/etc/xml/catalog";
+
+    # Homebrew prefix (for compatibility with existing scripts)
+    BREW_PREFIX = "/opt/homebrew";  # Apple Silicon default
+    RUSTUP_PREFIX = "/opt/homebrew/opt/rustup";
   };
 
   # macOS-specific shell aliases
