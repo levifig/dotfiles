@@ -35,7 +35,7 @@
 
       # Database with service management
       # Using Homebrew for better launchd integration
-      "postgresql@14"  # Development database (brew services start postgresql@14)
+      "postgresql@18"  # Development database (brew services start postgresql@18)
     ];
 
     # Homebrew Casks (GUI applications)
