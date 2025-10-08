@@ -73,9 +73,9 @@
       # Home Manager Configurations
       homeConfigurations = let
         # Package overrides for all configurations
-        packageOverrides = pkgs: {
+        packageOverrides = final: prev: {
           # Override dulwich to skip failing GPG tests
-          python3Packages = pkgs.python3Packages.override {
+          python3Packages = prev.python3Packages.override {
             overrides = self: super: {
               dulwich = super.dulwich.overridePythonAttrs (old: {
                 doCheck = false;  # Skip tests due to GPG signing failures in sandbox
