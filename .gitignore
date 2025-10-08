@@ -26,6 +26,9 @@ secrets/
 # Note: .fonts/private is a git submodule pointing to private repo
 # The submodule reference must be tracked, but the actual fonts are restricted
 
+# Shell history files (should never be committed - may contain secrets)
+*_history
+
 # Temporary files (unlikely, but just in case)
 *.tmp
 *.bak
