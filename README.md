@@ -19,8 +19,6 @@ nix flake check
 nix run home-manager/master -- switch --flake .#levifig@LFX001 --impure
 ```
 
-For headless systems (no fonts): `nix run home-manager/master -- switch --flake .#levifig@linux-server`
-
 After the first run, `home-manager` command will be available in your PATH.
 
 ---
@@ -73,11 +71,8 @@ nix flake show
 
 3. **Apply your configuration:**
 ```bash
-# For GUI workstations (includes fonts)
+# Apply configuration (replace LFX001 with LFX004 for Linux systems)
 nix run home-manager/master -- switch --flake ~/.dotfiles#levifig@LFX001 --impure
-
-# For headless systems (no fonts needed)
-nix run home-manager/master -- switch --flake ~/.dotfiles#levifig@linux-server
 ```
 
 **Note:** The `--impure` flag is required for configurations that use the private fonts submodule (workstation profiles).
@@ -108,11 +103,11 @@ The bootstrap script will:
 
 **Apply Configuration:**
 ```bash
-# GUI workstation (with fonts)
+# macOS workstation
 home-manager switch --flake ~/.dotfiles#levifig@LFX001 --impure
 
-# Headless workstation (no fonts)
-home-manager switch --flake ~/.dotfiles#levifig@linux-server
+# Linux laptop
+home-manager switch --flake ~/.dotfiles#levifig@LFX004 --impure
 ```
 
 **Update All Packages:**
@@ -225,9 +220,7 @@ home-manager packages
 │   │   └── platform.nix
 │   ├── hosts/               # Machine-specific configs
 │   │   ├── LFX001.nix       # Primary macOS machine
-│   │   ├── LFX004.nix       # Linux laptop
-│   │   ├── macbook-work.nix
-│   │   └── linux-server.nix
+│   │   └── LFX004.nix       # Linux laptop
 │   └── modules/             # Reusable components
 │       ├── core/           # Essential tools (git, ssh)
 │       ├── fonts/          # Font management
@@ -351,12 +344,57 @@ All scripts auto-detect your platform (darwin/nixos/home-manager) and configurat
 | Machine | Description | Platform | Command |
 |---------|-------------|----------|---------|
 | `levifig` | Auto-detected based on hostname | Any | `home-manager switch --flake .` |
-| `levifig@LFX001` | Primary macOS machine (Apple Silicon) | Darwin | `home-manager switch --flake .#levifig@LFX001` |
-| `levifig@LFX004` | Linux laptop (NixOS ready) | Linux | `home-manager switch --flake .#levifig@LFX004` |
-| `levifig@macbook-work` | Work MacBook template | Darwin | `home-manager switch --flake .#levifig@macbook-work` |
-| `levifig@macbook-personal` | Personal MacBook template | Darwin | `home-manager switch --flake .#levifig@macbook-personal` |
-| `levifig@linux-desktop` | Linux desktop template | Linux | `home-manager switch --flake .#levifig@linux-desktop` |
-| `levifig@linux-server` | Minimal Linux server template | Linux | `home-manager switch --flake .#levifig@linux-server` |
+| `levifig@LFX001` | Primary macOS machine (Apple Silicon) | Darwin | `home-manager switch --flake .#levifig@LFX001 --impure` |
+| `levifig@LFX004` | Linux laptop (NixOS ready) | Linux | `home-manager switch --flake .#levifig@LFX004 --impure` |
+
+### Creating Additional Configurations
+
+To add a new machine, create a host file and add it to `flake.nix`:
+
+```nix
+# home-manager/hosts/new-machine.nix
+{ config, pkgs, lib, ... }: {
+  imports = [
+    ../platform/darwin-base.nix  # or linux-base.nix
+    ../profiles/development.nix   # Choose your profiles
+  ];
+
+  home.packages = with pkgs; [
+    # Machine-specific packages
+  ];
+
+  programs.git = {
+    userEmail = "your@email.com";
+    signing.key = "~/.ssh/keys/your-key.pub";
+  };
+}
+```
+
+Then add to `flake.nix`:
+```nix
+"${user}@new-machine" = home-manager.lib.homeManagerConfiguration {
+  pkgs = import nixpkgs-darwin {
+    system = "aarch64-darwin";  # or x86_64-linux
+    config.allowUnfree = true;
+    overlays = [ packageOverrides ];
+  };
+  modules = [
+    ./home-manager/home.nix
+    ./home-manager/hosts/new-machine.nix
+    {
+      home = {
+        username = user;
+        homeDirectory = "/Users/${user}";  # or /home/${user}
+      };
+      manual = {
+        html.enable = false;
+        json.enable = false;
+        manpages.enable = false;
+      };
+    }
+  ];
+};
+```
 
 ## Development Shells
 
@@ -399,10 +437,10 @@ Host files have clear `🔧 CUSTOMIZE` markers to help you find what to edit.
 **Different per machine:**
 
 ```nix
-# Personal machine (hosts/macbook-personal.nix)
+# Personal machine (hosts/personal-machine.nix)
 programs.git.userEmail = "me@example.com";
 
-# Work machine (hosts/macbook-work.nix)
+# Work machine (hosts/work-machine.nix)
 programs.git.userEmail = "work@company.com";
 ```
 
@@ -472,17 +510,7 @@ The data in host files is the same information already on every git commit you m
 
 ### Adding a New Machine
 
-1. Create a new host file: `home-manager/hosts/new-machine.nix`
-2. Add the configuration to `flake.nix`:
-```nix
-"levifig@new-machine" = home-manager.lib.homeManagerConfiguration {
-  modules = [
-    ./home-manager/home.nix
-    ./home-manager/platform/linux-base.nix  # or darwin-base.nix
-    ./home-manager/hosts/new-machine.nix
-  ];
-};
-```
+See the [Creating Additional Configurations](#creating-additional-configurations) section above for detailed instructions on adding new machines.
 
 ### Adding New Tools
 
