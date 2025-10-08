@@ -7,16 +7,16 @@
 
   imports = [
     ./server.nix  # Inherit all server tools
+    ./development.nix  # Development tools and language runtimes
     ../modules/shell/zsh.nix
     ../modules/editors/nvim.nix
     ../modules/terminal/tmux.nix
     ../modules/terminal/starship.nix
-    ../modules/git/config.nix
   ];
 
   home.packages = with pkgs; [
     # Upgrade to better alternatives
-    neovim      # Full neovim instead of basic vim
+    # Note: neovim is configured via modules/editors/nvim.nix
     bat         # Better cat
     eza         # Better ls
     fd          # Better find
@@ -25,75 +25,27 @@
     # Shell enhancements
     fzf
     atuin
-    direnv
     starship
+    # Note: direnv is provided by development.nix
 
     # Development tools - Version management
-    nodejs_22
-    ruby_3_4
-    python313
-    go_1_24
+    # Note: Language runtimes (node, ruby, python, go) are provided by development.nix
+    # Only include tools not in development.nix here
     bun
     uv
 
-    # Development tools - Build systems
-    cmake
-    ninja
-    meson
-    autoconf
-    automake
-    libtool
-    pkg-config
+    # Note: Build tools and language toolchains are provided by development.nix
 
-    # Development tools - Languages
-    rustc
-    cargo
-    rustfmt
-    clippy
-
-    # Container tools
+    # Container tools (basic docker, k8s/cloud tools from platform.nix)
     docker-client
     docker-compose
     lazydocker
 
-    # Kubernetes tools
-    kubectl
-    kubectx
-    kubernetes-helm
-    helmfile
-    kustomize
-    k9s
-    stern
-    argocd
+    # Note: Kubernetes, IaC, and Cloud tools are provided by platform.nix profile
+    # Note: Database tools are provided by development.nix profile
+    # Note: Git tools (gh, delta, etc.) are provided by development.nix profile
 
-    # Infrastructure as Code
-    terraform
-    terragrunt
-    tflint
-    ansible
-    ansible-lint
-
-    # Cloud CLIs
-    awscli2
-    google-cloud-sdk
-    azure-cli
-
-    # Database tools
-    postgresql
-    mariadb
-    redis
-    sqlite
-
-    # API tools
-    httpie
-    grpcurl
-
-    # Utilities
-    gh
-    delta  # git-delta
-    git-filter-repo
-    tig
-    lazygit
+    # Utilities specific to workstation-headless
     jump
     just
     tokei
@@ -152,14 +104,5 @@
     AWS_PAGER = "";  # Disable AWS CLI pager
   };
 
-  # Enable direnv for project-specific environments
-  programs.direnv = {
-    enable = true;
-    enableZshIntegration = true;
-    enableBashIntegration = true;
-    nix-direnv.enable = true;
-  };
-
-  # Enable language-specific programs
-  programs.go.enable = true;
+  # Note: direnv and language-specific programs are configured in development.nix
 }

@@ -46,10 +46,11 @@
     clip = "xclip -selection clipboard";
     paste = "xclip -selection clipboard -o";
 
-    # Package management (will vary by distro)
-    update = "sudo apt update && sudo apt upgrade";  # Debian/Ubuntu
-    # update = "sudo dnf update";  # Fedora
-    # update = "sudo pacman -Syu";  # Arch
+    # Package management (will vary by distro - can be overridden in host configs)
+    update = lib.mkDefault "sudo apt update && sudo apt upgrade";  # Debian/Ubuntu default
+    # NixOS hosts should override with: update = lib.mkForce "sudo nixos-rebuild switch --flake ~/.dotfiles";
+    # Fedora: update = lib.mkForce "sudo dnf update";
+    # Arch: update = lib.mkForce "sudo pacman -Syu";
 
     # IP addresses
     localip = "hostname -I | awk '{print $1}'";
@@ -103,7 +104,7 @@
   };
 
   # Programs with Linux-specific configuration
-  programs.zsh.initExtra = lib.mkAfter ''
+  programs.zsh.initContent = lib.mkAfter ''
     # Linux specific ZSH configuration
 
     # Add snap to PATH if it exists
@@ -149,7 +150,7 @@
   # Qt theme configuration
   qt = {
     enable = true;
-    platformTheme = "gtk";
+    platformTheme.name = "gtk";
     style.name = "adwaita-dark";
   };
 }

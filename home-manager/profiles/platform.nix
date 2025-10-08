@@ -5,7 +5,12 @@
   home.packages = with pkgs; [
     # Cross-platform packages
     # Infrastructure as Code
-    terraform
+    (terraform.withPlugins (p: with p; [
+      aws
+      google
+      azurerm
+      kubernetes
+    ]))
     terragrunt
     # terraform-docs  # Build failure in current nixpkgs
     tflint
@@ -172,7 +177,7 @@
   };
 
   # Additional Zsh configuration for platform tools
-  programs.zsh.initExtra = lib.mkAfter ''
+  programs.zsh.initContent = lib.mkAfter ''
     # Kubernetes completion
     if command -v kubectl >/dev/null 2>&1; then
       source <(kubectl completion zsh)

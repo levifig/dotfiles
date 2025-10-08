@@ -34,7 +34,7 @@
     wget
     git
     tmux
-    neovim
+    # Note: neovim is configured via modules/editors/nvim.nix
 
     # Search and file tools
     ripgrep
@@ -46,7 +46,7 @@
 
     # JSON/YAML/Data tools
     jq
-    yq
+    yq-go  # Go implementation of yq
 
     # Archive tools
     zip

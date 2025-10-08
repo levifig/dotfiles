@@ -49,7 +49,7 @@
   };
 
   # Programs with macOS-specific configuration
-  programs.zsh.initExtra = lib.mkAfter ''
+  programs.zsh.initContent = lib.mkAfter ''
     # macOS specific ZSH configuration
 
     # Add Homebrew to PATH if it exists
