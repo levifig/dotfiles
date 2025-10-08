@@ -26,7 +26,7 @@
 
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
-      trusted-users = [ "root" "@admin" ];
+      trusted-users = [ "root" "@admin" "@staff" "levifig" ];
 
       # Build optimizations
       max-jobs = "auto";
