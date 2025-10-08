@@ -1,6 +1,12 @@
 {
   description = "Levi's Nix + Home Manager Configuration";
 
+  # Enable git submodules
+  nixConfig = {
+    extra-substituters = [];
+    extra-trusted-public-keys = [];
+  };
+
   inputs = {
     # Nixpkgs
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -20,9 +26,28 @@
 
     # Flake utilities
     flake-utils.url = "github:numtide/flake-utils";
+
+    # nix-homebrew for declarative Homebrew management
+    nix-homebrew = {
+      url = "github:zhaofengli-wip/nix-homebrew";
+    };
+
+    # Homebrew tap inputs
+    homebrew-bundle = {
+      url = "github:homebrew/homebrew-bundle";
+      flake = false;
+    };
+    homebrew-core = {
+      url = "github:homebrew/homebrew-core";
+      flake = false;
+    };
+    homebrew-cask = {
+      url = "github:homebrew/homebrew-cask";
+      flake = false;
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-darwin, home-manager, darwin, flake-utils, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-darwin, home-manager, darwin, flake-utils, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, ... }@inputs:
     let
       # System types
       systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
@@ -168,6 +193,21 @@
           system = "aarch64-darwin";
           modules = [
             ./darwin/configuration.nix
+            nix-homebrew.darwinModules.nix-homebrew
+            {
+              nix-homebrew = {
+                enable = true;
+                enableRosetta = true;  # Enable for Apple Silicon Macs
+                user = user;
+                taps = {
+                  "homebrew/homebrew-core" = homebrew-core;
+                  "homebrew/homebrew-cask" = homebrew-cask;
+                  "homebrew/homebrew-bundle" = homebrew-bundle;
+                };
+                mutableTaps = false;
+                autoMigrate = true;
+              };
+            }
             home-manager.darwinModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
@@ -181,6 +221,21 @@
           system = "aarch64-darwin";
           modules = [
             ./darwin/configuration.nix
+            nix-homebrew.darwinModules.nix-homebrew
+            {
+              nix-homebrew = {
+                enable = true;
+                enableRosetta = true;  # Enable for Apple Silicon Macs
+                user = user;
+                taps = {
+                  "homebrew/homebrew-core" = homebrew-core;
+                  "homebrew/homebrew-cask" = homebrew-cask;
+                  "homebrew/homebrew-bundle" = homebrew-bundle;
+                };
+                mutableTaps = false;
+                autoMigrate = true;
+              };
+            }
             home-manager.darwinModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
@@ -259,33 +314,64 @@
 
       # Helpful apps/scripts
       apps = forAllSystems (system: {
-        # Quick switch command
+        # Build configuration without switching
+        build = {
+          type = "app";
+          program = toString (nixpkgs.legacyPackages.${system}.writeShellScript "build" ''
+            #!/usr/bin/env bash
+            cd ${./.}
+            exec ${./apps/build.sh}
+          '');
+        };
+
+        # Build and switch configuration
         switch = {
           type = "app";
           program = toString (nixpkgs.legacyPackages.${system}.writeShellScript "switch" ''
             #!/usr/bin/env bash
-            set -e
-            echo "🔄 Switching Home Manager configuration..."
-
-            # Detect hostname
-            HOST=$(hostname -s)
-            CONFIG="${user}@$HOST"
-
-            # Check if specific config exists, otherwise use default
-            if home-manager build --flake .#"$CONFIG" 2>/dev/null; then
-              echo "✅ Using configuration: $CONFIG"
-              home-manager switch --flake .#"$CONFIG"
-            else
-              echo "ℹ️  No specific config for $HOST, using default"
-              home-manager switch --flake .#"${user}"
-            fi
+            cd ${./.}
+            exec ${./apps/switch.sh}
           '');
         };
 
-        # Bootstrap installer
+        # Rollback to previous generation
+        rollback = {
+          type = "app";
+          program = toString (nixpkgs.legacyPackages.${system}.writeShellScript "rollback" ''
+            #!/usr/bin/env bash
+            cd ${./.}
+            exec ${./apps/rollback.sh}
+          '');
+        };
+
+        # Update flake inputs
+        update = {
+          type = "app";
+          program = toString (nixpkgs.legacyPackages.${system}.writeShellScript "update" ''
+            #!/usr/bin/env bash
+            cd ${./.}
+            exec ${./apps/update.sh}
+          '');
+        };
+
+        # Garbage collect old generations
+        clean = {
+          type = "app";
+          program = toString (nixpkgs.legacyPackages.${system}.writeShellScript "clean" ''
+            #!/usr/bin/env bash
+            cd ${./.}
+            exec ${./apps/clean.sh} "$@"
+          '');
+        };
+
+        # Bootstrap installer for new machines
         bootstrap = {
           type = "app";
-          program = toString ./scripts/bootstrap.sh;
+          program = toString (nixpkgs.legacyPackages.${system}.writeShellScript "bootstrap" ''
+            #!/usr/bin/env bash
+            cd ${./.}
+            exec ${./apps/bootstrap.sh} "$@"
+          '');
         };
       });
     };
