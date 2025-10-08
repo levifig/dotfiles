@@ -356,6 +356,52 @@ nix develop ~/.dotfiles#node
 nix develop ~/.dotfiles#go
 ```
 
+## User Information
+
+User details are centralized in the `userInfo` module for easy configuration:
+
+```nix
+# home-manager/modules/user-info.nix
+userInfo = {
+  fullName = "Levi Figueira";           # Git commits, etc.
+  email = "me@levifig.com";              # Primary email
+  githubUser = "levifig";                # GitHub username
+  gitSigningKey = "ssh-ed25519 AAAA..."; # SSH signing key
+};
+```
+
+### Override Per Host
+
+Override user info in host-specific configs:
+
+```nix
+# home-manager/hosts/macbook-work.nix
+{
+  userInfo = {
+    email = "levi@work.com";
+    gitSigningKey = "~/.ssh/work_id_ed25519.pub";
+  };
+}
+```
+
+### Conditional Git Config
+
+Use git includes for directory-specific settings:
+
+```nix
+programs.git.includes = [
+  {
+    condition = "gitdir:~/Work/";
+    contents = {
+      user.email = "levi@work.com";
+      user.signingKey = "~/.ssh/work_id_ed25519.pub";
+    };
+  }
+];
+```
+
+All modules (git, ssh, etc.) automatically reference `config.userInfo`.
+
 ## Customization
 
 ### Adding a New Machine

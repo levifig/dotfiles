@@ -4,12 +4,12 @@
   programs.git = {
     enable = true;
 
-    # User info will be overridden in host-specific configs
-    userName = lib.mkDefault "Levi Figueira";
-    userEmail = lib.mkDefault "me@levifig.com";
+    # User info from centralized configuration
+    userName = lib.mkDefault config.userInfo.fullName;
+    userEmail = lib.mkDefault config.userInfo.email;
 
     signing = {
-      key = lib.mkDefault "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBT8O1BCE6d5mjzD+k4VLeCyM5hjZ2kWnAr+p7XlMsmy";
+      key = lib.mkDefault config.userInfo.gitSigningKey;
       signByDefault = lib.mkDefault true;
     };
 
@@ -34,6 +34,14 @@
       };
 
       fetch.prune = true;
+
+      # Rebase settings
+      rebase.autostash = true;
+
+      branch.autosetuprebase = "always";
+
+      # Credential helper (macOS)
+      credential.helper = "osxkeychain";
 
       merge = {
         conflictstyle = "zdiff3";

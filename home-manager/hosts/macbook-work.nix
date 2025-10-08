@@ -5,8 +5,10 @@
   home.username = "levifig";
   home.homeDirectory = "/Users/levifig";
 
-  # Work email for git
-  programs.git.userEmail = lib.mkForce "levi@work.com"; # Replace with actual work email
+  # Override user info for work (optional - can also use git includes below)
+  # userInfo.email = "levi@work.com";
+  # userInfo.fullName = "Levi Figueira";
+  # userInfo.gitSigningKey = "~/.ssh/work_id_ed25519.pub";
 
   # Work-specific packages
   home.packages = with pkgs; [

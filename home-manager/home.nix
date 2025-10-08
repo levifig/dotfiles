@@ -117,6 +117,7 @@
 
   # Import core modules
   imports = [
+    ./modules/user-info.nix
     ./modules/core/git.nix
     ./modules/shell/zsh.nix
     ./modules/shell/bash.nix
