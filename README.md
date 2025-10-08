@@ -16,10 +16,12 @@ cd ~/.dotfiles
 nix flake check
 
 # Apply configuration (replace LFX001 with your machine name)
-home-manager switch --flake .#levifig@LFX001 --impure
+nix run home-manager/master -- switch --flake .#levifig@LFX001 --impure
 ```
 
-For headless systems (no fonts): `home-manager switch --flake .#levifig@linux-server`
+For headless systems (no fonts): `nix run home-manager/master -- switch --flake .#levifig@linux-server`
+
+After the first run, `home-manager` command will be available in your PATH.
 
 ---
 
@@ -72,13 +74,15 @@ nix flake show
 3. **Apply your configuration:**
 ```bash
 # For GUI workstations (includes fonts)
-home-manager switch --flake ~/.dotfiles#levifig@LFX001 --impure
+nix run home-manager/master -- switch --flake ~/.dotfiles#levifig@LFX001 --impure
 
 # For headless systems (no fonts needed)
-home-manager switch --flake ~/.dotfiles#levifig@linux-server
+nix run home-manager/master -- switch --flake ~/.dotfiles#levifig@linux-server
 ```
 
 **Note:** The `--impure` flag is required for configurations that use the private fonts submodule (workstation profiles).
+
+After the first run, you can use the shorter `home-manager switch --flake ...` command directly.
 
 #### Quick Setup (Bootstrap)
 
