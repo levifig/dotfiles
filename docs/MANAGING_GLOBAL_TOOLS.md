@@ -139,6 +139,50 @@ pip install --user anthropic
 npm install -g @githubnext/github-copilot-cli
 ```
 
+## Syncing Packages Across Machines
+
+### Track Your Global Packages
+
+Edit `home-manager/profiles/global-packages.sh` to document your installations:
+
+```bash
+# Edit the arrays at the top of the file
+NPM_PACKAGES=(
+  "@anthropics/claude-code"
+  "codex-cli"
+)
+
+PYTHON_PACKAGES=(
+  "google-generativeai"
+  "anthropic"
+)
+```
+
+### On a New Machine (or After Adding Packages)
+
+```bash
+cd ~/.dotfiles
+
+# 1. Apply home-manager configuration (installs Nix packages + configures paths)
+home-manager switch --flake .#levifig@LFX001 --impure
+
+# 2. Install language package manager globals
+./home-manager/profiles/global-packages.sh install
+
+# 3. Verify everything is installed
+./home-manager/profiles/global-packages.sh check
+```
+
+### Check What's Installed
+
+```bash
+# List all global packages
+./home-manager/profiles/global-packages.sh list
+
+# Check for missing packages
+./home-manager/profiles/global-packages.sh check
+```
+
 ## Managing Updates
 
 ### Nix-managed packages
@@ -210,12 +254,13 @@ export PATH="$HOME/.npm-global/bin:$PATH"
 
 ## Best Practices
 
-1. **Document what's installed via language package managers** (add comments to cli-tools.nix)
-2. **Prefer Nix packages** when available (better reproducibility)
-3. **Use direnv for project-specific tools** (avoids global version conflicts)
-4. **Regular audits**: Review `npm list -g`, `pip list --user` periodically
-5. **Commit configuration changes**: Document global tool decisions in git
+1. **Always check nixpkgs first** - Most tools are available, use those for reproducibility
+2. **Document language package manager installs** - Edit `global-packages.sh` immediately after installing
+3. **Commit global-packages.sh changes** - Keep it in git so machines stay in sync
+4. **Use direnv for project-specific tools** - Avoid global version conflicts
+5. **Regular audits**: Run `./global-packages.sh check` to ensure consistency
+6. **On new machines**: Run `./global-packages.sh install` after `home-manager switch`
 
 ---
 
-*Last Updated: 2025-10-08 - Initial guide for managing global CLI tools*
+*Last Updated: 2025-10-08 - Added global-packages.sh script for cross-machine sync*
