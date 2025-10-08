@@ -23,6 +23,7 @@
 
     # Kubernetes & Container Orchestration
     kubectl
+    krew  # kubectl plugin manager
     kubernetes-helm
     helmfile
     kustomize
@@ -34,6 +35,7 @@
     stern
     linkerd
     fluxcd
+    talosctl  # Talos Linux management
 
     # Service Mesh & Networking
     istioctl
