@@ -50,6 +50,10 @@
     just
     tokei
     hyperfine
+
+    # Fun utilities
+    cowsay
+    fortune
   ];
 
   # Enhanced shell aliases
