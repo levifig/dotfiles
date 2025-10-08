@@ -29,6 +29,12 @@
       inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
 
+    # Disko - Declarative disk partitioning
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Flake utilities
     flake-utils.url = "github:numtide/flake-utils";
 
@@ -52,7 +58,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-darwin, home-manager, darwin, flake-utils, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-darwin, home-manager, darwin, disko, flake-utils, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, ... }@inputs:
     let
       # System types
       systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
@@ -85,6 +91,11 @@
 
           # Also update python3Packages to use the overridden python3
           python3Packages = final.python3.pkgs;
+
+          # Override awscli2 to skip flaky tests
+          awscli2 = prev.awscli2.overridePythonAttrs (old: {
+            doCheck = false;  # Skip flaky wizard tests
+          });
         };
       in {
         # Default configuration (auto-detected)
@@ -124,8 +135,7 @@
           modules = [
             ./home-manager/home.nix
             ./home-manager/platform/darwin-base.nix
-            ./home-manager/profiles/workstation.nix  # Full workstation with GUI
-            ./home-manager/profiles/platform.nix      # Platform engineering tools
+            ./home-manager/profiles/workstation.nix  # Full workstation with GUI (includes development.nix)
             ./home-manager/profiles/cli-tools.nix     # Language package manager tools
             ./home-manager/hosts/LFX001.nix
             {
@@ -201,6 +211,7 @@
           system = "x86_64-linux";
           modules = [
             ./nixos/hosts/LFX004/configuration.nix
+            disko.nixosModules.disko
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
