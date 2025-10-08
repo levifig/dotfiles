@@ -52,7 +52,7 @@
   users.users.levifig = {
     isNormalUser = true;
     description = "Levi Figueira";
-    extraGroups = [ "networkmanager" "wheel" "docker" "video" "audio" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "video" "audio" "postgres" ];
     shell = pkgs.zsh;
   };
 
@@ -96,6 +96,24 @@
 
     # SSH
     openssh.enable = true;
+
+    # Database
+    postgresql = {
+      enable = true;
+      package = pkgs.postgresql_18;
+      enableTCPIP = true;
+      authentication = pkgs.lib.mkOverride 10 ''
+        # TYPE  DATABASE        USER            ADDRESS                 METHOD
+        local   all             all                                     trust
+        host    all             all             127.0.0.1/32            trust
+        host    all             all             ::1/128                 trust
+      '';
+      settings = {
+        # Development-friendly settings
+        max_connections = 100;
+        shared_buffers = "128MB";
+      };
+    };
 
     # Power management
     tlp.enable = true;
