@@ -6,11 +6,16 @@
 
     # User info will be overridden in host-specific configs
     userName = lib.mkDefault "Levi Figueira";
-    userEmail = lib.mkDefault "levi@levifig.com";
+    userEmail = lib.mkDefault "me@levifig.com";
+
+    signing = {
+      key = lib.mkDefault "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBT8O1BCE6d5mjzD+k4VLeCyM5hjZ2kWnAr+p7XlMsmy";
+      signByDefault = lib.mkDefault true;
+    };
 
     # Core settings
     extraConfig = {
-      init.defaultBranch = "main";
+      init.defaultBranch = "master";
 
       core = {
         editor = "nvim";
@@ -31,13 +36,22 @@
       fetch.prune = true;
 
       merge = {
-        conflictstyle = "diff3";
+        conflictstyle = "zdiff3";
         tool = "vimdiff";
       };
 
       diff = {
         colorMoved = "default";
         tool = "vimdiff";
+      };
+
+      # 1Password SSH signing
+      gpg = {
+        format = "ssh";
+      };
+
+      "gpg \"ssh\"" = {
+        program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
       };
 
       rerere.enabled = true;
@@ -94,6 +108,7 @@
       l = "log --oneline --graph --decorate";
       ll = "log --oneline --graph --decorate --all";
       lg = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
+      wtf = "reflog";
 
       # Push/Pull
       p = "push";
@@ -106,6 +121,7 @@
       # Remote
       r = "remote";
       rv = "remote -v";
+      rs = "remote show origin";
 
       # Reset
       unstage = "reset HEAD --";
@@ -137,6 +153,10 @@
       ".direnv"
       "result"
       "result-*"
+      ".unicorn*"
+      ".ruby-gemset"
+      "node_modules"
+      "**/.claude/settings.local.json"
     ];
 
     # Enable delta for better diffs

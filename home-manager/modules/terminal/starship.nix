@@ -1,12 +1,8 @@
 { config, pkgs, lib, ... }:
 
 {
-  # Deploy Starship prompt configuration from repository
+  # This module is deprecated - use modules/shell/starship.nix instead
+  # Keeping only to ensure starship is enabled for profiles that import it
+  # The actual configuration is in modules/shell/starship.nix
   programs.starship.enable = true;
-
-  # Deploy your Starship configuration from the repository
-  # Note: Starship looks for config at ~/.config/starship.toml
-  xdg.configFile."starship.toml" = {
-    source = ../../../config/starship/starship.toml;
-  };
 }

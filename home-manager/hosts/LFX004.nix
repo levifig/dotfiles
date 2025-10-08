@@ -8,7 +8,7 @@
   # Include platform defaults
   imports = [
     ../platform/linux-base.nix
-    ../profiles/development.nix
+    ../profiles/workstation-headless.nix  # Includes: server.nix, development.nix, zsh, nvim, tmux, starship
     ../profiles/platform.nix
   ];
 
@@ -57,11 +57,11 @@
 
   # Git configuration for this machine
   programs.git = {
-    userEmail = lib.mkForce "levi@levifig.com";
+    # Email uses default from core/git.nix (me@levifig.com)
 
     # Signing configuration
     signing = {
-      key = "~/.ssh/id_ed25519.pub";
+      key = "~/.ssh/keys/levifig-ed25519.pub";
       signByDefault = true;
     };
 
@@ -74,6 +74,7 @@
   # SSH configuration
   programs.ssh = {
     enable = true;
+    enableDefaultConfig = false;
 
     matchBlocks = {
       # Default settings for all hosts
@@ -89,13 +90,13 @@
       "github.com" = {
         hostname = "github.com";
         user = "git";
-        identityFile = "~/.ssh/id_ed25519";
+        identityFile = "~/.ssh/keys/levifig-ed25519";
       };
 
       "gitlab.com" = {
         hostname = "gitlab.com";
         user = "git";
-        identityFile = "~/.ssh/id_ed25519";
+        identityFile = "~/.ssh/keys/levifig-ed25519";
       };
 
       # Add your personal servers here
@@ -124,8 +125,8 @@
     dots = "cd ~/.dotfiles";
     conf = "cd ~/.config";
 
-    # System specific
-    update = "sudo nixos-rebuild switch --flake ~/.dotfiles";  # For when on NixOS
+    # System specific (override linux-base.nix default)
+    update = lib.mkForce "sudo nixos-rebuild switch --flake ~/.dotfiles";  # NixOS
     hm-update = "home-manager switch --flake ~/.dotfiles#levifig@LFX004";
 
     # Quick edits
@@ -145,7 +146,7 @@
   };
 
   # Zsh extra configuration for this machine
-  programs.zsh.initExtra = lib.mkAfter ''
+  programs.zsh.initContent = lib.mkAfter ''
     # Machine-specific ZSH configuration
 
     # Load work-specific configuration if it exists

@@ -5,11 +5,10 @@
   home.username = "levifig";
   home.homeDirectory = "/Users/levifig";
 
-  # Include platform defaults
+  # Note: Profiles are imported via flake.nix
+  # This file only contains machine-specific overrides
   imports = [
     ../platform/darwin-base.nix
-    ../profiles/development.nix
-    ../profiles/platform.nix
   ];
 
   # Machine-specific packages
@@ -34,11 +33,11 @@
 
   # Git configuration for this machine
   programs.git = {
-    userEmail = lib.mkForce "levi@levifig.com";
+    # Email uses default from core/git.nix (me@levifig.com)
 
     # Signing configuration
     signing = {
-      key = "~/.ssh/id_ed25519.pub";
+      key = "~/.ssh/keys/levifig-ed25519.pub";
       signByDefault = true;
     };
 
@@ -51,6 +50,7 @@
   # SSH configuration
   programs.ssh = {
     enable = true;
+    enableDefaultConfig = false;
 
     matchBlocks = {
       # Default settings for all hosts
@@ -66,13 +66,13 @@
       "github.com" = {
         hostname = "github.com";
         user = "git";
-        identityFile = "~/.ssh/id_ed25519";
+        identityFile = "~/.ssh/keys/levifig-ed25519";
       };
 
       "gitlab.com" = {
         hostname = "gitlab.com";
         user = "git";
-        identityFile = "~/.ssh/id_ed25519";
+        identityFile = "~/.ssh/keys/levifig-ed25519";
       };
 
       # Add your personal servers here
@@ -122,7 +122,7 @@
   };
 
   # Zsh extra configuration for this machine
-  programs.zsh.initExtra = lib.mkAfter ''
+  programs.zsh.initContent = lib.mkAfter ''
     # Machine-specific ZSH configuration
 
     # Load work-specific configuration if it exists

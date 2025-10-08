@@ -64,6 +64,5 @@
   # Import basic modules
   imports = [
     ../modules/shell/bash.nix
-    ../modules/git/config.nix
   ];
 }

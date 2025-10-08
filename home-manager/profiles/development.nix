@@ -1,6 +1,11 @@
 { config, pkgs, lib, ... }:
 
 {
+  imports = [
+    ../modules/ruby/gemrc.nix
+    ../modules/javascript/eslintrc.nix
+  ];
+
   home.packages = with pkgs; [
     # Version control
     git-lfs
@@ -39,7 +44,6 @@
     # Go
     go
     gopls
-    gotools
     golangci-lint
 
     # Rust
@@ -59,15 +63,7 @@
     awscli2
     google-cloud-sdk
     azure-cli
-    (terraform.withPlugins (p: with p; [
-      aws
-      google
-      azurerm
-      kubernetes
-    ]))
-    # terraform-docs  # Build failure in current nixpkgs
-    tflint
-    terragrunt
+    # Note: Terraform is provided by platform.nix profile
 
     # Kubernetes
     kubectl
@@ -136,12 +132,7 @@
     kl = "kubectl logs";
     ke = "kubectl exec -it";
 
-    # Terraform
-    tf = "terraform";
-    tfi = "terraform init";
-    tfp = "terraform plan";
-    tfa = "terraform apply";
-    tfd = "terraform destroy";
+    # Note: Terraform aliases provided by platform.nix profile
 
     # Git shortcuts
     gs = "git status";
