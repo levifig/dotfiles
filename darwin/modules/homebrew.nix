@@ -27,33 +27,14 @@
     ];
 
     # Homebrew formulas (CLI tools)
-    # Note: Prefer Nix packages when available, use Homebrew for macOS-specific tools
+    # Note: Cross-platform tools are managed via Nix (see home-manager profiles)
+    # macOS CLI tools (mas, duti, trash) are in home-manager/platform/darwin-base.nix
     brews = [
-      # Platform/Infrastructure tools
-      "ansible"
-      "argocd"
-      "awscli"
-      "helm"
-      "k9s"
-      "kubernetes-cli"
-      "krew"
-      "lazydocker"
-      "talosctl"
-      "terraform"
-      "velero"
-
-      # Shell/System utilities
-      "atuin"  # Shell history sync
-      "cowsay"
-      "fortune"
-      "mise"   # Project-specific version management
-      "zoxide"  # Smart cd
-
-      # macOS-specific tools
-      "mas"  # Mac App Store CLI
+      # macOS utilities not in nixpkgs
       "terminal-notifier"
 
-      # Database
+      # Database with service management
+      # Using Homebrew for better launchd integration
       "postgresql@14"  # Development database (brew services start postgresql@14)
     ];
 
