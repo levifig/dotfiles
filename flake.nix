@@ -327,6 +327,10 @@
             cd ${./.}
             exec ${./apps/build.sh}
           '');
+          meta = {
+            description = "Build Nix configuration without switching";
+            platforms = [ system ];
+          };
         };
 
         # Build and switch configuration
@@ -337,6 +341,10 @@
             cd ${./.}
             exec ${./apps/switch.sh}
           '');
+          meta = {
+            description = "Build and switch to new Nix configuration";
+            platforms = [ system ];
+          };
         };
 
         # Rollback to previous generation
@@ -347,6 +355,10 @@
             cd ${./.}
             exec ${./apps/rollback.sh}
           '');
+          meta = {
+            description = "Rollback to previous Nix generation";
+            platforms = [ system ];
+          };
         };
 
         # Update flake inputs
@@ -357,6 +369,10 @@
             cd ${./.}
             exec ${./apps/update.sh}
           '');
+          meta = {
+            description = "Update all flake inputs to latest versions";
+            platforms = [ system ];
+          };
         };
 
         # Garbage collect old generations
@@ -367,6 +383,10 @@
             cd ${./.}
             exec ${./apps/clean.sh} "$@"
           '');
+          meta = {
+            description = "Garbage collect old Nix generations";
+            platforms = [ system ];
+          };
         };
 
         # Bootstrap installer for new machines
@@ -377,6 +397,10 @@
             cd ${./.}
             exec ${./apps/bootstrap.sh} "$@"
           '');
+          meta = {
+            description = "Bootstrap dotfiles on a new machine";
+            platforms = [ system ];
+          };
         };
       });
     };
