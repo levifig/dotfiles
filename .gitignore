@@ -23,7 +23,7 @@ secrets/
 .env
 .env.*
 
-# Note: .fonts/private is a git submodule pointing to private repo
+# Note: config/fonts is a git submodule pointing to private fonts repo
 # The submodule reference must be tracked, but the actual fonts are restricted
 
 # Shell history files (should never be committed - may contain secrets)

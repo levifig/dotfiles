@@ -2,7 +2,7 @@
 
 let
   # Use absolute path to fonts submodule (outside flake's git tree)
-  fontsPath = "${config.home.homeDirectory}/.dotfiles/.fonts/private";
+  fontsPath = "${config.home.homeDirectory}/.dotfiles/config/fonts";
   fontsExist = builtins.pathExists fontsPath;
 in
 {

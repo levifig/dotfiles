@@ -60,7 +60,7 @@ cd ~/.dotfiles
 
 **Note:** The `--recurse-submodules` flag initializes the private fonts submodule. If you cloned without it:
 ```bash
-git submodule update --init .fonts/private
+git submodule update --init config/fonts
 ```
 
 2. **Verify the flake:**
