@@ -58,11 +58,6 @@
     elif [[ -f /usr/local/bin/brew ]]; then
       eval "$(/usr/local/bin/brew shellenv)"
     fi
-
-    # iTerm2 integration
-    if [[ -f ~/.iterm2_shell_integration.zsh ]]; then
-      source ~/.iterm2_shell_integration.zsh
-    fi
   '';
 
   # Git configuration for macOS

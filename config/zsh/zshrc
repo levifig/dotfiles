@@ -9,7 +9,6 @@ ${BREW_PREFIX}/opt/homebrew/sbin:\
 ${BREW_PREFIX}/opt/homebrew/bin:\
 ${BREW_PREFIX}/sbin:\
 ${BREW_PREFIX}/bin:\
-${HOME}/.local/share/mise/shims:\
 ${HOME}/.go/bin:\
 ${HOME}/.bun/bin:\
 ${HOME}/.krew/bin:\
@@ -43,7 +42,6 @@ export LSCOLORS=ExFxBxDxCxegedabagacad
 export SSH_AUTH_SOCK="$HOME/.1password/agent.sock"
 export FZF_DEFAULT_OPTS="--color=fg:#f8f8f2,bg:#282a36,hl:#bd93f9 --color=fg+:#f8f8f2,bg+:#44475a,hl+:#bd93f9 --color=info:#ffb86c,prompt:#50fa7b,pointer:#ff79c6 --color=marker:#ff79c6,spinner:#ffb86c,header:#6272a4"
 export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR="/opt/homebrew/share/zsh-syntax-highlighting/highlighters"
-export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES
 export CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR=1
 export HOMEBREW_DOWNLOAD_CONCURRENCY=auto
 export HOMEBREW_NO_ENV_HINTS=1
@@ -149,19 +147,17 @@ _cache_completions \
     "helm" "helm completion zsh" \
     "argocd" "argocd completion zsh" \
     "bootdev" "bootdev completion zsh" \
-    "docker" "docker completion zsh" \
-    "mise" "mise completion zsh; compdef mise"
+    "docker" "docker completion zsh"
 
 
 # Essential tools that need immediate loading
-#source <(mise activate zsh)  # gonna try using mise for local env management only, not global
 source <(zoxide init zsh)
 source <(fzf --zsh)
 source <(atuin init zsh --disable-up-arrow)
 source <(starship init zsh)
 source <(direnv hook zsh)
 
-# Bash-style completions (after mise activation)
+# Bash-style completions
 if command -v terraform &> /dev/null || command -v aws_completer &> /dev/null; then
     autoload -U +X bashcompinit && bashcompinit
     command -v terraform &> /dev/null && complete -o nospace -C terraform terraform

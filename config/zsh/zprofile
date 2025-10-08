@@ -1,1 +1,2 @@
-eval "$($HOME/.local/bin/mise activate zsh --shims)"
+# ZSH profile - loaded before zshrc
+# Currently empty - using direnv + Nix flakes for project-specific environments
