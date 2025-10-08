@@ -2,18 +2,10 @@
 
 {
   # Basic Bash configuration for server environments
+  # Note: Shell aliases are centralized in modules/shell/aliases.nix
   programs.bash = {
     enable = true;
     enableCompletion = true;
-
-    # Basic bash aliases
-    shellAliases = {
-      ll = "ls -lah";
-      la = "ls -A";
-      l = "ls -CF";
-      ".." = "cd ..";
-      "..." = "cd ../..";
-    };
 
     # Basic bash configuration
     initExtra = ''

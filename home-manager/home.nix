@@ -79,51 +79,19 @@
     XDG_STATE_HOME = "${config.xdg.stateHome}";
   };
 
-  # Shell aliases (works across shells)
-  home.shellAliases = {
-    # Navigation
-    ".." = "cd ..";
-    "..." = "cd ../..";
-    "...." = "cd ../../..";
-
-    # ls replacements (can be overridden in profiles)
-    ls = lib.mkDefault "eza";
-    ll = lib.mkDefault "eza -la";
-    la = lib.mkDefault "eza -a";
-    lt = lib.mkDefault "eza --tree";
-
-    # Safety nets
-    cp = "cp -i";
-    mv = "mv -i";
-    rm = "rm -i";
-
-    # Shortcuts
-    g = "git";
-    v = "nvim";
-    t = "tmux";
-
-    # Colorize (can be overridden in profiles)
-    grep = lib.mkDefault "grep --color=auto";
-    fgrep = lib.mkDefault "fgrep --color=auto";
-    egrep = lib.mkDefault "egrep --color=auto";
-
-    # System
-    reload = "source ~/.zshrc";
-
-    # Nix specific
-    nix-switch = "home-manager switch --flake ~/.dotfiles";
-    nix-update = "nix flake update ~/.dotfiles";
-  };
+  # Note: Shell aliases are centralized in modules/shell/aliases.nix
 
   # Import core modules
   imports = [
     ./modules/core/git.nix
     ./modules/core/xdg.nix
+    ./modules/shell/aliases.nix
     ./modules/shell/zsh.nix
     ./modules/shell/bash.nix
     ./modules/shell/starship.nix
     ./modules/terminal/tmux.nix
     ./modules/terminal/alacritty.nix
     ./modules/editors/nvim.nix
+    ./modules/tools/ripgrep.nix
   ];
 }

@@ -56,44 +56,7 @@
     fortune
   ];
 
-  # Enhanced shell aliases
-  home.shellAliases = lib.mkMerge [
-    # Inherit server aliases, then add more
-    {
-      # Modern replacements
-      cat = "bat";
-      ls = "eza";
-      find = "fd";
-      grep = "rg";
-
-      # Git shortcuts
-      gs = "git status";
-      ga = "git add";
-      gc = "git commit";
-      gp = "git push";
-      gl = "git log";
-      gd = "git diff";
-
-      # Docker shortcuts
-      d = "docker";
-      dc = "docker-compose";
-      dps = "docker ps";
-      di = "docker images";
-
-      # Kubernetes shortcuts
-      k = "kubectl";
-      kx = "kubectx";
-      kg = "kubectl get";
-      kd = "kubectl describe";
-      kl = "kubectl logs";
-
-      # Terraform shortcuts
-      tf = "terraform";
-      tfi = "terraform init";
-      tfp = "terraform plan";
-      tfa = "terraform apply";
-    }
-  ];
+  # Note: Shell aliases are centralized in modules/shell/aliases.nix
 
   # Development environment variables
   home.sessionVariables = {
