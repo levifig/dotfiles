@@ -20,11 +20,13 @@
   - `linux-base.nix` - Linux-specific user configs
 
 - **`home-manager/modules/`** - Reusable configuration modules
-  - `core/` - Essential configs (git, direnv, etc.)
+  - `core/` - Essential configs (git, xdg, direnv)
   - `editors/` - Editor configurations
   - `shell/` - Shell configurations
-  - `terminal/` - Terminal emulator configs
+  - `terminal/` - Terminal emulator configs (Alacritty, Ghostty)
   - `fonts/` - Font management
+  - `ruby/` - Ruby-specific configs (gemrc)
+  - `javascript/` - JavaScript-specific configs (eslintrc)
 
 - **`home-manager/hosts/`** - Host-specific configurations
   - Individual machine configs that import profiles
@@ -56,8 +58,9 @@
    - Declared in `darwin/modules/homebrew.nix`
 
 3. **Services with launchd Integration**
-   - postgresql@14 (for development)
-   - Using Homebrew for better service management
+   - postgresql@18 (for development)
+   - Using Homebrew for better launchd service management on macOS
+   - NixOS uses native systemd PostgreSQL service
 
 4. **macOS-Specific Utilities Not in nixpkgs**
    - terminal-notifier
@@ -92,7 +95,34 @@ direnv allow
 - direnv automatically activates project environments
 - Flakes provide exact version pinning via lock files
 
-See [PROJECT_VERSIONS.md](PROJECT_VERSIONS.md) for detailed migration guide.
+See [DIRENV_FLAKES.md](DIRENV_FLAKES.md) for comprehensive guide with examples.
+See [PROJECT_VERSIONS.md](PROJECT_VERSIONS.md) for mise migration details.
+
+## XDG Base Directory Compliance
+
+**Full XDG compliance via `home-manager/modules/core/xdg.nix`:**
+
+All configuration, data, cache, and state directories follow the [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/latest/):
+
+**Standard Directories:**
+- `XDG_CONFIG_HOME` → `~/.config`
+- `XDG_DATA_HOME` → `~/.local/share`
+- `XDG_CACHE_HOME` → `~/.cache`
+- `XDG_STATE_HOME` → `~/.local/state`
+- `XDG_BIN_HOME` → `~/.local/bin`
+
+**Tool-Specific XDG Paths:**
+- Languages: `CARGO_HOME`, `GOPATH`, `RUSTUP_HOME`, `PYENV_ROOT`
+- Node.js: `NPM_CONFIG_*`, `NODE_REPL_HISTORY`, `NVM_DIR`
+- Python: `PYTHONPYCACHEPREFIX`, `PYTHONUSERBASE`, `WORKON_HOME`
+- Docker: `DOCKER_CONFIG`, `MACHINE_STORAGE_PATH`
+- Tools: `RIPGREP_CONFIG_PATH`, `GNUPGHOME`, `LESSHISTFILE`
+
+**Benefits:**
+- Clean home directory (no dotfile clutter)
+- Consistent file organization across systems
+- Easy backup/sync (just `~/.config` and `~/.local`)
+- Portable configuration
 
 ## Architecture Principles
 
@@ -122,7 +152,8 @@ platform.nix ──────────────┘
 | macOS CLI utils | `darwin-base.nix` | mas, duti, trash-cli |
 | Linux CLI utils | `linux-base.nix` | (OS-specific tools) |
 | macOS GUI apps | `darwin/modules/homebrew.nix` | browsers, IDEs |
-| macOS services | `darwin/modules/homebrew.nix` | postgresql@14 |
+| macOS services | `darwin/modules/homebrew.nix` | postgresql@18 |
+| NixOS services | `nixos/hosts/*/configuration.nix` | postgresql@18 (systemd) |
 | Mac App Store | `darwin/modules/homebrew.nix` | Xcode, Things |
 
 ## Migration from Homebrew
@@ -134,9 +165,10 @@ platform.nix ──────────────┘
 - ✅ Removed redundant Homebrew management modules
 
 **Result:**
-- Homebrew brews: ~30 → **2** (terminal-notifier, postgresql@14)
+- Homebrew brews: ~30 → **2** (terminal-notifier, postgresql@18)
 - Nix packages: **All cross-platform tools**
 - Homebrew casks: **GUI apps only** (can't be managed well by Nix on macOS)
+- Removed: mise (now using direnv + Nix flakes), iTerm2 (using Alacritty/Ghostty only)
 
 ## Benefits of This Architecture
 
@@ -149,4 +181,9 @@ platform.nix ──────────────┘
 
 ---
 
-*Last Updated: 2025-10-08 - Initial architecture documentation*
+*Last Updated: 2025-10-08*
+- Initial architecture documentation
+- Updated PostgreSQL version (14 → 18)
+- Added XDG Base Directory compliance section
+- Added direnv + Nix flakes documentation references
+- Documented mise and iTerm2 removal
