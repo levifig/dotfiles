@@ -1,0 +1,9 @@
+*~
+*.swp
+*.swo
+.DS_Store
+.unicorn*
+.ruby-gemset
+.vscode
+node_modules
+**/.claude/settings.local.json

@@ -1,0 +1,35 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Nix
+result
+result-*
+.direnv/
+.envrc
+
+# Home Manager
+home-manager-generation
+
+# Logs
+*.log
+
+# Secrets (just to be safe)
+*.key
+*.pem
+*.crt
+secrets/
+.env
+.env.*
+
+# Note: .fonts/private is a git submodule pointing to private repo
+# The submodule reference must be tracked, but the actual fonts are restricted
+
+# Temporary files (unlikely, but just in case)
+*.tmp
+*.bak
+*.backup
+*.old
+tmp/
+temp/
