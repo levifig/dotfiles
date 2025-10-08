@@ -161,11 +161,6 @@
       cp -r "$1" "$1.backup.$(date +%Y%m%d-%H%M%S)"
     }
 
-    # Mise (if still using during transition)
-    if command -v mise >/dev/null 2>&1; then
-      eval "$(mise activate zsh)"
-    fi
-
     # NixOS-specific
     if [[ -f /etc/NIXOS ]]; then
       # We're on NixOS

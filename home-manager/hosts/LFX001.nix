@@ -135,16 +135,8 @@
       cp -r "$1" "$1.backup.$(date +%Y%m%d-%H%M%S)"
     }
 
-    # iTerm2 integration (if using iTerm2)
-    test -e "''${HOME}/.iterm2_shell_integration.zsh" && source "''${HOME}/.iterm2_shell_integration.zsh"
-
     # 1Password CLI (if using)
     # eval "$(op completion zsh)"; compdef _op op
-
-    # Mise (if still using during transition)
-    if command -v mise >/dev/null 2>&1; then
-      eval "$(mise activate zsh)"
-    fi
   '';
 
   # VS Code settings (if using)
