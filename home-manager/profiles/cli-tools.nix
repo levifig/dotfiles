@@ -34,7 +34,7 @@
     prefix=${config.home.homeDirectory}/.npm-global
   '';
 
-  programs.zsh.initExtra = lib.mkAfter ''
+  programs.zsh.initContent = lib.mkAfter ''
     # Helper functions for managing global packages
     npm-list() {
       npm list -g --depth=0

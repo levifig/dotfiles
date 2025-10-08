@@ -10,6 +10,7 @@
     ../platform/linux-base.nix
     ../profiles/workstation-headless.nix  # Includes: server.nix, development.nix, zsh, nvim, tmux, starship
     ../profiles/platform.nix
+    ../profiles/cli-tools.nix              # Language package manager tools
   ];
 
   # Linux laptop specific packages
