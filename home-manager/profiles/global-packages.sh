@@ -20,44 +20,34 @@ NC='\033[0m' # No Color
 # NPM Global Packages
 # =============================================================================
 NPM_PACKAGES=(
-  # AI/LLM Tools
-  # "@anthropics/claude-code"
-  # "codex-cli"
-  # "@githubnext/github-copilot-cli"
-
-  # Build/Dev Tools
-  # "typescript"  # Prefer: pkgs.nodePackages.typescript in Nix
-  # "prettier"    # Prefer: pkgs.nodePackages.prettier in Nix
-
-  # Add your npm global packages here
 )
 
 # =============================================================================
 # Python User Packages (pip install --user)
 # =============================================================================
 PYTHON_PACKAGES=(
-  # AI/LLM Tools
-  # "google-generativeai"
-  # "anthropic"
-  # "openai"
-
-  # Add your pip --user packages here
 )
 
 # =============================================================================
 # Ruby User Gems (gem install --user-install)
 # =============================================================================
 RUBY_GEMS=(
-  # "bundler"  # Usually comes with Ruby in Nix
-
-  # Add your Ruby gems here
 )
 
 # =============================================================================
 # Bun Global Packages
 # =============================================================================
+# Note: Most AI CLI tools are not npm/bun packages. Check their official docs!
 BUN_PACKAGES=(
-  # Add your bun global packages here
+  # Examples:
+  # "some-real-package"
+
+  # AI Tools - Check official installation methods:
+  # - Claude Code: Not yet public as npm package
+  # - OpenCode: https://github.com/OpenCode-ai/OpenCode
+  # - Gemini CLI: pip install google-generativeai (Python, not npm)
+  # - Codex: OpenAI Codex API (not a CLI tool)
+  # - Codeium: https://codeium.com/download (IDE extension, not npm)
 )
 
 # =============================================================================
@@ -119,9 +109,12 @@ install_bun() {
 
   echo -e "${BLUE}Installing Bun global packages...${NC}"
   for package in "${BUN_PACKAGES[@]}"; do
-    if [[ $package == \#* ]]; then continue; fi  # Skip comments
+    if [[ $package == \#* ]] || [[ -z "$package" ]]; then continue; fi  # Skip comments/empty
     echo -e "  ${GREEN}→${NC} $package"
-    bun install -g "$package"
+    if ! bun install -g "$package" 2>&1; then
+      echo -e "  ${RED}✗${NC} Failed to install: $package"
+      echo -e "  ${YELLOW}Note: Verify package name at https://www.npmjs.com${NC}"
+    fi
   done
 }
 
