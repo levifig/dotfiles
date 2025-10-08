@@ -52,6 +52,9 @@
     rustfmt
     clippy
 
+    # Nix
+    nil  # Nix language server
+
     # Containers
     docker-client
     docker-compose
