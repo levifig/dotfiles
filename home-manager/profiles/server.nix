@@ -45,14 +45,7 @@
     openssh
   ];
 
-  # Basic shell aliases
-  home.shellAliases = {
-    ll = "ls -lah";
-    la = "ls -A";
-    l = "ls -CF";
-    ".." = "cd ..";
-    "..." = "cd ../..";
-  };
+  # Note: Shell aliases are centralized in modules/shell/aliases.nix
 
   # Minimal environment variables
   home.sessionVariables = {

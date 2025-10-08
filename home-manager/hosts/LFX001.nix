@@ -96,28 +96,8 @@
     DOTFILES = "$HOME/.dotfiles";
   };
 
-  # Machine-specific shell aliases
-  home.shellAliases = {
-    # Quick navigation
-    dev = "cd ~/Development";
-    proj = "cd ~/Development/Projects";
-    dots = "cd ~/.dotfiles";
-    conf = "cd ~/.config";
-
-    # System specific
-    brewup = "brew update && brew upgrade && brew cleanup";
-
-    # Quick edits
-    zshconfig = "nvim ~/.config/zsh/.zshrc";
-    nixconfig = "nvim ~/.dotfiles/home-manager/hosts/LFX001.nix";
-
-    # Utilities
-    myip = "curl -s https://api.ipify.org && echo";
-    weather = "curl wttr.in";
-
-    # Docker with Colima (if using)
-    # colima-start = "colima start --cpu 4 --memory 8";
-  };
+  # Note: Shell aliases are centralized in modules/shell/aliases.nix
+  # Machine-specific aliases can be added here if needed
 
   # Zsh extra configuration for this machine
   programs.zsh.initContent = lib.mkAfter ''

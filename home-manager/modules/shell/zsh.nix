@@ -8,6 +8,13 @@
     enable = true;
     enableCompletion = true;
 
+    # History file location (XDG compliant)
+    history = {
+      path = "${config.xdg.stateHome}/zsh/zsh_history";
+      size = 50000;
+      save = 50000;
+    };
+
     # Session variables
     sessionVariables = {
       ZDOTDIR = "${config.xdg.configHome}/zsh";

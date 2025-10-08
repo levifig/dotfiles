@@ -173,5 +173,12 @@
     # ============================================
     ff = "fastfetch -c neofetch";
     ffd = "fastfetch -c examples/25";
+
+    # ============================================
+    # Node.js compatibility (bun can run Node apps)
+    # ============================================
+    node = "bun";
+    npm = "bun";
+    npx = "bunx";
   };
 }
