@@ -261,7 +261,16 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.${user} = import ./home-manager/hosts/LFX004.nix;
+              home-manager.users.${user} = {
+                imports = [ ./home-manager/hosts/LFX004.nix ];
+
+                # Disable manual generation to avoid builtins.toFile warnings
+                manual = {
+                  html.enable = false;
+                  json.enable = false;
+                  manpages.enable = false;
+                };
+              };
             }
           ];
         };
