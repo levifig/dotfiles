@@ -11,6 +11,15 @@
     ../platform/darwin-base.nix
   ];
 
+  # User information for this machine
+  # These override the defaults from user-info/module.nix
+  userInfo = {
+    fullName = "Levi Figueira";
+    email = "me@levifig.com";
+    githubUser = "levifig";
+    gitSigningKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBT8O1BCE6d5mjzD+k4VLeCyM5hjZ2kWnAr+p7XlMsmy";
+  };
+
   # Machine-specific packages
   home.packages = with pkgs; [
     # macOS specific tools
@@ -31,21 +40,8 @@
     tldr
   ];
 
-  # Git configuration for this machine
-  programs.git = {
-    # Email uses default from core/git.nix (me@levifig.com)
-
-    # Signing configuration
-    signing = {
-      key = "~/.ssh/keys/levifig-ed25519.pub";
-      signByDefault = true;
-    };
-
-    extraConfig = {
-      gpg.format = "ssh";
-      commit.gpgsign = true;
-    };
-  };
+  # Git configuration is handled by userInfo above
+  # Additional git config can be added here if needed
 
   # SSH configuration
   programs.ssh = {

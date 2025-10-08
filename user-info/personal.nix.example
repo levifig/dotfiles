@@ -1,0 +1,14 @@
+# Personal User Information Template
+# Copy this to personal.nix and fill in your actual information
+# personal.nix is gitignored - your data stays private
+
+{ ... }:
+
+{
+  userInfo = {
+    fullName = "Your Full Name";
+    email = "your.email@example.com";
+    githubUser = "yourgithubusername";
+    gitSigningKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAA..."; # Your SSH signing key
+  };
+}
