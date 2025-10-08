@@ -1,0 +1,17 @@
+# OS generated files
+.DS_Store
+
+# Local configuration overrides
+local.lua
+local/
+
+# Temporary vim files (if any end up here)
+*.swp
+*.swo
+*~
+
+# Note: Most Neovim runtime files are stored in:
+# - ~/.cache/nvim/ (plugins, logs, etc.)
+# - ~/.local/share/nvim/ (undo, sessions, etc.)
+# - ~/.local/state/nvim/ (state files)
+# This .gitignore only covers files that might appear in ~/.config/nvim/
