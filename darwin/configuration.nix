@@ -26,8 +26,10 @@ in
   # Homebrew configuration moved to ./modules/homebrew.nix
 
   # Nix settings
+  # Note: Determinate Nix installer detected - disable nix-darwin's Nix management
   nix = {
-    package = pkgs.nix;
+    # Disable nix-darwin's Nix daemon management (Determinate manages it)
+    enable = false;
 
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
@@ -38,15 +40,13 @@ in
       cores = 0;  # Use all available cores
     };
 
-    # Store optimisation
-    optimise.automatic = true;
-
-    # Garbage collection
-    gc = {
-      automatic = true;
-      interval = { Weekday = 7; };  # Weekly
-      options = "--delete-older-than 30d";
-    };
+    # Note: Store optimisation and GC are managed by Determinate Nix
+    # optimise.automatic = true;
+    # gc = {
+    #   automatic = true;
+    #   interval = { Weekday = 7; };
+    #   options = "--delete-older-than 30d";
+    # };
   };
 
   # macOS system settings
