@@ -81,7 +81,7 @@
       "contexts"
 
       # Development Tools
-      "docker-desktop" # Renamed from docker
+      # docker-desktop - Removed (use colima + docker CLI or orbstack instead)
       "visual-studio-code"
       "zed"
       "cursor"
@@ -118,8 +118,8 @@
 
       # Media & Entertainment
       "iina" # Video player
-      "spotify" # Music streaming
-      "handbrake-app" # Renamed from handbrake
+      # spotify - Using Nix version (cross-platform)
+      # handbrake - Using Nix version (cross-platform)
       "vlc"
 
       # Virtualization & Container Tools
