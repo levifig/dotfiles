@@ -34,7 +34,7 @@
 
       # Window management
       "yabai" # Tiling window manager
-      "skhd" # Hotkey daemon
+      "jackielii/tap/skhd-zig" # Hotkey daemon (Zig rewrite)
       "sketchybar" # Custom macOS status bar
 
       # Media processing
