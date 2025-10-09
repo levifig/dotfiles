@@ -30,6 +30,9 @@
     # Communication
     telegram-desktop  # Cross-platform Telegram client
 
+    # Cloud & Infrastructure
+    tailscale  # VPN mesh network
+
     # Additional GUI utilities that work well via Nix
     # (Most GUI apps on macOS are better as casks in nix-darwin)
   ];

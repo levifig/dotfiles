@@ -96,7 +96,7 @@
 
       # Cloud & Infrastructure
       "aws-vault-binary" # Renamed from aws-vault
-      "tailscale-app" # Renamed from tailscale
+      # tailscale - Using Nix version (cross-platform)
       "cloudflare-warp"
 
       # Database & API Tools
