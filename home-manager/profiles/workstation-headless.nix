@@ -9,6 +9,7 @@
     ./server.nix  # Inherit all server tools
     ./development.nix  # Development tools and language runtimes
     ../modules/shell/zsh.nix
+    ../modules/shell/atuin.nix
     ../modules/editors/nvim.nix
     ../modules/terminal/tmux.nix
     ../modules/terminal/starship.nix
@@ -24,8 +25,8 @@
 
     # Shell enhancements
     fzf
-    atuin
     starship
+    # Note: atuin is configured via modules/shell/atuin.nix
     # Note: direnv is provided by development.nix
 
     # Development tools - Version management

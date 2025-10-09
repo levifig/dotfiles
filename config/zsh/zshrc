@@ -156,7 +156,7 @@ _cache_completions \
 # Essential tools that need immediate loading
 source <(zoxide init zsh)
 source <(fzf --zsh)
-source <(atuin init zsh --disable-up-arrow)
+# Note: atuin init handled by home-manager (modules/shell/atuin.nix)
 source <(starship init zsh)
 source <(direnv hook zsh)
 
