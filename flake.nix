@@ -180,21 +180,22 @@
           system = "aarch64-darwin";
           modules = [
             ./darwin/configuration.nix
-            nix-homebrew.darwinModules.nix-homebrew
-            {
-              nix-homebrew = {
-                enable = true;
-                enableRosetta = true;  # Enable for Apple Silicon Macs
-                user = user;
-                taps = {
-                  "homebrew/homebrew-core" = homebrew-core;
-                  "homebrew/homebrew-cask" = homebrew-cask;
-                  "homebrew/homebrew-bundle" = homebrew-bundle;
-                };
-                mutableTaps = false;
-                autoMigrate = true;
-              };
-            }
+            # nix-homebrew disabled - using existing Homebrew installation
+            # nix-homebrew.darwinModules.nix-homebrew
+            # {
+            #   nix-homebrew = {
+            #     enable = true;
+            #     enableRosetta = true;
+            #     user = user;
+            #     taps = {
+            #       "homebrew/homebrew-core" = homebrew-core;
+            #       "homebrew/homebrew-cask" = homebrew-cask;
+            #       "homebrew/homebrew-bundle" = homebrew-bundle;
+            #     };
+            #     mutableTaps = false;
+            #     autoMigrate = true;
+            #   };
+            # }
             home-manager.darwinModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
