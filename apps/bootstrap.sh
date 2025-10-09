@@ -83,7 +83,13 @@ clone_dotfiles() {
         log_info "Dotfiles repository already exists"
         log_info "Pulling latest changes..."
         cd "$DOTFILES_DIR"
-        git pull origin main || git pull origin nix-migration
+
+        # Pull from current branch's upstream
+        if git pull; then
+            log_success "Updated from upstream"
+        else
+            log_warning "Could not pull updates (you may have local changes)"
+        fi
     else
         log_info "Cloning dotfiles repository..."
 
@@ -96,10 +102,8 @@ clone_dotfiles() {
         git clone "$REPO_URL" "$DOTFILES_DIR"
         cd "$DOTFILES_DIR"
 
-        # Check if nix-migration branch exists
-        if git ls-remote --heads origin nix-migration | grep -q nix-migration; then
-            git checkout nix-migration
-        fi
+        # Use default branch (master/main) from remote
+        # No need to switch branches - use whatever is the default
     fi
 
     log_success "Dotfiles repository ready"
