@@ -27,6 +27,9 @@
     _1password-gui  # 1Password GUI application
     _1password-cli  # 1Password CLI
 
+    # Communication
+    telegram-desktop  # Cross-platform Telegram client
+
     # Additional GUI utilities that work well via Nix
     # (Most GUI apps on macOS are better as casks in nix-darwin)
   ];

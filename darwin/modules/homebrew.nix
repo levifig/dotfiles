@@ -194,8 +194,7 @@
       "Motion" = 434290957;
       "Compressor" = 424390742;
 
-      # Communication
-      "Telegram" = 747648890;
+      # Note: Telegram managed via Nix (telegram-desktop in workstation.nix)
 
       # Media
       "Infuse" = 1136220934;
