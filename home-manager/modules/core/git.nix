@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   programs.git = {
@@ -6,8 +11,8 @@
 
     # User info - Override in host-specific configs
     # Default values provided for reference
-    userName = lib.mkDefault "Your Name";
-    userEmail = lib.mkDefault "you@example.com";
+    userName = lib.mkDefault "Levi Figueira";
+    userEmail = lib.mkDefault "me@levifig.com";
 
     signing = {
       key = lib.mkDefault "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAA...";

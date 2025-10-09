@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   programs.starship = {
@@ -9,6 +14,10 @@
     enableBashIntegration = true;
 
     settings = {
+      # Global settings
+      add_newline = false;
+      command_timeout = 1000;
+
       # General format
       format = lib.concatStrings [
         "$username"
@@ -45,7 +54,7 @@
         truncate_to_repo = true;
         format = "[$path]($style)[$read_only]($read_only_style) ";
         style = "bold cyan";
-        read_only = " 🔒";
+        read_only = " 󰌾";
         read_only_style = "red";
         truncation_symbol = "…/";
       };
@@ -53,23 +62,27 @@
       # Git
       git_branch = {
         format = "[$symbol$branch(:$remote_branch)]($style) ";
-        symbol = " ";
+        symbol = " ";
         style = "bold purple";
+      };
+
+      git_commit = {
+        tag_symbol = "  ";
       };
 
       git_status = {
         format = "([$all_status$ahead_behind]($style) )";
         style = "bold red";
-        conflicted = "⚔️ ";
+        conflicted = " ";
         ahead = "⇡\${count}";
         behind = "⇣\${count}";
         diverged = "⇕⇡\${ahead_count}⇣\${behind_count}";
-        untracked = "🤷\${count}";
-        stashed = "📦\${count}";
-        modified = "📝\${count}";
-        staged = "➕\${count}";
-        renamed = "✏️ \${count}";
-        deleted = "🗑️ \${count}";
+        untracked = " \${count}";
+        stashed = " \${count}";
+        modified = " \${count}";
+        staged = " \${count}";
+        renamed = " \${count}";
+        deleted = " \${count}";
       };
 
       # Username
@@ -86,54 +99,269 @@
         ssh_only = true;
         format = "[$hostname]($style) ";
         style = "bold green";
+        ssh_symbol = " ";
       };
 
       # Nix shell
       nix_shell = {
         format = "[$symbol$state( \\($name\\))]($style) ";
-        symbol = "❄️ ";
+        symbol = " ";
         style = "bold blue";
       };
 
       # Languages
       nodejs = {
         format = "[$symbol($version )]($style)";
-        symbol = " ";
+        symbol = " ";
         style = "bold green";
-        detect_extensions = [ "js" "mjs" "cjs" "ts" "tsx" ];
-        detect_files = [ "package.json" ".node-version" ".nvmrc" ];
+        detect_extensions = [
+          "js"
+          "mjs"
+          "cjs"
+          "ts"
+          "tsx"
+        ];
+        detect_files = [
+          "package.json"
+          ".node-version"
+          ".nvmrc"
+        ];
       };
 
       python = {
         format = "[$symbol($version )($virtualenv )]($style)";
-        symbol = "🐍 ";
+        symbol = " ";
         style = "bold yellow";
         detect_extensions = [ "py" ];
-        detect_files = [ "requirements.txt" "pyproject.toml" "Pipfile" ];
+        detect_files = [
+          "requirements.txt"
+          "pyproject.toml"
+          "Pipfile"
+        ];
       };
 
       ruby = {
         format = "[$symbol($version )]($style)";
-        symbol = "💎 ";
+        symbol = " ";
         style = "bold red";
         detect_extensions = [ "rb" ];
-        detect_files = [ "Gemfile" ".ruby-version" ];
+        detect_files = [
+          "Gemfile"
+          ".ruby-version"
+        ];
       };
 
       golang = {
         format = "[$symbol($version )]($style)";
-        symbol = "🐹 ";
+        symbol = " ";
         style = "bold cyan";
         detect_extensions = [ "go" ];
-        detect_files = [ "go.mod" "go.sum" ];
+        detect_files = [
+          "go.mod"
+          "go.sum"
+        ];
       };
 
       rust = {
         format = "[$symbol($version )]($style)";
-        symbol = "🦀 ";
+        symbol = "󱘗 ";
         style = "bold red";
         detect_extensions = [ "rs" ];
         detect_files = [ "Cargo.toml" ];
+      };
+
+      buf = {
+        symbol = " ";
+      };
+
+      bun = {
+        symbol = " ";
+      };
+
+      c = {
+        symbol = " ";
+      };
+
+      cpp = {
+        symbol = " ";
+      };
+
+      cmake = {
+        symbol = " ";
+      };
+
+      conda = {
+        symbol = " ";
+      };
+
+      crystal = {
+        symbol = " ";
+      };
+
+      dart = {
+        symbol = " ";
+      };
+
+      deno = {
+        symbol = " ";
+      };
+
+      elixir = {
+        symbol = " ";
+      };
+
+      elm = {
+        symbol = " ";
+      };
+
+      fennel = {
+        symbol = " ";
+      };
+
+      haskell = {
+        symbol = " ";
+      };
+
+      haxe = {
+        symbol = " ";
+      };
+
+      java = {
+        symbol = " ";
+      };
+
+      julia = {
+        symbol = " ";
+      };
+
+      kotlin = {
+        symbol = " ";
+      };
+
+      lua = {
+        symbol = " ";
+      };
+
+      nim = {
+        symbol = "󰆥 ";
+      };
+
+      ocaml = {
+        symbol = " ";
+      };
+
+      perl = {
+        symbol = " ";
+      };
+
+      php = {
+        symbol = " ";
+      };
+
+      rlang = {
+        symbol = "󰟔 ";
+      };
+
+      scala = {
+        symbol = " ";
+      };
+
+      swift = {
+        symbol = " ";
+      };
+
+      zig = {
+        symbol = " ";
+      };
+
+      gradle = {
+        symbol = " ";
+      };
+
+      # VCS/Tools modules
+      fossil_branch = {
+        symbol = " ";
+      };
+
+      gcloud = {
+        symbol = "  ";
+      };
+
+      guix_shell = {
+        symbol = " ";
+      };
+
+      hg_branch = {
+        symbol = " ";
+      };
+
+      memory_usage = {
+        symbol = "󰍛 ";
+      };
+
+      meson = {
+        symbol = "󰔷 ";
+      };
+
+      package = {
+        symbol = "󰏗 ";
+      };
+
+      pijul_channel = {
+        symbol = " ";
+      };
+
+      pixi = {
+        symbol = "󰏗 ";
+      };
+
+      # OS symbols
+      os.symbols = {
+        Alpaquita = " ";
+        Alpine = " ";
+        AlmaLinux = " ";
+        Amazon = " ";
+        Android = " ";
+        Arch = " ";
+        Artix = " ";
+        CachyOS = " ";
+        CentOS = " ";
+        Debian = " ";
+        DragonFly = " ";
+        Emscripten = " ";
+        EndeavourOS = " ";
+        Fedora = " ";
+        FreeBSD = " ";
+        Garuda = "󰛓 ";
+        Gentoo = " ";
+        HardenedBSD = "󰞌 ";
+        Illumos = "󰈸 ";
+        Kali = " ";
+        Linux = " ";
+        Mabox = " ";
+        Macos = " ";
+        Manjaro = " ";
+        Mariner = " ";
+        MidnightBSD = " ";
+        Mint = " ";
+        NetBSD = " ";
+        NixOS = " ";
+        Nobara = " ";
+        OpenBSD = "󰈺 ";
+        openSUSE = " ";
+        OracleLinux = "󰌷 ";
+        Pop = " ";
+        Raspbian = " ";
+        Redhat = " ";
+        RedHatEnterprise = " ";
+        RockyLinux = " ";
+        Redox = "󰀘 ";
+        Solus = "󰠳 ";
+        SUSE = " ";
+        Ubuntu = " ";
+        Unknown = " ";
+        Void = " ";
+        Windows = "󰍲 ";
       };
 
       # Tools
@@ -145,7 +373,7 @@
 
       docker_context = {
         format = "[$symbol$context]($style) ";
-        symbol = "🐋 ";
+        symbol = " ";
         style = "bold blue";
         disabled = false;
       };
@@ -159,7 +387,7 @@
 
       aws = {
         format = "[$symbol($profile )(\\($region\\) )]($style)";
-        symbol = "☁️ ";
+        symbol = "  ";
         style = "bold yellow";
       };
 

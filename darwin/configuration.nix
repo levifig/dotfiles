@@ -1,5 +1,10 @@
 { config, pkgs, lib, ... }:
 
+let
+  # Single source of truth for username
+  userName = "levifig";
+  homeDir = "/Users/${userName}";
+in
 {
   # Nix-Darwin configuration for macOS
   # This replaces Homebrew for system-level package management
@@ -26,7 +31,7 @@
 
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
-      trusted-users = [ "root" "@admin" "@staff" "levifig" ];
+      trusted-users = [ "root" "@admin" "@staff" userName ];
 
       # Build optimizations
       max-jobs = "auto";
@@ -47,7 +52,7 @@
   # macOS system settings
   system = {
     # Primary user for system defaults
-    primaryUser = "levifig";
+    primaryUser = userName;
 
     defaults = {
       # Dock settings
@@ -105,6 +110,11 @@
     ];
   };
 
+  # LaunchD environment variables (for GUI apps)
+  launchd.user.envVariables = {
+    PATH = config.environment.systemPath + ":${homeDir}/.nix-profile/bin:${homeDir}/.local/bin";
+  };
+
   # Services
   services = {
     # nix-daemon is now managed automatically by nix-darwin when nix.enable = true
@@ -123,9 +133,9 @@
   };
 
   # Users
-  users.users.levifig = {
-    name = "levifig";
-    home = "/Users/levifig";
+  users.users.${userName} = {
+    name = userName;
+    home = homeDir;
   };
 
   # Allow unfree packages

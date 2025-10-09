@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   # Declarative Homebrew Management via nix-homebrew
@@ -11,19 +16,17 @@
     onActivation = {
       autoUpdate = true;
       upgrade = true;
-      cleanup = "zap";  # Uninstall packages not declared here
+      cleanup = "uninstall"; # Only remove unused dependencies (safer than "zap")
+      # Note: Change to "zap" after reviewing to remove all undeclared packages
     };
 
     # Homebrew taps
     taps = [
       "dagger/tap"
-      "dracula/install"
       "felixkratz/formulae"
-      "hashicorp/tap"
       "jackielii/tap"
       "koekeishiya/formulae"
       "nikitabobko/tap"
-      "sst/tap"
     ];
 
     # Homebrew formulas (CLI tools)
@@ -33,9 +36,23 @@
       # macOS utilities not in nixpkgs
       "terminal-notifier"
 
+      # Window management
+      "yabai" # Tiling window manager
+      "skhd" # Hotkey daemon
+      "sketchybar" # Custom macOS status bar
+
+      # Media processing
+      "ffmpeg" # Video/audio processing with all codecs
+
+      # Development tools
+      "xcodes" # Xcode version management
+
+      # AI/LLM
+      "llama.cpp" # Local LLM inference
+
       # Database with service management
       # Using Homebrew for better launchd integration
-      "postgresql@18"  # Development database (brew services start postgresql@18)
+      "postgresql@18" # Development database (brew services start postgresql@18)
     ];
 
     # Homebrew Casks (GUI applications)
@@ -45,18 +62,18 @@
       "1password-cli"
 
       # Window Management
-      "aerospace"  # Current window manager
+      "aerospace" # Current window manager
 
       # Terminal Emulators
-      "alacritty"
-      "ghostty"  # Primary terminal
+      # alacritty - Now managed via Nix (home-manager/modules/terminal/alacritty.nix)
+      # ghostty - Now managed via Nix (home-manager/modules/terminal/ghostty.nix)
+      "iterm2" # Backup terminal
 
       # Browsers (multiple for testing/preferences)
       "arc"
       "brave-browser"
       "firefox@beta"
       "zen-browser"
-      # Safari is included with macOS
 
       # Productivity & Utilities
       "alfred"
@@ -70,7 +87,15 @@
       "docker"
       "visual-studio-code"
       "zed"
-      # "cursor"
+      "cursor"
+      "github" # GitHub Desktop
+      "sublime-text" # Quick editor
+
+      # AI & LLM Tools
+      "claude" # Claude Desktop
+      "chatgpt" # ChatGPT Desktop
+      "lm-studio" # Local LLM management
+      "ollama" # Local LLM runtime
 
       # Cloud & Infrastructure
       "aws-vault"
@@ -79,64 +104,67 @@
 
       # Database & API Tools
       "beekeeper-studio"
-      # "db-browser-for-sqlite"
-      # "sequel-ace"
+      "db-browser-for-sqlite"
+      "sequel-ace"
 
       # Communication
       "discord"
       "slack@beta"
       "telegram"
-      # "whatsapp"
-      # "zoom"
+      "zoom"
 
       # Design & Creative
       "figma"
-      # "blender"  # 3D modeling - install when needed
-      # "godot"    # Game engine - install when needed
-      # "obs"
+      "blender" # 3D modeling - install when needed
+      "godot" # Game engine - install when needed
+      "obs"
 
       # Media & Entertainment
-      # "iina"
-      # "spotify"
-      # "vlc"
+      "iina" # Video player
+      "spotify" # Music streaming
+      "handbrake" # Video conversion
+      "vlc"
 
       # Virtualization & Container Tools
-      "colima"        # Container runtime
-      "orbstack"      # Docker/Linux VMs
-      "utm"           # Virtual machines
-      "vagrant"       # VM orchestration
-      # "vmware-fusion"     # Commercial - install manually if needed
-      # "parallels-desktop" # Commercial - install manually if needed
+      "colima" # Container runtime
+      "orbstack" # Docker/Linux VMs
+      "utm" # Virtual machines
+      "vagrant" # VM orchestration
+      "vmware-fusion" # Commercial - install manually if needed
+      "parallels-desktop" # Commercial - install manually if needed
 
       # File Management & Sync
       "google-drive"
-      # "dropbox"
+      "dropbox"
 
-      # System Monitoring
+      # System Monitoring & Utilities
       "stats"
-      # "sensei"
-      # "monitorcontrol"
+      "appcleaner" # Clean app uninstalls
+      "aldente" # Battery management
+      "betterdisplay" # Display management
+      "karabiner-elements" # Keyboard customization
+      "hammerspoon" # Automation toolkit
+      "sensei"
+      "monitorcontrol"
 
       # Specialized Tools
       "linear-linear"
       "notion"
       "obsidian"
-      # "craft"  # May prefer Mac App Store version
+      "todoist" # Task management
+      "typora" # Markdown editor
 
       # Gaming & Benchmarking
-      # "steam"
-      # "geekbench"
+      "steam"
+      "geekbench"
 
       # Audio/Music Production
-      # "ableton-live-lite"
-      # "logic-pro"  # Mac App Store
-      # "reaper"
+      "ableton-live-lite"
+      "reaper"
 
       # Photography & Video
-      # "darktable"
-      # "davinci-resolve"  # Mac App Store
-      # "final-cut-pro"  # Mac App Store
-      # "handbrake"
+      "darktable"
+      "handbrake"
     ];
 
     # Mac App Store apps
@@ -165,10 +193,10 @@
       "Pixelmator Pro" = 1289583905;
 
       # Apple Pro Apps (commented - install manually if needed)
-      # "Final Cut Pro" = 424389933;
-      # "Logic Pro" = 634148309;
-      # "Motion" = 434290957;
-      # "Compressor" = 424390742;
+      "Final Cut Pro" = 424389933;
+      "Logic Pro" = 634148309;
+      "Motion" = 434290957;
+      "Compressor" = 424390742;
 
       # Communication
       "Telegram" = 747648890;
@@ -179,6 +207,7 @@
       # Development/Reading
       "Marked 2" = 890031187;
       "Kindle" = 302584613;
+      "Unread" = 1363637349;
 
       # System Tools
       "WireGuard" = 1451685025;

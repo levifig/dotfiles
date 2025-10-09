@@ -3,7 +3,8 @@
 {
   programs.ghostty = {
     enable = true;
-    package = null;  # Ghostty installed externally (e.g., via Homebrew or direct download)
+    # Available in nixpkgs for both macOS and Linux
+    package = pkgs.ghostty;
 
     settings = {
       # Font configuration
