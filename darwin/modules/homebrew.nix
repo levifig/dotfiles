@@ -49,6 +49,9 @@
       # Database with service management
       # Using Homebrew for better launchd integration
       "postgresql@18" # Development database (brew services start postgresql@18)
+
+      # Container runtime (CLI tool, not a cask)
+      "colima"
     ];
 
     # Homebrew Casks (GUI applications)
@@ -120,12 +123,11 @@
       "vlc"
 
       # Virtualization & Container Tools
-      "colima" # Container runtime
       "orbstack" # Docker/Linux VMs
       "utm" # Virtual machines
       "vagrant" # VM orchestration
       "vmware-fusion" # Commercial - install manually if needed
-      "parallels-desktop" # Commercial - install manually if needed
+      "parallels" # Commercial - install manually if needed
 
       # File Management & Sync
       "google-drive"
@@ -192,8 +194,7 @@
       "Motion" = 434290957;
       "Compressor" = 424390742;
 
-      # Communication
-      "Telegram" = 747648890;
+      # Note: Telegram installed via cask, not MAS
 
       # Media
       "Infuse" = 1136220934;
