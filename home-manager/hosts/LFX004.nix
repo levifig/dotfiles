@@ -10,7 +10,6 @@
     ../platform/linux-base.nix
     ../profiles/workstation-headless.nix  # Includes: server.nix, development.nix, zsh, nvim, tmux, starship
     ../profiles/workstation-linux-gui.nix  # GUI applications (Linux equivalents of macOS casks)
-    ../profiles/platform.nix
     ../profiles/cli-tools.nix              # Language package manager tools
   ];
 
