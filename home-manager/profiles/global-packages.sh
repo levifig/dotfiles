@@ -43,6 +43,17 @@ BUN_PACKAGES=(
   "@openai/codex"
   "@google/gemini-cli"
   "@sourcegraph/amp"
+  "@github/copilot"
+
+)
+
+# =============================================================================
+# Shell Installers (curl-pipe-bash)
+# Format: binary_name|installer_url
+# =============================================================================
+SHELL_INSTALLERS=(
+  "cursor|https://cursor.com/install"
+  # "opencode|https://opencode.ai/install"  # Example
 )
 
 # =============================================================================
@@ -110,6 +121,25 @@ install_bun() {
   done
 }
 
+install_shell() {
+  if [ ${#SHELL_INSTALLERS[@]} -eq 0 ]; then
+    echo -e "${BLUE}No shell installers configured${NC}"
+    return
+  fi
+
+  echo -e "${BLUE}Installing shell-based tools...${NC}"
+  for installer in "${SHELL_INSTALLERS[@]}"; do
+    if [[ $installer == \#* ]]; then continue; fi  # Skip comments
+    IFS='|' read -r binary url <<< "$installer"
+    if command -v "$binary" &> /dev/null; then
+      echo -e "  ${GREEN}✓${NC} $binary (already installed)"
+    else
+      echo -e "  ${GREEN}→${NC} Installing $binary..."
+      curl -fsSL "$url" | bash
+    fi
+  done
+}
+
 list_installed() {
   echo -e "${BLUE}=== NPM Global Packages ===${NC}"
   npm list -g --depth=0 2>/dev/null || echo "npm not available"
@@ -128,6 +158,19 @@ list_installed() {
     bun pm ls -g 2>/dev/null || echo "No global bun packages"
     echo ""
   fi
+
+  echo -e "${BLUE}=== Shell-Installed Tools ===${NC}"
+  for installer in "${SHELL_INSTALLERS[@]}"; do
+    if [[ $installer == \#* ]]; then continue; fi
+    IFS='|' read -r binary url <<< "$installer"
+    if command -v "$binary" &> /dev/null; then
+      local version=$("$binary" --version 2>/dev/null || "$binary" -v 2>/dev/null || echo "installed")
+      echo -e "  ${GREEN}✓${NC} $binary: $version"
+    else
+      echo -e "  ${RED}✗${NC} $binary"
+    fi
+  done
+  echo ""
 }
 
 check_missing() {
@@ -172,6 +215,16 @@ check_missing() {
     done
   fi
 
+  # Check Shell installers
+  for installer in "${SHELL_INSTALLERS[@]}"; do
+    if [[ $installer == \#* ]]; then continue; fi
+    IFS='|' read -r binary url <<< "$installer"
+    if ! command -v "$binary" &> /dev/null; then
+      echo -e "  ${RED}✗${NC} shell: $binary"
+      ((missing++))
+    fi
+  done
+
   if [ $missing -eq 0 ]; then
     echo -e "${GREEN}All packages installed!${NC}"
   else
@@ -195,6 +248,7 @@ Package Configuration:
     - PYTHON_PACKAGES
     - RUBY_GEMS
     - BUN_PACKAGES
+    - SHELL_INSTALLERS (format: binary|url)
 
 Examples:
   $0 install              # Install all packages
@@ -214,6 +268,7 @@ case "${1:-help}" in
     install_python
     install_ruby
     install_bun
+    install_shell
     echo -e "${GREEN}Done!${NC}"
     ;;
   list)
