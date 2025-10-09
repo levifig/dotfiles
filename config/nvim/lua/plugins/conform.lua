@@ -19,31 +19,31 @@ return {
         elixir = { "mix" },
 
         -- JavaScript/TypeScript
-        javascript = { { "prettierd", "prettier" } },
-        typescript = { { "prettierd", "prettier" } },
-        javascriptreact = { { "prettierd", "prettier" } },
-        typescriptreact = { { "prettierd", "prettier" } },
+        javascript = { "prettierd", "prettier", stop_after_first = true },
+        typescript = { "prettierd", "prettier", stop_after_first = true },
+        javascriptreact = { "prettierd", "prettier", stop_after_first = true },
+        typescriptreact = { "prettierd", "prettier", stop_after_first = true },
 
         -- Web technologies
-        html = { { "prettierd", "prettier" } },
-        css = { { "prettierd", "prettier" } },
-        scss = { { "prettierd", "prettier" } },
-        json = { { "prettierd", "prettier" } },
-        jsonc = { { "prettierd", "prettier" } },
+        html = { "prettierd", "prettier", stop_after_first = true },
+        css = { "prettierd", "prettier", stop_after_first = true },
+        scss = { "prettierd", "prettier", stop_after_first = true },
+        json = { "prettierd", "prettier", stop_after_first = true },
+        jsonc = { "prettierd", "prettier", stop_after_first = true },
 
         -- Configuration files
-        yaml = { { "prettierd", "prettier" } },
+        yaml = { "prettierd", "prettier", stop_after_first = true },
         toml = { "taplo" },
 
         -- Infrastructure as Code
         terraform = { "terraform_fmt" },
         hcl = { "terraform_fmt" },
-        
+
         -- Kubernetes/Helm
         helm = { "prettier" },
 
         -- Documentation
-        markdown = { { "prettierd", "prettier" } },
+        markdown = { "prettierd", "prettier", stop_after_first = true },
 
         -- Shell scripting
         sh = { "shfmt" },
@@ -63,15 +63,6 @@ return {
         },
       },
 
-      format_on_save = {
-        timeout_ms = 1000,
-        lsp_fallback = true,
-      },
-      
-      format_after_save = {
-        lsp_fallback = true,
-      },
-      
       log_level = vim.log.levels.ERROR,
       notify_on_error = true,
     })
