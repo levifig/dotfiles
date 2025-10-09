@@ -12,7 +12,7 @@
     ../modules/shell/atuin.nix
     ../modules/editors/nvim.nix
     ../modules/terminal/tmux.nix
-    ../modules/terminal/starship.nix
+    ../modules/shell/starship.nix
   ];
 
   home.packages = with pkgs; [
