@@ -54,7 +54,7 @@
     # ============================================
     # Database & API Tools
     # ============================================
-    dbeaver
+    dbeaver-bin
     # beekeeper-studio  # Check if available in nixpkgs
     sqlitebrowser  # Equivalent to db-browser-for-sqlite
 
@@ -91,7 +91,7 @@
     # System Utilities
     # ============================================
     _1password-gui  # Password manager
-    _1password  # CLI
+    _1password-cli  # CLI
     flameshot  # Screenshot tool (alternative to cleanshot)
     # copyq  # Clipboard manager
     # albert  # Launcher (alternative to alfred/raycast)
