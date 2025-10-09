@@ -204,7 +204,12 @@
         "homebrew-core": "homebrew-core",
         "nix-homebrew": "nix-homebrew",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-darwin": "nixpkgs-darwin"
+        "nixpkgs-darwin": "nixpkgs-darwin",
+        "tap-dagger": "tap-dagger",
+        "tap-felixkratz": "tap-felixkratz",
+        "tap-jackielii": "tap-jackielii",
+        "tap-koekeishiya": "tap-koekeishiya",
+        "tap-nikitabobko": "tap-nikitabobko"
       }
     },
     "systems": {
@@ -219,6 +224,86 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "tap-dagger": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1759943825,
+        "narHash": "sha256-Jxs7xBsOVmHjwIuanZrcB+8A1krJ79r8XiYcEYjzLDc=",
+        "owner": "dagger",
+        "repo": "homebrew-tap",
+        "rev": "4a92a386bf858e453c4c2cf2110dafbfc72f6593",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dagger",
+        "repo": "homebrew-tap",
+        "type": "github"
+      }
+    },
+    "tap-felixkratz": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1758708932,
+        "narHash": "sha256-SsFP4MS1udaS7GMVq9HpsYiTY4tlpXc0CNbk7TzzsjE=",
+        "owner": "felixkratz",
+        "repo": "homebrew-formulae",
+        "rev": "d67bfcbb7da8c0cc999af348dadf5695db62c419",
+        "type": "github"
+      },
+      "original": {
+        "owner": "felixkratz",
+        "repo": "homebrew-formulae",
+        "type": "github"
+      }
+    },
+    "tap-jackielii": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1756314826,
+        "narHash": "sha256-oQO4X5Gqpq9m5OXukmoQ9w95HyTHj2sccUSNKZlxFek=",
+        "owner": "jackielii",
+        "repo": "homebrew-tap",
+        "rev": "5995841dd8cc26971fc47951ddafbee700fb0189",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jackielii",
+        "repo": "homebrew-tap",
+        "type": "github"
+      }
+    },
+    "tap-koekeishiya": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1759843705,
+        "narHash": "sha256-4dLzkwdIw02V8rbNzdOZ4h3ZwtpqRof2WV3KwXN/EXE=",
+        "owner": "koekeishiya",
+        "repo": "homebrew-formulae",
+        "rev": "c9fc60dcb9746ae35a08e1fa8e6eaa2f604a3b92",
+        "type": "github"
+      },
+      "original": {
+        "owner": "koekeishiya",
+        "repo": "homebrew-formulae",
+        "type": "github"
+      }
+    },
+    "tap-nikitabobko": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1756592205,
+        "narHash": "sha256-AB7c96r/7JgkBubPrlEFz9yaIPdsD7S8JkLVnGtlhAw=",
+        "owner": "nikitabobko",
+        "repo": "homebrew-tap",
+        "rev": "2eff00794112cf73fdefeec27cd9b30abe644408",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nikitabobko",
+        "repo": "homebrew-tap",
         "type": "github"
       }
     }
