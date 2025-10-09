@@ -21,13 +21,9 @@
     };
 
     # Homebrew taps
-    taps = [
-      "dagger/tap"
-      "felixkratz/formulae"
-      "jackielii/tap"
-      "koekeishiya/formulae"
-      "nikitabobko/tap"
-    ];
+    # Note: Custom taps are now managed via nix-homebrew in flake.nix
+    # This ensures they are immutable and part of the flake inputs
+    taps = [];
 
     # Homebrew formulas (CLI tools)
     # Note: Cross-platform tools are managed via Nix (see home-manager profiles)

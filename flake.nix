@@ -56,6 +56,28 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
+
+    # Custom taps
+    tap-dagger = {
+      url = "github:dagger/homebrew-tap";
+      flake = false;
+    };
+    tap-felixkratz = {
+      url = "github:felixkratz/homebrew-formulae";
+      flake = false;
+    };
+    tap-jackielii = {
+      url = "github:jackielii/homebrew-tap";
+      flake = false;
+    };
+    tap-koekeishiya = {
+      url = "github:koekeishiya/homebrew-formulae";
+      flake = false;
+    };
+    tap-nikitabobko = {
+      url = "github:nikitabobko/homebrew-tap";
+      flake = false;
+    };
   };
 
   outputs = { self, nixpkgs, nixpkgs-darwin, home-manager, darwin, disko, flake-utils, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, ... }@inputs:
@@ -187,11 +209,19 @@
                 enableRosetta = true;  # Enable for Apple Silicon Macs
                 user = user;
                 taps = {
+                  # Official Homebrew taps
                   "homebrew/homebrew-core" = homebrew-core;
                   "homebrew/homebrew-cask" = homebrew-cask;
                   "homebrew/homebrew-bundle" = homebrew-bundle;
+
+                  # Custom taps
+                  "dagger/homebrew-tap" = inputs.tap-dagger;
+                  "felixkratz/homebrew-formulae" = inputs.tap-felixkratz;
+                  "jackielii/homebrew-tap" = inputs.tap-jackielii;
+                  "koekeishiya/homebrew-formulae" = inputs.tap-koekeishiya;
+                  "nikitabobko/homebrew-tap" = inputs.tap-nikitabobko;
                 };
-                mutableTaps = true;  # Allow custom taps to be added at runtime
+                mutableTaps = false;  # Fully declarative - all taps managed by Nix
                 autoMigrate = true;
               };
             }
