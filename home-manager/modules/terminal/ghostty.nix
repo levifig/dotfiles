@@ -3,8 +3,8 @@
 {
   programs.ghostty = {
     enable = true;
-    # Available in nixpkgs for both macOS and Linux
-    package = pkgs.ghostty;
+    # Using binary package to avoid building from source
+    package = pkgs.ghostty-bin;
 
     settings = {
       # Font configuration
