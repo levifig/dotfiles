@@ -117,10 +117,11 @@ install_nix_darwin() {
 
     if command_exists darwin-rebuild; then
         log_info "nix-darwin is already installed"
-        return 0
+        return 1  # Return 1 to indicate already installed (apply needed)
     fi
 
     log_info "Installing nix-darwin..."
+    log_warning "Initial nix-darwin installation requires sudo for system changes"
 
     local DOTFILES_DIR="${HOME}/.dotfiles"
     local HOSTNAME=$(hostname -s)
@@ -129,9 +130,15 @@ install_nix_darwin() {
 
     # Bootstrap nix-darwin using the flake
     # This will install nix-darwin and make darwin-rebuild available
-    nix run nix-darwin -- switch --flake ".#${HOSTNAME}"
-
-    log_success "nix-darwin installed successfully"
+    # Note: First-time installation requires sudo for system activation
+    if sudo nix run nix-darwin -- switch --flake ".#${HOSTNAME}"; then
+        log_success "nix-darwin installed and configured successfully"
+        return 0  # Return 0 to indicate fresh install (already applied)
+    else
+        log_error "nix-darwin installation failed"
+        log_info "You may need to grant sudo access or check the error above"
+        exit 1
+    fi
 }
 
 # Install Home Manager (Linux only, or as fallback)
@@ -165,9 +172,10 @@ apply_configuration() {
     if [[ $(detect_os) == "darwin" ]]; then
         log_info "Applying nix-darwin configuration for: $HOSTNAME"
 
-        if darwin-rebuild switch --flake ".#${HOSTNAME}"; then
+        # darwin-rebuild requires sudo for system-level changes
+        if sudo darwin-rebuild switch --flake ".#${HOSTNAME}"; then
             log_success "nix-darwin configuration applied successfully!"
-            log_info "System generation: $(darwin-rebuild --list-generations | tail -1)"
+            log_info "System generation: $(sudo darwin-rebuild --list-generations | tail -1)"
         else
             log_error "Failed to apply nix-darwin configuration"
             exit 1
@@ -263,13 +271,22 @@ main() {
     backup_existing_configs
 
     # Install appropriate system manager based on OS
+    local SKIP_APPLY=false
     if [[ $(detect_os) == "darwin" ]]; then
-        install_nix_darwin
+        if install_nix_darwin; then
+            # Fresh install - configuration already applied during bootstrap
+            SKIP_APPLY=true
+        fi
     else
         install_home_manager
     fi
 
-    apply_configuration
+    # Apply configuration (skip if we just did a fresh nix-darwin install)
+    if [[ "$SKIP_APPLY" != true ]]; then
+        apply_configuration
+    else
+        log_info "Configuration already applied during nix-darwin installation"
+    fi
 
     echo ""
     echo "================================================"
