@@ -3,7 +3,10 @@ bootTimeStart=$(date +%s%N 2>/dev/null)
 
 ##
 ## set up environment
+# Nix paths FIRST for proper precedence
 export PATH="\
+${HOME}/.nix-profile/bin:\
+/nix/var/nix/profiles/default/bin:\
 ${BREW_PREFIX}/opt/rustup/bin:\
 ${BREW_PREFIX}/opt/homebrew/sbin:\
 ${BREW_PREFIX}/opt/homebrew/bin:\
