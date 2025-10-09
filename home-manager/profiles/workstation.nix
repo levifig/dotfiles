@@ -36,7 +36,6 @@
 
     # Media & Entertainment
     spotify # Music streaming
-    handbrake # Video transcoding
 
     # Database & API Tools
     sqlitebrowser # SQLite database browser

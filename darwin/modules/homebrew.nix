@@ -140,6 +140,7 @@
 
       # Photography & Video
       "darktable"
+      "handbrake"
     ];
 
     # Mac App Store apps
