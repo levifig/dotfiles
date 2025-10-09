@@ -38,7 +38,6 @@ RUBY_GEMS=(
 # Bun Global Packages
 # =============================================================================
 BUN_PACKAGES=(
-  "opencode-ai"
   "@anthropic-ai/claude-code"
   "@openai/codex"
   "@google/gemini-cli"
@@ -53,7 +52,7 @@ BUN_PACKAGES=(
 # =============================================================================
 SHELL_INSTALLERS=(
   "cursor|https://cursor.com/install"
-  # "opencode|https://opencode.ai/install"  # Example
+  "opencode|https://opencode.ai/install"
 )
 
 # =============================================================================
