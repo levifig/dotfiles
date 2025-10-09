@@ -57,9 +57,7 @@
 
     # Homebrew Casks (GUI applications)
     casks = [
-      # Security & Authentication
-      "1password"
-      "1password-cli"
+      # Note: 1Password packages are managed via Nix in home-manager/profiles/workstation.nix
 
       # Window Management
       "aerospace" # Current window manager

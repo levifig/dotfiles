@@ -90,8 +90,7 @@
     # ============================================
     # System Utilities
     # ============================================
-    _1password-gui  # Password manager
-    _1password-cli  # CLI
+    # Note: 1Password packages are in profiles/workstation.nix for cross-platform consistency
     flameshot  # Screenshot tool (alternative to cleanshot)
     # copyq  # Clipboard manager
     # albert  # Launcher (alternative to alfred/raycast)
