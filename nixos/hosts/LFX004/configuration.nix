@@ -51,6 +51,12 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  # TEMPORARY: Allow insecure packages
+  # TODO: Identify which package requires openssl-1.1 and find an alternative
+  nixpkgs.config.permittedInsecurePackages = [
+    "openssl-1.1.1w"
+  ];
+
   # Users
   users.users.levifig = {
     isNormalUser = true;
