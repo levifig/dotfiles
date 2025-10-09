@@ -221,7 +221,7 @@
   programs.direnv = {
     enable = true;
     enableZshIntegration = true;
-    enableBashIntegration = true;
+    enableBashIntegration = false;
     nix-direnv.enable = true;
   };
 

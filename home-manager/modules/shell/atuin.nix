@@ -7,7 +7,7 @@
   programs.atuin = {
     enable = true;
     enableZshIntegration = true;
-    enableBashIntegration = true;
+    enableBashIntegration = false;
 
     # Disable up-arrow binding to preserve default zsh behavior
     flags = [ "--disable-up-arrow" ];

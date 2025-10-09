@@ -11,7 +11,7 @@
 
     # Enable integration with shells
     enableZshIntegration = true;
-    enableBashIntegration = true;
+    enableBashIntegration = false;
 
     settings = {
       # Global settings
