@@ -160,7 +160,7 @@
 
       # Photography & Video
       "darktable"
-      "handbrake"
+      # handbrake - Using Nix version (cross-platform)
     ];
 
     # Mac App Store apps
