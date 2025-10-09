@@ -191,7 +191,7 @@
                   "homebrew/homebrew-cask" = homebrew-cask;
                   "homebrew/homebrew-bundle" = homebrew-bundle;
                 };
-                mutableTaps = false;
+                mutableTaps = true;  # Allow custom taps to be added at runtime
                 autoMigrate = true;
               };
             }
