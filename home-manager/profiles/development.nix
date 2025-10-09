@@ -54,6 +54,7 @@
 
     # Nix
     nixd  # Nix language server
+    nil   # Alternative Nix language server
 
     # Containers
     docker-client
