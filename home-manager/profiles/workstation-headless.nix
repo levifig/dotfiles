@@ -51,6 +51,17 @@
     tokei
     hyperfine
 
+    # Cloud storage and sync
+    rclone
+    icloudpd
+
+    # Media utilities
+    mediainfo
+    exiftool
+
+    # Container runtime (alternative to Docker Desktop)
+    colima
+
     # Fun utilities
     cowsay
     fortune
