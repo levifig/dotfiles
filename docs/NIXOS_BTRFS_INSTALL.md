@@ -1,11 +1,10 @@
-# NixOS Installation Guide - LFX004 (Lenovo L14 Gen2)
+# NixOS Installation Guide
 # BTRFS with Subvolumes
 
-This guide covers installing NixOS on LFX004 with BTRFS filesystem and declarative disk configuration using disko.
+This guide covers installing NixOS with BTRFS filesystem and declarative disk configuration using disko.
 
 ## Prerequisites
 
-- Lenovo L14 Gen2 laptop
 - NixOS minimal ISO (burned to USB)
 - Network connection (wired or wireless)
 - Your dotfiles already configured with BTRFS layout
@@ -60,7 +59,6 @@ ping -c 3 nixos.org
 lsblk
 
 # Identify your primary disk (usually /dev/nvme0n1 or /dev/sda)
-# For Lenovo L14 Gen2, likely /dev/nvme0n1
 ```
 
 **Note the device path for the next steps!**
