@@ -70,7 +70,7 @@
       "arc"
       "brave-browser"
       "firefox@beta"
-      "zen-browser"
+      "zen" # Renamed from zen-browser
 
       # Productivity & Utilities
       "alfred"
@@ -81,7 +81,7 @@
       "contexts"
 
       # Development Tools
-      "docker"
+      "docker-desktop" # Renamed from docker
       "visual-studio-code"
       "zed"
       "cursor"
@@ -92,11 +92,11 @@
       "claude" # Claude Desktop
       "chatgpt" # ChatGPT Desktop
       "lm-studio" # Local LLM management
-      "ollama" # Local LLM runtime
+      "ollama-app" # Renamed from ollama
 
       # Cloud & Infrastructure
-      "aws-vault"
-      "tailscale"
+      "aws-vault-binary" # Renamed from aws-vault
+      "tailscale-app" # Renamed from tailscale
       "cloudflare-warp"
 
       # Database & API Tools
@@ -107,7 +107,7 @@
       # Communication
       "discord"
       "slack@beta"
-      "telegram"
+      # telegram - Using MAS version instead
       "zoom"
 
       # Design & Creative
@@ -119,7 +119,7 @@
       # Media & Entertainment
       "iina" # Video player
       "spotify" # Music streaming
-      "handbrake" # Video conversion
+      "handbrake-app" # Renamed from handbrake
       "vlc"
 
       # Virtualization & Container Tools
@@ -147,7 +147,7 @@
       "linear-linear"
       "notion"
       "obsidian"
-      "todoist" # Task management
+      "todoist-app" # Renamed from todoist
       "typora" # Markdown editor
 
       # Gaming & Benchmarking
@@ -194,7 +194,8 @@
       "Motion" = 434290957;
       "Compressor" = 424390742;
 
-      # Note: Telegram installed via cask, not MAS
+      # Communication
+      "Telegram" = 747648890;
 
       # Media
       "Infuse" = 1136220934;
