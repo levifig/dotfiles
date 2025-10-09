@@ -59,9 +59,16 @@
     # Media utilities
     mediainfo
     exiftool
+    ffmpeg_8-headless  # Video/audio processing
 
     # Container runtime (alternative to Docker Desktop)
     colima
+
+    # Virtualization & VM orchestration
+    vagrant
+
+    # AI/LLM tools
+    llama-cpp  # Local LLM inference
 
     # Fun utilities
     cowsay

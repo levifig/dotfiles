@@ -23,7 +23,7 @@
     # Homebrew taps
     # Note: Custom taps are now managed via nix-homebrew in flake.nix
     # This ensures they are immutable and part of the flake inputs
-    taps = [];
+    taps = [ ];
 
     # Homebrew formulas (CLI tools)
     # Note: Cross-platform tools are managed via Nix (see home-manager profiles)
@@ -37,14 +37,8 @@
       "jackielii/tap/skhd-zig" # Hotkey daemon (Zig rewrite)
       "sketchybar" # Custom macOS status bar
 
-      # Media processing
-      "ffmpeg" # Video/audio processing with all codecs
-
       # Development tools
       "xcodes" # Xcode version management
-
-      # AI/LLM
-      "llama.cpp" # Local LLM inference
 
       # Database with service management
       # Using Homebrew for better launchd integration
@@ -56,21 +50,17 @@
 
     # Homebrew Casks (GUI applications)
     casks = [
-      # Note: 1Password packages are managed via Nix in home-manager/profiles/workstation.nix
-
       # Window Management
       "aerospace" # Current window manager
 
       # Terminal Emulators
-      # alacritty - Now managed via Nix (home-manager/modules/terminal/alacritty.nix)
-      # ghostty - Now managed via Nix (home-manager/modules/terminal/ghostty.nix)
-      "iterm2" # Backup terminal
+      "iterm2"
 
       # Browsers (multiple for testing/preferences)
       "arc"
       "brave-browser"
       "firefox@beta"
-      "zen" # Renamed from zen-browser
+      "zen"
 
       # Productivity & Utilities
       "alfred"
@@ -81,53 +71,43 @@
       "contexts"
 
       # Development Tools
-      # docker-desktop - Removed (use colima + docker CLI or orbstack instead)
-      "visual-studio-code"
-      "zed"
-      "cursor"
-      "github" # GitHub Desktop
-      "sublime-text" # Quick editor
+
+      "github"
 
       # AI & LLM Tools
-      "claude" # Claude Desktop
-      "chatgpt" # ChatGPT Desktop
-      "lm-studio" # Local LLM management
-      "ollama-app" # Renamed from ollama
+      "claude"
+      "chatgpt"
+      "lm-studio"
+      "ollama-app"
 
       # Cloud & Infrastructure
-      "aws-vault-binary" # Renamed from aws-vault
-      # tailscale - Using Nix version (cross-platform)
+      "aws-vault-binary"
       "cloudflare-warp"
 
       # Database & API Tools
       "beekeeper-studio"
-      "db-browser-for-sqlite"
       "sequel-ace"
 
       # Communication
       "discord"
       "slack@beta"
-      # telegram - Using MAS version instead
       "zoom"
 
       # Design & Creative
       "figma"
-      "blender" # 3D modeling - install when needed
-      "godot" # Game engine - install when needed
+      "blender"
+      "godot"
       "obs"
 
       # Media & Entertainment
-      "iina" # Video player
-      # spotify - Using Nix version (cross-platform)
-      # handbrake - Using Nix version (cross-platform)
+      "iina"
       "vlc"
 
       # Virtualization & Container Tools
-      "orbstack" # Docker/Linux VMs
-      "utm" # Virtual machines
-      "vagrant" # VM orchestration
-      "vmware-fusion" # Commercial - install manually if needed
-      "parallels" # Commercial - install manually if needed
+      "orbstack"
+      "utm"
+      "vmware-fusion"
+      "parallels"
 
       # File Management & Sync
       "google-drive"
@@ -135,11 +115,11 @@
 
       # System Monitoring & Utilities
       "stats"
-      "appcleaner" # Clean app uninstalls
-      "aldente" # Battery management
-      "betterdisplay" # Display management
-      "karabiner-elements" # Keyboard customization
-      "hammerspoon" # Automation toolkit
+      "appcleaner"
+      "aldente"
+      "betterdisplay"
+      "karabiner-elements"
+      "hammerspoon"
       "sensei"
       "monitorcontrol"
 
@@ -147,8 +127,8 @@
       "linear-linear"
       "notion"
       "obsidian"
-      "todoist-app" # Renamed from todoist
-      "typora" # Markdown editor
+      "todoist-app"
+      "typora"
 
       # Gaming & Benchmarking
       "steam"
@@ -160,7 +140,6 @@
 
       # Photography & Video
       "darktable"
-      # handbrake - Using Nix version (cross-platform)
     ];
 
     # Mac App Store apps
@@ -193,8 +172,6 @@
       "Logic Pro" = 634148309;
       "Motion" = 434290957;
       "Compressor" = 424390742;
-
-      # Note: Telegram managed via Nix (telegram-desktop in workstation.nix)
 
       # Media
       "Infuse" = 1136220934;
