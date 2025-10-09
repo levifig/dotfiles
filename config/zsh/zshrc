@@ -3,6 +3,13 @@ bootTimeStart=$(date +%s%N 2>/dev/null)
 
 ##
 ## set up environment
+# Detect Homebrew prefix
+if type brew &>/dev/null; then
+  BREW_PREFIX="$(brew --prefix)"
+else
+  BREW_PREFIX=""
+fi
+
 # Nix paths FIRST for proper precedence
 export PATH="\
 ${HOME}/.nix-profile/bin:\
@@ -119,8 +126,10 @@ bindkey '^[[3~' delete-char
 
 ## zsh plugins via homebrew (for non-Nix systems)
 if type brew &>/dev/null && [[ ! -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]; then
-  FPATH="$BREW_PREFIX/share/zsh-completions:$FPATH"
-  FPATH="$BREW_PREFIX/share/zsh/site-functions:$FPATH"
+  [[ -d "$BREW_PREFIX/share/zsh-completions" ]] && \
+    FPATH="$BREW_PREFIX/share/zsh-completions:$FPATH"
+  [[ -d "$BREW_PREFIX/share/zsh/site-functions" ]] && \
+    FPATH="$BREW_PREFIX/share/zsh/site-functions:$FPATH"
   [[ -f "$BREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && \
     source "$BREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
   [[ -f "$BREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && \
