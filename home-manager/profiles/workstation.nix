@@ -34,9 +34,6 @@
     # Cloud & Infrastructure
     tailscale # VPN mesh network
 
-    # Media & Entertainment
-    spotify # Music streaming
-
     # Database & API Tools
     sqlitebrowser # SQLite database browser
   ];

@@ -102,6 +102,7 @@
       # Media & Entertainment
       "iina"
       "vlc"
+      "spotify"
 
       # Virtualization & Container Tools
       "orbstack"
