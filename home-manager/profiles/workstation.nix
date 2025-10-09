@@ -19,10 +19,6 @@
   ];
 
   home.packages = with pkgs; [
-    # Security & Authentication
-    _1password-gui # 1Password GUI application
-    _1password-cli # 1Password CLI
-
     # Development Tools
     vscode # Visual Studio Code
     zed-editor # Zed editor

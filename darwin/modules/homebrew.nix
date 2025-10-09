@@ -50,6 +50,10 @@
 
     # Homebrew Casks (GUI applications)
     casks = [
+      # Security & Authentication
+      "1password"
+      "1password-cli"
+
       # Window Management
       "aerospace" # Current window manager
 
