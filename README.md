@@ -15,11 +15,15 @@ cd ~/.dotfiles
 # Verify configuration
 nix flake check
 
-# Apply configuration (replace LFX001 with your machine name)
-nix run home-manager/master -- switch --flake .#levifig@LFX001 --impure
+# Apply configuration
+# macOS (nix-darwin):
+nix run nix-darwin -- switch --flake .#LFX001
+
+# Linux (home-manager):
+nix run home-manager/master -- switch --flake .#levifig@LFX004 --impure
 ```
 
-After the first run, `home-manager` command will be available in your PATH.
+After the first run, `darwin-rebuild` (macOS) or `home-manager` (Linux) will be available in your PATH.
 
 ---
 
@@ -103,33 +107,60 @@ The bootstrap script will:
 
 **Apply Configuration:**
 ```bash
-# macOS workstation
-home-manager switch --flake ~/.dotfiles#levifig@LFX001 --impure
+# macOS workstation (nix-darwin with integrated home-manager)
+darwin-rebuild switch --flake ~/.dotfiles
 
-# Linux laptop
+# macOS - home-manager only (faster, when only user configs changed)
+home-manager switch --flake ~/.dotfiles
+
+# Linux laptop (standalone home-manager)
 home-manager switch --flake ~/.dotfiles#levifig@LFX004 --impure
 ```
+
+**Which command to use on macOS?**
+- **`darwin-rebuild switch`** - Use when changing system settings, Homebrew packages, or darwin configuration
+- **`home-manager switch`** - Use for faster rebuilds when only changing user dotfiles, shell configs, or packages
+
+Your home-manager is integrated as a nix-darwin module, so `darwin-rebuild` rebuilds both system and user configs, while `home-manager switch` only rebuilds user configs.
 
 **Update All Packages:**
 ```bash
 cd ~/.dotfiles
 nix flake update
-home-manager switch --flake .
+darwin-rebuild switch --flake ~/.dotfiles  # macOS
+# or
+home-manager switch --flake ~/.dotfiles    # Linux
 ```
 
 **Rollback Changes:**
 ```bash
+# macOS
+darwin-rebuild rollback
+# or for home-manager only
+home-manager rollback
+
+# Linux
 home-manager rollback
 ```
 
 **List Generations:**
 ```bash
+# macOS system
+darwin-rebuild --list-generations
+# or home-manager only
+home-manager generations
+
+# Linux
 home-manager generations
 ```
 
 **Test Before Applying:**
 ```bash
-home-manager build --flake ~/.dotfiles#levifig@LFX001
+# macOS
+darwin-rebuild build --flake ~/.dotfiles
+
+# Linux
+home-manager build --flake ~/.dotfiles#levifig@LFX004
 ```
 
 #### Development Shells
@@ -204,41 +235,62 @@ home-manager packages
 
 ```
 .
-├── flake.nix                 # Entry point with all machine definitions
-├── .fonts/
-│   └── private/             # Private fonts (git submodule)
-├── home-manager/
-│   ├── home.nix             # Base configuration (all machines)
+├── flake.nix                 # Entry point with darwin + home-manager configurations
+├── darwin/                   # nix-darwin system configuration (macOS only)
+│   ├── configuration.nix     # Main darwin config
+│   └── modules/
+│       ├── homebrew.nix      # Declarative Homebrew packages
+│       ├── system.nix        # macOS system settings
+│       └── dock.nix          # Dock configuration (optional)
+├── home-manager/             # User-level configuration (all platforms)
+│   ├── home.nix              # Base configuration (all machines)
 │   ├── platform/
-│   │   ├── darwin-base.nix  # macOS defaults
-│   │   └── linux-base.nix   # Linux defaults
-│   ├── profiles/            # Role-based configurations
+│   │   ├── darwin-base.nix   # macOS user defaults
+│   │   └── linux-base.nix    # Linux user defaults
+│   ├── profiles/             # Role-based configurations
 │   │   ├── server.nix
 │   │   ├── workstation-headless.nix
 │   │   ├── workstation.nix
 │   │   ├── development.nix
 │   │   └── platform.nix
-│   ├── hosts/               # Machine-specific configs
-│   │   ├── LFX001.nix       # Primary macOS machine
-│   │   └── LFX004.nix       # Linux laptop
-│   └── modules/             # Reusable components
-│       ├── core/           # Essential tools (git, ssh)
-│       ├── fonts/          # Font management
-│       ├── shell/          # Shell configurations (zsh, bash)
-│       ├── editors/        # Editor setups (neovim)
-│       ├── terminal/       # Terminal tools (tmux, alacritty)
-│       ├── ruby/           # Ruby-specific configs
-│       └── javascript/     # JavaScript-specific configs
+│   ├── hosts/                # Machine-specific configs
+│   │   ├── LFX001.nix        # Primary macOS machine
+│   │   └── LFX004.nix        # Linux laptop
+│   └── modules/              # Reusable components
+│       ├── core/             # Essential tools (git, ssh)
+│       ├── fonts/            # Font management
+│       ├── shell/            # Shell configurations (zsh, bash)
+│       ├── editors/          # Editor setups (neovim, vim)
+│       ├── terminal/         # Terminal tools (tmux, ghostty)
+│       ├── desktop/          # GUI apps (aerospace, hammerspoon)
+│       ├── tools/            # Development tools (opencode, claude)
+│       └── darwin/           # macOS-specific user configs
+├── config/                   # Actual configuration files deployed to ~
+│   ├── zsh/                  # ZSH configuration
+│   ├── nvim/                 # Neovim config
+│   ├── tmux/                 # Tmux config
+│   ├── opencode/             # OpenCode config
+│   └── ...                   # Other app configs
+└── .fonts/
+    └── private/              # Private fonts (git submodule)
 ```
 
 ## Configuration Layers
 
 The configuration uses a layered approach for maximum flexibility:
 
-1. **Base Layer** (`home.nix`) - Common settings for all machines
-2. **Platform Layer** (`platform/*.nix`) - OS-specific defaults
+### macOS (nix-darwin + home-manager)
+1. **Darwin System Layer** (`darwin/configuration.nix`) - macOS system settings, Homebrew
+2. **Home-Manager Base** (`home.nix`) - Common user settings for all machines
+3. **Platform Layer** (`platform/darwin-base.nix`) - macOS user defaults
+4. **Profile Layer** (`profiles/*.nix`) - Role-based bundles (can stack multiple)
+5. **Host Layer** (`hosts/LFX001.nix`) - Machine-specific overrides
+
+### Linux (standalone home-manager)
+1. **Home-Manager Base** (`home.nix`) - Common user settings for all machines
+2. **Platform Layer** (`platform/linux-base.nix`) - Linux user defaults
 3. **Profile Layer** (`profiles/*.nix`) - Role-based bundles (can stack multiple)
-4. **Host Layer** (`hosts/*.nix`) - Machine-specific overrides
+4. **Host Layer** (`hosts/LFX004.nix`) - Machine-specific overrides
 
 Each layer can add or override settings from previous layers.
 
