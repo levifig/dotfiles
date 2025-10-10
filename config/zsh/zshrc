@@ -1,6 +1,9 @@
 ## measure boot time
 bootTimeStart=$(date +%s%N 2>/dev/null)
 
+# Set ZDOTDIR for custom config location (if not already set by home-manager)
+: ${ZDOTDIR:="$XDG_CONFIG_HOME/zsh"}
+
 ##
 ## set up Nix environment first
 # Source Nix profile if available and not already sourced
