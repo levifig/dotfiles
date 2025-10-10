@@ -80,10 +80,29 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-darwin, home-manager, darwin, disko, flake-utils, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, ... }@inputs:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      nixpkgs-darwin,
+      home-manager,
+      darwin,
+      disko,
+      flake-utils,
+      nix-homebrew,
+      homebrew-bundle,
+      homebrew-core,
+      homebrew-cask,
+      ...
+    }@inputs:
     let
       # System types
-      systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "aarch64-darwin"
+      ];
 
       # Helper function to generate system-specific outputs
       forAllSystems = nixpkgs.lib.genAttrs systems;
@@ -92,109 +111,114 @@
       user = "levifig";
 
       # Helper to determine if system is Darwin
-      isDarwin = system: builtins.elem system [ "x86_64-darwin" "aarch64-darwin" ];
+      isDarwin =
+        system:
+        builtins.elem system [
+          "x86_64-darwin"
+          "aarch64-darwin"
+        ];
 
       # Get appropriate nixpkgs for system
       nixpkgsFor = system: if isDarwin system then nixpkgs-darwin else nixpkgs;
     in
     {
       # Home Manager Configurations
-      homeConfigurations = let
-        # Package overrides for all configurations
-        packageOverrides = final: prev: {
-          # Override python3 to include dulwich without tests
-          python3 = prev.python3.override {
-            packageOverrides = pyfinal: pyprev: {
-              dulwich = pyprev.dulwich.overridePythonAttrs (old: {
-                doCheck = false;  # Skip tests due to GPG signing failures in sandbox
-              });
+      homeConfigurations =
+        let
+          # Package overrides for all configurations
+          packageOverrides = final: prev: {
+            # Override python3 to include dulwich without tests
+            python3 = prev.python3.override {
+              packageOverrides = pyfinal: pyprev: {
+                dulwich = pyprev.dulwich.overridePythonAttrs (old: {
+                  doCheck = false; # Skip tests due to GPG signing failures in sandbox
+                });
+              };
             };
+
+            # Also update python3Packages to use the overridden python3
+            python3Packages = final.python3.pkgs;
+
+            # Override awscli2 to skip flaky tests
+            awscli2 = prev.awscli2.overridePythonAttrs (old: {
+              doCheck = false; # Skip flaky wizard tests
+            });
+          };
+        in
+        {
+          # Default configuration (auto-detected)
+          "${user}" = home-manager.lib.homeManagerConfiguration {
+            pkgs = import nixpkgs {
+              system = builtins.currentSystem;
+              config.allowUnfree = true;
+              overlays = [ packageOverrides ];
+            };
+            modules = [
+              ./home-manager/home.nix
+              {
+                home = {
+                  username = user;
+                  homeDirectory = if isDarwin builtins.currentSystem then "/Users/${user}" else "/home/${user}";
+                };
+
+                # Disable manual generation to avoid builtins.toFile warnings
+                manual = {
+                  html.enable = false;
+                  json.enable = false;
+                  manpages.enable = false;
+                };
+              }
+            ];
           };
 
-          # Also update python3Packages to use the overridden python3
-          python3Packages = final.python3.pkgs;
+          # LFX001 - Primary macOS machine (Workstation)
+          "${user}@LFX001" = home-manager.lib.homeManagerConfiguration {
+            pkgs = import nixpkgs-darwin {
+              system = "aarch64-darwin";
+              config.allowUnfree = true;
+              overlays = [ packageOverrides ];
+            };
+            modules = [
+              ./home-manager/home.nix
+              ./home-manager/platform/darwin-base.nix
+              ./home-manager/profiles/workstation.nix # Full workstation with GUI (includes development.nix)
+              ./home-manager/profiles/cli-tools.nix # Language package manager tools
+              ./home-manager/hosts/LFX001.nix
+              {
+                home = {
+                  username = user;
+                  homeDirectory = "/Users/${user}";
+                };
 
-          # Override awscli2 to skip flaky tests
-          awscli2 = prev.awscli2.overridePythonAttrs (old: {
-            doCheck = false;  # Skip flaky wizard tests
-          });
-        };
-      in {
-        # Default configuration (auto-detected)
-        "${user}" = home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs {
-            system = builtins.currentSystem;
-            config.allowUnfree = true;
-            overlays = [ packageOverrides ];
+                # Disable manual generation to avoid builtins.toFile warnings
+                manual = {
+                  html.enable = false;
+                  json.enable = false;
+                  manpages.enable = false;
+                };
+              }
+            ];
           };
-          modules = [
-            ./home-manager/home.nix
-            {
-              home = {
-                username = user;
-                homeDirectory = if isDarwin builtins.currentSystem
-                  then "/Users/${user}"
-                  else "/home/${user}";
-              };
 
-              # Disable manual generation to avoid builtins.toFile warnings
-              manual = {
-                html.enable = false;
-                json.enable = false;
-                manpages.enable = false;
-              };
-            }
-          ];
-        };
-
-        # LFX001 - Primary macOS machine (Workstation)
-        "${user}@LFX001" = home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs-darwin {
-            system = "aarch64-darwin";
-            config.allowUnfree = true;
-            overlays = [ packageOverrides ];
+          # LFX004 - Linux laptop (NixOS ready)
+          "${user}@LFX004" = home-manager.lib.homeManagerConfiguration {
+            pkgs = import nixpkgs {
+              system = "x86_64-linux";
+              config.allowUnfree = true;
+              overlays = [ packageOverrides ];
+            };
+            modules = [
+              ./home-manager/home.nix
+              ./home-manager/hosts/LFX004.nix
+              {
+                home = {
+                  username = user;
+                  homeDirectory = "/home/${user}";
+                };
+              }
+            ];
           };
-          modules = [
-            ./home-manager/home.nix
-            ./home-manager/platform/darwin-base.nix
-            ./home-manager/profiles/workstation.nix  # Full workstation with GUI (includes development.nix)
-            ./home-manager/profiles/cli-tools.nix     # Language package manager tools
-            ./home-manager/hosts/LFX001.nix
-            {
-              home = {
-                username = user;
-                homeDirectory = "/Users/${user}";
-              };
-
-              # Disable manual generation to avoid builtins.toFile warnings
-              manual = {
-                html.enable = false;
-                json.enable = false;
-                manpages.enable = false;
-              };
-            }
-          ];
         };
-
-        # LFX004 - Linux laptop (NixOS ready)
-        "${user}@LFX004" = home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs {
-            system = "x86_64-linux";
-            config.allowUnfree = true;
-            overlays = [ packageOverrides ];
-          };
-          modules = [
-            ./home-manager/home.nix
-            ./home-manager/hosts/LFX004.nix
-            {
-              home = {
-                username = user;
-                homeDirectory = "/home/${user}";
-              };
-            }
-          ];
-        };
-      };
 
       # Darwin (macOS) system configurations
       darwinConfigurations = {
@@ -206,7 +230,7 @@
             {
               nix-homebrew = {
                 enable = true;
-                enableRosetta = true;  # Enable for Apple Silicon Macs
+                enableRosetta = true; # Enable for Apple Silicon Macs
                 user = user;
                 taps = {
                   # Official Homebrew taps
@@ -221,7 +245,7 @@
                   "koekeishiya/homebrew-formulae" = inputs.tap-koekeishiya;
                   "nikitabobko/homebrew-tap" = inputs.tap-nikitabobko;
                 };
-                mutableTaps = false;  # Fully declarative - all taps managed by Nix
+                mutableTaps = false; # Fully declarative - all taps managed by Nix
                 autoMigrate = true;
               };
             }
@@ -229,7 +253,22 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.${user} = import ./home-manager/hosts/LFX001.nix;
+              home-manager.users.${user} = {
+                imports = [
+                  ./home-manager/home.nix
+                  ./home-manager/platform/darwin-base.nix
+                  ./home-manager/profiles/workstation.nix
+                  ./home-manager/profiles/cli-tools.nix
+                  ./home-manager/hosts/LFX001.nix
+                ];
+
+                # Disable manual generation to avoid builtins.toFile warnings
+                manual = {
+                  html.enable = false;
+                  json.enable = false;
+                  manpages.enable = false;
+                };
+              };
             }
           ];
         };
@@ -262,10 +301,12 @@
       };
 
       # Development shells for different languages/projects
-      devShells = forAllSystems (system:
+      devShells = forAllSystems (
+        system:
         let
           pkgs = (nixpkgsFor system).legacyPackages.${system};
-        in {
+        in
+        {
           default = pkgs.mkShell {
             buildInputs = with pkgs; [
               git
@@ -309,18 +350,21 @@
               gotools
             ];
           };
-        });
+        }
+      );
 
       # Helpful apps/scripts
       apps = forAllSystems (system: {
         # Build configuration without switching
         build = {
           type = "app";
-          program = toString (nixpkgs.legacyPackages.${system}.writeShellScript "build" ''
-            #!/usr/bin/env bash
-            cd ${./.}
-            exec ${./apps/build.sh}
-          '');
+          program = toString (
+            nixpkgs.legacyPackages.${system}.writeShellScript "build" ''
+              #!/usr/bin/env bash
+              cd ${./.}
+              exec ${./apps/build.sh}
+            ''
+          );
           meta = {
             description = "Build Nix configuration without switching";
             platforms = [ system ];
@@ -330,11 +374,13 @@
         # Build and switch configuration
         switch = {
           type = "app";
-          program = toString (nixpkgs.legacyPackages.${system}.writeShellScript "switch" ''
-            #!/usr/bin/env bash
-            cd ${./.}
-            exec ${./apps/switch.sh}
-          '');
+          program = toString (
+            nixpkgs.legacyPackages.${system}.writeShellScript "switch" ''
+              #!/usr/bin/env bash
+              cd ${./.}
+              exec ${./apps/switch.sh}
+            ''
+          );
           meta = {
             description = "Build and switch to new Nix configuration";
             platforms = [ system ];
@@ -344,11 +390,13 @@
         # Rollback to previous generation
         rollback = {
           type = "app";
-          program = toString (nixpkgs.legacyPackages.${system}.writeShellScript "rollback" ''
-            #!/usr/bin/env bash
-            cd ${./.}
-            exec ${./apps/rollback.sh}
-          '');
+          program = toString (
+            nixpkgs.legacyPackages.${system}.writeShellScript "rollback" ''
+              #!/usr/bin/env bash
+              cd ${./.}
+              exec ${./apps/rollback.sh}
+            ''
+          );
           meta = {
             description = "Rollback to previous Nix generation";
             platforms = [ system ];
@@ -358,11 +406,13 @@
         # Update flake inputs
         update = {
           type = "app";
-          program = toString (nixpkgs.legacyPackages.${system}.writeShellScript "update" ''
-            #!/usr/bin/env bash
-            cd ${./.}
-            exec ${./apps/update.sh}
-          '');
+          program = toString (
+            nixpkgs.legacyPackages.${system}.writeShellScript "update" ''
+              #!/usr/bin/env bash
+              cd ${./.}
+              exec ${./apps/update.sh}
+            ''
+          );
           meta = {
             description = "Update all flake inputs to latest versions";
             platforms = [ system ];
@@ -372,11 +422,13 @@
         # Garbage collect old generations
         clean = {
           type = "app";
-          program = toString (nixpkgs.legacyPackages.${system}.writeShellScript "clean" ''
-            #!/usr/bin/env bash
-            cd ${./.}
-            exec ${./apps/clean.sh} "$@"
-          '');
+          program = toString (
+            nixpkgs.legacyPackages.${system}.writeShellScript "clean" ''
+              #!/usr/bin/env bash
+              cd ${./.}
+              exec ${./apps/clean.sh} "$@"
+            ''
+          );
           meta = {
             description = "Garbage collect old Nix generations";
             platforms = [ system ];
@@ -386,11 +438,13 @@
         # Bootstrap installer for new machines
         bootstrap = {
           type = "app";
-          program = toString (nixpkgs.legacyPackages.${system}.writeShellScript "bootstrap" ''
-            #!/usr/bin/env bash
-            cd ${./.}
-            exec ${./apps/bootstrap.sh} "$@"
-          '');
+          program = toString (
+            nixpkgs.legacyPackages.${system}.writeShellScript "bootstrap" ''
+              #!/usr/bin/env bash
+              cd ${./.}
+              exec ${./apps/bootstrap.sh} "$@"
+            ''
+          );
           meta = {
             description = "Bootstrap dotfiles on a new machine";
             platforms = [ system ];
