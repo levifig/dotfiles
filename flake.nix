@@ -224,6 +224,31 @@
       darwinConfigurations = {
         "LFX001" = darwin.lib.darwinSystem {
           system = "aarch64-darwin";
+          specialArgs = {
+            # Pass nixpkgs with overlays to the darwin system
+            pkgs = import nixpkgs-darwin {
+              system = "aarch64-darwin";
+              config.allowUnfree = true;
+              overlays = [
+                # Package overrides
+                (final: prev: {
+                  # Override awscli2 to skip flaky tests
+                  awscli2 = prev.awscli2.overridePythonAttrs (old: {
+                    doCheck = false;
+                  });
+
+                  # Override python3 to include dulwich without tests
+                  python3 = prev.python3.override {
+                    packageOverrides = pyfinal: pyprev: {
+                      dulwich = pyprev.dulwich.overridePythonAttrs (old: {
+                        doCheck = false;
+                      });
+                    };
+                  };
+                })
+              ];
+            };
+          };
           modules = [
             ./darwin/configuration.nix
             nix-homebrew.darwinModules.nix-homebrew
