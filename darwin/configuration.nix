@@ -71,7 +71,7 @@ in
         AppleShowScrollBars = "WhenScrolling";
         AppleInterfaceStyle = "Dark";
         InitialKeyRepeat = 12;
-        KeyRepeat = 0;
+        KeyRepeat = 1;
       };
 
       # Trackpad settings
