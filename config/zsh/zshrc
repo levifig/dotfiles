@@ -2,6 +2,18 @@
 bootTimeStart=$(date +%s%N 2>/dev/null)
 
 ##
+## set up Nix environment first
+# Source Nix profile if available and not already sourced
+if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ] && [ -z "$__NIX_DARWIN_SET_ENVIRONMENT_DONE" ]; then
+  . "$HOME/.nix-profile/etc/profile.d/nix.sh"
+fi
+
+# Source nix-darwin environment (handles PATH and other env vars)
+if [ -e '/etc/static/bashrc' ]; then
+  . '/etc/static/bashrc'
+fi
+
+##
 ## set up environment
 # Detect Homebrew prefix
 if type brew &>/dev/null; then
@@ -10,15 +22,9 @@ else
   BREW_PREFIX=""
 fi
 
-# Nix paths FIRST for proper precedence
+# Additional PATH entries (Nix paths already set by nix-darwin)
 export PATH="\
-${HOME}/.nix-profile/bin:\
-/nix/var/nix/profiles/default/bin:\
 ${BREW_PREFIX}/opt/rustup/bin:\
-${BREW_PREFIX}/opt/homebrew/sbin:\
-${BREW_PREFIX}/opt/homebrew/bin:\
-${BREW_PREFIX}/sbin:\
-${BREW_PREFIX}/bin:\
 ${HOME}/.go/bin:\
 ${HOME}/.bun/bin:\
 ${HOME}/.krew/bin:\
@@ -27,13 +33,6 @@ ${HOME}/.local/bin:\
 ${HOME}/.lmstudio/bin:\
 ${HOME}/.opencode/bin:\
 ./node_modules/.bin:\
-/usr/local/sbin:\
-/usr/local/bin:\
-/usr/local:\
-/usr/sbin:\
-/usr/bin:\
-/sbin:\
-/bin:\
 $PATH"
 
 
@@ -183,10 +182,10 @@ echo -e "\033[35;3mZSH load time: $bootTimeDuration \\bms\033[m"
 
 chuck_cow
 
-echo -e << EOF 
-• ▌ ▄ ·. ▄ •▄  ▐ ▄ ▐▄• ▄ 
+echo -e << EOF
+• ▌ ▄ ·. ▄ •▄  ▐ ▄ ▐▄• ▄
 ·██ ▐███▪█▌▄▌▪•█▌▐█ █▌█▌▪
-▐█ ▌▐▌▐█·▐▀▀▄·▐█▐▐▌ ·██· 
+▐█ ▌▐▌▐█·▐▀▀▄·▐█▐▐▌ ·██·
 ██ ██▌▐█▌▐█.█▌██▐█▌▪▐█·█▌
 ▀▀  █▪▀▀▀·▀  ▀▀▀ █▪•▀▀ ▀▀
 EOF
