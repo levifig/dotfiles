@@ -7,6 +7,7 @@
 
   imports = [
     ./workstation.nix  # Base workstation setup (includes fonts, terminal configs)
+    ../modules/terminal/ghostty.nix  # Ghostty terminal for Linux
   ];
 
   home.packages = with pkgs; [

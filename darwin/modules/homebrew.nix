@@ -59,6 +59,7 @@
 
       # Terminal Emulators
       "iterm2"
+      "ghostty"
 
       # Browsers (multiple for testing/preferences)
       "arc"
