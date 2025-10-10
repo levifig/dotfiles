@@ -30,31 +30,16 @@ This script will:
 
 ### 1. Context7 API Key (for OpenCode)
 
+The Context7 API key should be stored in your existing 1Password item.
+
+**Reference:** `op://Private/Context7/API/mcp`
+
+To update the key:
 ```bash
-op item create \
-  --category='API Credential' \
-  --title='Context7 API' \
-  --vault='Personal' \
-  credential=ctx7sk-your-actual-key-here
+op item edit 'Context7' 'API.mcp[password]=ctx7sk-your-actual-key-here' --vault='Private'
 ```
 
-**Reference:** `op://Personal/Context7 API/credential`
-
-### 2. Full OpenCode Configuration (Alternative)
-
-Store the entire config file:
-
-```bash
-op document create \
-  --title='OpenCode' \
-  --vault='Personal' \
-  --file-name='config.json' \
-  ~/.config/opencode/opencode.json
-```
-
-**Reference:** `op://Personal/OpenCode/config.json`
-
-### 3. Other MCP Server Configurations
+### 2. Other MCP Server Configurations
 
 For other MCP servers that require API keys:
 
@@ -63,14 +48,14 @@ For other MCP servers that require API keys:
 op item create \
   --category='API Credential' \
   --title='Anthropic API' \
-  --vault='Personal' \
+  --vault='Private' \
   credential=sk-ant-your-key-here
 
 # Example: OpenAI API
 op item create \
   --category='API Credential' \
   --title='OpenAI API' \
-  --vault='Personal' \
+  --vault='Private' \
   credential=sk-your-key-here
 ```
 
@@ -79,9 +64,9 @@ op item create \
 ### OpenCode (`~/.config/opencode/opencode.json`)
 
 **Automatic:** The Nix activation script will:
-1. Try to read `op://Personal/OpenCode/config.json`
-2. Fall back to injecting `op://Personal/Context7 API/credential` into template
-3. Use template if no 1Password entries found
+1. Create config from template
+2. Inject `op://Private/Context7/API/mcp` if available
+3. Use template with placeholder if no 1Password entry found
 
 **Manual:** Run `setup-secrets.sh` or edit the file directly
 

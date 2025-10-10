@@ -59,36 +59,28 @@ setup_config() {
 echo -e "\n${GREEN}OpenCode Configuration:${NC}"
 OPENCODE_CONFIG="$HOME/.config/opencode/opencode.json"
 OPENCODE_TEMPLATE="$HOME/.config/opencode/opencode.json.template"
-OPENCODE_OP_REF="op://Personal/OpenCode/config.json"
+CONTEXT7_KEY_REF="op://Private/Context7/API/mcp"
 
 if [ -f "$OPENCODE_CONFIG" ]; then
     echo -e "${YELLOW}  ⊙ OpenCode config already exists${NC}"
 else
     if [ -f "$OPENCODE_TEMPLATE" ]; then
-        echo -e "  → Creating OpenCode config..."
+        echo -e "  → Creating OpenCode config from template..."
+        cp "$OPENCODE_TEMPLATE" "$OPENCODE_CONFIG"
 
-        # Try to read from 1Password
-        if op read "$OPENCODE_OP_REF" &> /dev/null; then
-            op read "$OPENCODE_OP_REF" > "$OPENCODE_CONFIG"
-            echo -e "${GREEN}  ✓ Created from 1Password${NC}"
-        else
-            # No 1Password entry, check for individual secrets
-            cp "$OPENCODE_TEMPLATE" "$OPENCODE_CONFIG"
-
-            CONTEXT7_KEY_REF="op://Personal/Context7 API/credential"
-            if op read "$CONTEXT7_KEY_REF" &> /dev/null; then
-                CONTEXT7_KEY=$(op read "$CONTEXT7_KEY_REF")
-                # Use sed to replace the placeholder
-                if [[ "$OSTYPE" == "darwin"* ]]; then
-                    sed -i '' "s/YOUR_CONTEXT7_API_KEY_HERE/$CONTEXT7_KEY/" "$OPENCODE_CONFIG"
-                else
-                    sed -i "s/YOUR_CONTEXT7_API_KEY_HERE/$CONTEXT7_KEY/" "$OPENCODE_CONFIG"
-                fi
-                echo -e "${GREEN}  ✓ Injected Context7 API key from 1Password${NC}"
+        # Try to inject Context7 API key from 1Password
+        if op read "$CONTEXT7_KEY_REF" &> /dev/null; then
+            CONTEXT7_KEY=$(op read "$CONTEXT7_KEY_REF")
+            # Use sed to replace the placeholder
+            if [[ "$OSTYPE" == "darwin"* ]]; then
+                sed -i '' "s/YOUR_CONTEXT7_API_KEY_HERE/$CONTEXT7_KEY/" "$OPENCODE_CONFIG"
             else
-                echo -e "${YELLOW}  ⊙ Created from template - please add Context7 API key${NC}"
-                echo -e "${YELLOW}    Store in 1Password as: $CONTEXT7_KEY_REF${NC}"
+                sed -i "s/YOUR_CONTEXT7_API_KEY_HERE/$CONTEXT7_KEY/" "$OPENCODE_CONFIG"
             fi
+            echo -e "${GREEN}  ✓ Injected Context7 API key from 1Password${NC}"
+        else
+            echo -e "${YELLOW}  ⊙ Created from template - please add Context7 API key${NC}"
+            echo -e "${YELLOW}    Secret reference: $CONTEXT7_KEY_REF${NC}"
         fi
     else
         echo -e "${RED}  ✗ Template not found: $OPENCODE_TEMPLATE${NC}"
@@ -120,8 +112,6 @@ else
 fi
 
 echo -e "\n${GREEN}✓ Secret setup complete!${NC}"
-echo -e "\nTo store new secrets in 1Password:"
-echo -e "  ${YELLOW}op item create --category='API Credential' \\
-    --title='Context7 API' \\
-    --vault='Personal' \\
-    credential=ctx7sk-your-key-here${NC}"
+echo -e "\nTo update secrets in 1Password:"
+echo -e "  ${YELLOW}# Update Context7 API key"
+echo -e "  op item edit 'Context7' 'API.mcp[password]=ctx7sk-your-key-here' --vault='Private'${NC}"
