@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   # Home Manager needs a bit of information about you and the
@@ -8,8 +13,7 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-  # Allow unfree packages (needed for terraform, vscode, etc.)
-  nixpkgs.config.allowUnfree = true;
+  # Note: allowUnfree is configured in darwin/configuration.nix via useGlobalPkgs
 
   # Enable XDG compliance
   xdg = {
@@ -46,7 +50,7 @@
 
     # JSON/YAML/Data tools
     jq
-    yq-go  # Go implementation of yq
+    yq-go # Go implementation of yq
 
     # Archive tools
     zip
