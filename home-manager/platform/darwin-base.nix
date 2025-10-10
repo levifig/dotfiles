@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   # macOS-specific packages
@@ -18,7 +23,7 @@
     XML_CATALOG_FILES = "/usr/local/etc/xml/catalog";
 
     # Homebrew prefix (for compatibility with existing scripts)
-    BREW_PREFIX = "/opt/homebrew";  # Apple Silicon default
+    BREW_PREFIX = "/opt/homebrew"; # Apple Silicon default
     RUSTUP_PREFIX = "/opt/homebrew/opt/rustup";
   };
 
@@ -72,12 +77,15 @@
   # macOS-specific file associations
   xdg.mimeApps = lib.mkIf pkgs.stdenv.isDarwin {
     defaultApplications = {
-      "text/html" = ["org.mozilla.firefox.desktop" "com.apple.Safari.desktop"];
-      "text/xml" = ["code.desktop"];
-      "application/pdf" = ["com.apple.Preview.desktop"];
-      "image/png" = ["com.apple.Preview.desktop"];
-      "image/jpeg" = ["com.apple.Preview.desktop"];
-      "image/gif" = ["com.apple.Preview.desktop"];
+      "text/html" = [
+        "org.mozilla.firefox.desktop"
+        "com.apple.Safari.desktop"
+      ];
+      "text/xml" = [ "code.desktop" ];
+      "application/pdf" = [ "com.apple.Preview.desktop" ];
+      "image/png" = [ "com.apple.Preview.desktop" ];
+      "image/jpeg" = [ "com.apple.Preview.desktop" ];
+      "image/gif" = [ "com.apple.Preview.desktop" ];
     };
   };
 
