@@ -13,6 +13,7 @@
   imports = [
     ./workstation-headless.nix # Inherit all headless workstation tools
     ../modules/terminal/alacritty.nix
+    ../modules/terminal/ghostty.nix  # Config only (app via Homebrew on macOS)
     ../modules/fonts/fonts.nix # Private fonts for GUI applications
     # Add other GUI-specific modules here
   ];

@@ -6,8 +6,7 @@
   # Designed for desktop/laptop workstations with GUI environments
 
   imports = [
-    ./workstation.nix  # Base workstation setup (includes fonts, terminal configs)
-    ../modules/terminal/ghostty.nix  # Ghostty terminal for Linux
+    ./workstation.nix  # Base workstation setup (includes fonts, terminal configs, ghostty)
   ];
 
   home.packages = with pkgs; [

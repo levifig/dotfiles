@@ -3,8 +3,8 @@
 {
   programs.ghostty = {
     enable = true;
-    # Using binary package to avoid building from source
-    package = pkgs.ghostty-bin;
+    # On macOS, use Homebrew package; on Linux, use Nix package
+    package = if pkgs.stdenv.isDarwin then null else pkgs.ghostty-bin;
 
     settings = {
       # Font configuration
