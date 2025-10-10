@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
   # Single source of truth for username
@@ -26,27 +31,28 @@ in
   # Homebrew configuration moved to ./modules/homebrew.nix
 
   # Nix settings
-  # Note: Determinate Nix installer detected - disable nix-darwin's Nix management
+  # Note: Using Determinate Nix installer - configure but don't manage daemon
   nix = {
-    # Disable nix-darwin's Nix daemon management (Determinate manages it)
-    enable = false;
+    # Use the Nix daemon (installed by Determinate)
+    useDaemon = true;
 
     settings = {
-      experimental-features = [ "nix-command" "flakes" ];
-      trusted-users = [ "root" "@admin" "@staff" userName ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+      trusted-users = [
+        "root"
+        "@admin"
+        "@staff"
+        userName
+      ];
 
       # Build optimizations
       max-jobs = "auto";
-      cores = 0;  # Use all available cores
+      cores = 0; # Use all available cores
     };
 
-    # Note: Store optimisation and GC are managed by Determinate Nix
-    # optimise.automatic = true;
-    # gc = {
-    #   automatic = true;
-    #   interval = { Weekday = 7; };
-    #   options = "--delete-older-than 30d";
-    # };
   };
 
   # macOS system settings
@@ -60,7 +66,7 @@ in
         autohide = true;
         orientation = "bottom";
         show-recents = false;
-        tilesize = 48;
+        tilesize = 60;
         minimize-to-application = true;
       };
 
@@ -77,16 +83,15 @@ in
       # NSGlobal domain settings
       NSGlobalDomain = {
         AppleShowAllExtensions = true;
-        AppleShowScrollBars = "Automatic";
+        AppleShowScrollBars = "WhenScrolling";
         AppleInterfaceStyle = "Dark";
-        "com.apple.swipescrolldirection" = false;  # Disable natural scrolling
-        InitialKeyRepeat = 15;
-        KeyRepeat = 2;
+        InitialKeyRepeat = 12;
+        KeyRepeat = 0;
       };
 
       # Trackpad settings
       trackpad = {
-        Clicking = true;  # Tap to click
+        Clicking = true; # Tap to click
         TrackpadRightClick = true;
       };
     };
@@ -94,7 +99,6 @@ in
     # Keyboard settings
     keyboard = {
       enableKeyMapping = true;
-      remapCapsLockToControl = true;
     };
 
     # System state version
@@ -128,8 +132,26 @@ in
 
   # Programs
   programs = {
-    zsh.enable = true;
-    bash.enable = true;
+    zsh = {
+      enable = true;
+      # Ensure Nix environment is properly sourced
+      shellInit = ''
+        # Source Nix profile if available
+        if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+          . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+        fi
+      '';
+    };
+    bash = {
+      enable = true;
+      # Ensure Nix environment is properly sourced
+      shellInit = ''
+        # Source Nix profile if available
+        if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+          . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+        fi
+      '';
+    };
   };
 
   # Users
