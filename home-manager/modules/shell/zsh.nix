@@ -40,7 +40,7 @@
     ];
 
     # Load custom zshrc after home-manager initialization
-    initExtra = ''
+    initContent = ''
       # Source custom ZSH configuration
       if [[ -f "${config.xdg.configHome}/zsh/zshrc" ]]; then
         source "${config.xdg.configHome}/zsh/zshrc"
