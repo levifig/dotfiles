@@ -164,8 +164,7 @@ _cache_completions \
 # Essential tools that need immediate loading
 source <(zoxide init zsh)
 source <(fzf --zsh)
-source <(starship init zsh)
-source <(direnv hook zsh)
+# Note: starship and direnv are initialized by home-manager (see modules/shell/starship.nix and profiles/development.nix)
 
 # Bash-style completions
 if command -v terraform &> /dev/null || command -v aws_completer &> /dev/null; then
