@@ -8,9 +8,6 @@
     enable = true;
     enableCompletion = true;
 
-    # Put .zshrc in ~/.config/zsh/ instead of ~/
-    dotDir = ".config/zsh";
-
     # History file location (XDG compliant)
     history = {
       path = "${config.xdg.stateHome}/zsh/zsh_history";
