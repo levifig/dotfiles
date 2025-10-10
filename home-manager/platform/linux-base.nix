@@ -1,6 +1,12 @@
 { config, pkgs, lib, ... }:
 
 {
+  imports = [
+    ../modules/linux/i3.nix
+    ../modules/linux/polybar.nix
+    ../modules/linux/rofi.nix
+  ];
+
   # Linux-specific packages
   home.packages = with pkgs; [
     # Linux utilities

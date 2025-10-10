@@ -1,0 +1,32 @@
+{
+  "mcp": {
+    "context7": {
+      "type": "remote",
+      "url": "https://mcp.context7.com/mcp",
+      "headers": {
+        "CONTEXT7_API_KEY": "YOUR_CONTEXT7_API_KEY_HERE",
+        "Accept": "application/json, text/event-stream"
+      },
+      "enabled": true
+    },
+    "playwright": {
+      "type": "local",
+      "command": [
+        "npx",
+        "@playwright/mcp@latest"
+      ],
+      "enabled": true
+    },
+    "vibe_kanban": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "vibe-kanban@latest",
+        "--mcp"
+      ],
+      "enabled": true
+    }
+  },
+  "$schema": "https://opencode.ai/config.json"
+}

@@ -1,0 +1,42 @@
+# Claude - ignore everything, then unignore what we keep
+claude/*
+!claude/CLAUDE.md
+!claude/agents/
+!claude/commands/
+!claude/hooks/
+!claude/plugins/
+!claude/output-styles/
+
+# OpenCode - ignore everything, then unignore what we keep
+opencode/*
+!opencode/OPENCODE.md
+!opencode/README.md
+!opencode/opencode.json.template
+!opencode/agent/
+!opencode/command/
+!opencode/themes/
+!opencode/tool/
+!opencode/plugin/
+
+# Zed - ignore everything, then unignore what we keep
+zed/*
+!zed/themes/
+!zed/keymap.json
+!zed/settings.json.template
+
+# Vim - ignore plugin directories
+vim/plugged/
+vim/.netrwhist
+
+# Hammerspoon - ignore third-party dependencies
+hammerspoon/stackline/
+hammerspoon/Spoons/
+
+# Ubersicht - ignore third-party widget repos
+ubersicht/widgets/simple-bar/
+ubersicht/widgets-off/*/
+
+# General patterns
+**/.DS_Store
+**/node_modules/
+**/.cache/

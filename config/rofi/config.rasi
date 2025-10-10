@@ -1,0 +1,10 @@
+configuration {
+  display-drun: "Applications:";
+  display-window: "Windows:";
+  drun-display-format: "{name}";
+  font: "JetBrains Mono 12";
+  modi: "window,run,drun";
+  show-icons: true;
+}
+
+@theme "~/.config/rofi/theme.rasi"

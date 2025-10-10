@@ -6,6 +6,16 @@
 }:
 
 {
+  imports = [
+    ../modules/darwin/sketchybar.nix
+    ../modules/darwin/ubersicht.nix
+    ../modules/darwin/aerospace.nix
+    ../modules/darwin/karabiner.nix
+    ../modules/darwin/hammerspoon.nix
+    ../modules/darwin/yabai.nix
+    ../modules/darwin/wezterm.nix
+  ];
+
   # macOS-specific packages
   home.packages = with pkgs; [
     # macOS-friendly tools

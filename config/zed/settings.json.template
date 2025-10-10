@@ -1,0 +1,184 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run the `open default settings` command
+// from the command palette or from `Zed` application menu.
+{
+  "agent_servers": {
+    "claude": {
+      "default_mode": "plan"
+    }
+  },
+  "restore_on_startup": "last_session",
+  "restore_on_file_reopen": true,
+  "close_on_file_delete": false,
+  "icon_theme": "Material Icon Theme",
+  "edit_predictions": {
+    "disabled_globs": ["~/Documents/Workspace/_learning/boot.dev/**"],
+    "mode": "eager",
+    "copilot": {
+      "proxy": null,
+      "proxy_no_verify": null
+    },
+    "enabled_in_text_threads": false
+  },
+  "show_edit_predictions": true,
+  "agent": {
+    "use_modifier_to_send": true,
+    "always_allow_tool_actions": true,
+    "profiles": {
+      "chat": {
+        "name": "Chat",
+        "tools": {},
+        "enable_all_context_servers": false,
+        "context_servers": {}
+      }
+    },
+    "model_parameters": [
+      {
+        "temperature": 0.1
+      },
+      {
+        "provider": "openai",
+        "temperature": 0.1
+      },
+      {
+        "provider": "zed.dev",
+        "model": "claude-sonnet-4",
+        "temperature": 0.1
+      }
+    ],
+    "play_sound_when_agent_done": true,
+    "default_profile": "write",
+    "inline_assistant_model": {
+      "provider": "google",
+      "model": "gemini-2.5-pro"
+    },
+    "default_model": {
+      "provider": "zed.dev",
+      "model": "claude-sonnet-4"
+    }
+  },
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  },
+
+  "autosave": "on_focus_change",
+  "indent_guides": {
+    "enabled": true
+  },
+  "gutter": {
+    "line_numbers": true
+  },
+  "wrap_guides": [80],
+
+  "base_keymap": "SublimeText",
+  "theme": "Ayu Mirage",
+  "buffer_font_family": "PragmataPro Liga",
+  "buffer_font_features": {
+    "calt": true
+  },
+  "buffer_font_size": 16,
+  "tab_size": 2,
+  "buffer_line_height": "standard",
+  "vim_mode": true,
+  "preferred_line_length": 240,
+  "scrollbar": {
+    "show": "auto",
+    "git_diff": true
+  },
+  "preview_tabs": {
+    "enabled": true,
+    "enable_preview_from_file_finder": true,
+    "enable_preview_from_code_navigation": true
+  },
+
+  // ========================================= //
+  // MCP Servers
+
+  "context_servers": {
+    "terraform-context-server": {
+      "source": "extension",
+      "enabled": true,
+      "settings": {}
+    },
+    "container-use-mcp": {
+      "source": "extension",
+      "enabled": true,
+      "settings": {}
+    },
+    "mcp-server-figma": {
+      "source": "extension",
+      "enabled": true,
+      "settings": {
+        "figma_api_key": "YOUR_FIGMA_API_KEY"
+      }
+    },
+    "mcp-server-context7": {
+      "source": "extension",
+      "enabled": true,
+      "settings": {
+        "default_minimum_tokens": "10000"
+      }
+    },
+    "taskmaster": {
+      "source": "custom",
+      "enabled": true,
+      "command": "op",
+      "args": ["run", "--", "npx", "-y", "--package=task-master-ai", "task-master-ai"],
+      "env": {
+        "DEFAULT_SUBTASKS": "5",
+        "TEMPERATURE": "0.2",
+        "DEFAULT_PRIORITY": "medium",
+        "PERPLEXITY_MODEL": "sonar-pro",
+        "PERPLEXITY_API_KEY": "op://Private/Perplexity AI/task-master",
+        "MODEL": "claude-4-sonnet",
+        "MAX_TOKENS": "64000",
+        "ANTHROPIC_API_KEY": "op://Private/Anthropic/API/task-master"
+      }
+    }
+  },
+
+  // ========================================= //
+  // Python LSP
+
+  "lsp": {
+    "nixd": {
+      "settings": {
+        "nixd": {
+          "nixpkgs": {
+            "expr": "import (builtins.getFlake (builtins.toString ./.)).inputs.nixpkgs { }"
+          },
+          "formatting": {
+            "command": ["nixfmt"]
+          },
+          "options": {
+            "home-manager": {
+              "expr": "(builtins.getFlake (builtins.toString ./.)).homeConfigurations.\"levifig@LFX001\".options"
+            }
+          },
+          "diagnostic": {
+            "suppress": ["sema-extra-with"]
+          }
+        }
+      }
+    },
+    "pyright": {
+      "settings": {
+        "python.analysis": {
+          "analysis": {
+            "diagnosticMode": "workspace",
+            "typeCheckingMode": "strict"
+          }
+        },
+        "python": {
+          "pythonPath": "$(which python3)"
+        }
+      }
+    }
+  }
+}

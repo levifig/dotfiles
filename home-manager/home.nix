@@ -96,6 +96,10 @@
     ./modules/terminal/tmux.nix
     ./modules/terminal/alacritty.nix
     ./modules/editors/nvim.nix
+    ./modules/editors/vim.nix
+    ./modules/editors/zed.nix
     ./modules/tools/ripgrep.nix
+    ./modules/tools/claude.nix
+    ./modules/tools/opencode.nix
   ];
 }

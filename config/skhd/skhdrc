@@ -1,0 +1,82 @@
+#hyper - return: /Applications/WezTerm.app/Contents/MacOS/wezterm --single-instance -d ~
+hyper - return: open -na /Applications/Ghostty.app
+hyper - z : launchctl kickstart -k "gui/${UID}/com.koekeishiya.yabai"
+
+hyper - j : yabai -m window --focus prev
+hyper - k : yabai -m window --focus next
+
+# hyper - up : yabai -m window --focus north
+# hyper - down : yabai -m window --focus south
+# hyper - left : yabai -m window --focus west
+# hyper - right : yabai -m window --focus east
+hyper - e : yabai -m window --focus stack.next
+hyper - w : yabai -m window --focus stack.prev
+
+hyper - r : yabai -m space --rotate 90
+
+hyper - q : yabai -m space --focus recent
+hyper - a : yabai -m space --focus prev
+hyper - s : yabai -m space --focus next
+
+hyper - 1 : yabai -m space --focus tty
+hyper - 2 : yabai -m space --focus www
+hyper - 3 : yabai -m space --focus dev
+hyper - 4 : yabai -m space --focus write
+hyper - 5 : yabai -m space --focus misc
+hyper - 6 : yabai -m space --focus chat
+hyper - 7 : yabai -m space --focus utils
+hyper - 8 : yabai -m space --focus other
+hyper - 9 : yabai -m space --focus alt
+hyper - 0 : yabai -m space --focus music
+
+lctrl + lalt - 1 : yabai -m window --space term
+lctrl + lalt - 2 : yabai -m window --space browser
+lctrl + lalt - 3 : yabai -m window --space dev
+lctrl + lalt - 4 : yabai -m window --space write
+lctrl + lalt - 5 : yabai -m window --space misc
+lctrl + lalt - 6 : yabai -m window --space chat
+lctrl + lalt - 7 : yabai -m window --space utils
+lctrl + lalt - 8 : yabai -m window --space other
+lctrl + lalt - 9 : yabai -m window --space dev-alt
+lctrl + lalt - 0 : yabai -m window --space music
+
+# send window to monitor and follow focus
+hyper - up : yabai -m window --display prev; yabai -m display --focus prev
+hyper - down : yabai -m window --display next; yabai -m display --focus next
+
+lalt + lcmd - 1 : yabai -m space --display 1
+lalt + lcmd - 2 : yabai -m space --display 2
+lalt + lcmd - 3 : yabai -m space --display 3
+
+hyper - h : yabai -m config split_type horizontal
+hyper - v : yabai -m config split_type vertical
+
+# float / unfloat window and center on screen
+hyper - g : yabai -m window --toggle float; yabai -m window --grid 1:1:1:1:1:1
+
+# Center a floating window
+# --grid <rows>:<cols>:<start-x>:<start-y>:<width>:<height>
+hyper - c : yabai -m window --grid 15:15:2:2:12:12
+
+lctrl + lalt - 0x1B : yabai -m window --resize rel:-0.05
+lctrl + lalt - 0x18 : yabai -m window --resize rel:0.05
+
+hyper - t : yabai -m space --layout stack
+hyper - b: yabai -m space --layout bsp
+hyper - f : yabai -m window --toggle zoom-fullscreen
+
+# toggle sticky(+float), topmost, picture-in-picture
+hyper - p : yabai -m window --toggle sticky;\
+            yabai -m window --toggle topmost;\
+            yabai -m window --toggle pip
+
+# move managed window
+lctrl + lalt - h : yabai -m window --warp east
+
+# balance size of windows
+# lctrl + lalt -  : yabai -m space --balance
+
+# make floating window fill screen
+lctrl + lalt - up     : yabai -m window --grid 1:1:0:0:1:1
+# make floating window fill left-half of screen
+lctrl + lalt - left   : yabai -m window --grid 1:2:0:0:1:1
