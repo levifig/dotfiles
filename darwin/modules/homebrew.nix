@@ -76,7 +76,9 @@
       "contexts"
 
       # Development Tools
-
+      "visual-studio-code"
+      "zed"
+      "cursor"
       "github"
 
       # AI & LLM Tools
@@ -88,14 +90,17 @@
       # Cloud & Infrastructure
       "aws-vault-binary"
       "cloudflare-warp"
+      "tailscale"
 
       # Database & API Tools
       "beekeeper-studio"
       "sequel-ace"
+      "db-browser-for-sqlite"
 
       # Communication
       "discord"
       "slack@beta"
+      "telegram"
       "zoom"
 
       # Design & Creative

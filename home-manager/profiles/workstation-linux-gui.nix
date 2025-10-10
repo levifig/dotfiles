@@ -29,9 +29,9 @@
     # Development Tools
     # ============================================
     vscode
-    # zed-editor  # Check availability on Linux
+    zed-editor
     sublime4
-    # cursor - Proprietary, may need manual install
+    # cursor - Not available in nixpkgs, manual install required
     # github-desktop - Limited Linux support
 
     # ============================================
@@ -50,6 +50,11 @@
     telegram-desktop
     zoom-us
     # signal-desktop  # If needed
+
+    # ============================================
+    # Cloud & Infrastructure
+    # ============================================
+    tailscale
 
     # ============================================
     # Database & API Tools

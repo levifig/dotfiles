@@ -19,19 +19,9 @@
   ];
 
   home.packages = with pkgs; [
-    # Development Tools
-    vscode # Visual Studio Code
-    zed-editor # Zed editor
-    code-cursor # Cursor editor
-
-    # Communication
-    telegram-desktop # Cross-platform Telegram client
-
-    # Cloud & Infrastructure
-    tailscale # VPN mesh network
-
-    # Database & API Tools
-    sqlitebrowser # SQLite database browser
+    # Note: GUI applications are platform-specific
+    # - macOS: Managed via Homebrew (darwin/modules/homebrew.nix)
+    # - Linux: Managed via Nix (workstation-linux-gui.nix)
   ];
 
   # GUI-specific environment variables
