@@ -8,9 +8,9 @@ if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ] && [ -z "$__NIX_DARWIN_SET_E
   . "$HOME/.nix-profile/etc/profile.d/nix.sh"
 fi
 
-# Source nix-darwin environment (handles PATH and other env vars)
-if [ -e '/etc/static/bashrc' ]; then
-  . '/etc/static/bashrc'
+# Source nix-darwin environment for zsh (handles PATH and other env vars)
+if [ -e '/etc/static/zshrc' ]; then
+  . '/etc/static/zshrc'
 fi
 
 ##
