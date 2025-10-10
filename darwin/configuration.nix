@@ -31,28 +31,13 @@ in
   # Homebrew configuration moved to ./modules/homebrew.nix
 
   # Nix settings
-  # Note: Using Determinate Nix installer - configure but don't manage daemon
+  # Note: Using Determinate Nix installer - disable nix-darwin's Nix management
   nix = {
-    # Use the Nix daemon (installed by Determinate)
-    useDaemon = true;
+    # Disable nix-darwin's Nix daemon management (Determinate manages it)
+    enable = false;
 
-    settings = {
-      experimental-features = [
-        "nix-command"
-        "flakes"
-      ];
-      trusted-users = [
-        "root"
-        "@admin"
-        "@staff"
-        userName
-      ];
-
-      # Build optimizations
-      max-jobs = "auto";
-      cores = 0; # Use all available cores
-    };
-
+    # Note: nix.settings won't work with enable = false
+    # Nix settings are managed by Determinate installer
   };
 
   # macOS system settings
@@ -132,26 +117,7 @@ in
 
   # Programs
   programs = {
-    zsh = {
-      enable = true;
-      # Ensure Nix environment is properly sourced
-      shellInit = ''
-        # Source Nix profile if available
-        if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
-          . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
-        fi
-      '';
-    };
-    bash = {
-      enable = true;
-      # Ensure Nix environment is properly sourced
-      shellInit = ''
-        # Source Nix profile if available
-        if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
-          . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
-        fi
-      '';
-    };
+    zsh.enable = true;
   };
 
   # Users
@@ -160,8 +126,8 @@ in
     home = homeDir;
   };
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
+  # Note: nixpkgs.config (including allowUnfree) is configured in flake.nix
+  # via specialArgs to support useGlobalPkgs with home-manager
 
   # Used for backwards compatibility
   system.configurationRevision = null;
