@@ -6,6 +6,12 @@
     source = ../../../config/claude/CLAUDE.md;
   };
 
+  # Deploy settings.json
+  xdg.configFile."claude/settings.json" = lib.mkIf
+    (builtins.pathExists ../../../config/claude/settings.json) {
+    source = ../../../config/claude/settings.json;
+  };
+
   # Deploy agents directory
   xdg.configFile."claude/agents" = lib.mkIf
     (builtins.pathExists ../../../config/claude/agents) {
