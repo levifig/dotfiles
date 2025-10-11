@@ -1,6 +1,7 @@
 # Claude - ignore everything, then unignore what we keep
 claude/*
 !claude/CLAUDE.md
+!claude/settings.json
 !claude/agents/
 !claude/commands/
 !claude/hooks/
