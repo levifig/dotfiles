@@ -1,10 +1,10 @@
 { config, pkgs, lib, ... }:
 
-{
+lib.mkIf pkgs.stdenv.isDarwin {
   programs.ghostty = {
     enable = true;
-    # On macOS, use Homebrew package; on Linux, use Nix package
-    package = if pkgs.stdenv.isDarwin then null else pkgs.ghostty-bin;
+    # On macOS, use Homebrew package
+    package = null;
 
     settings = {
       # Font configuration
