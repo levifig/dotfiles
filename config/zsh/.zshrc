@@ -1,3 +1,194 @@
-source "$ZDOTDIR/zshrc"
+## measure boot time
+bootTimeStart=$(date +%s%N 2>/dev/null)
 
-# bun completions
+# Set ZDOTDIR for custom config location (if not already set by home-manager)
+: ${ZDOTDIR:="$XDG_CONFIG_HOME/zsh"}
+
+##
+## set up Nix environment first
+# Source Nix profile if available and not already sourced
+if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ] && [ -z "$__NIX_DARWIN_SET_ENVIRONMENT_DONE" ]; then
+  . "$HOME/.nix-profile/etc/profile.d/nix.sh"
+fi
+
+# Source nix-darwin environment for zsh (handles PATH and other env vars)
+if [ -e '/etc/static/zshrc' ]; then
+  . '/etc/static/zshrc'
+fi
+
+##
+## set up environment
+# Detect Homebrew prefix
+if type brew &>/dev/null; then
+  BREW_PREFIX="$(brew --prefix)"
+else
+  BREW_PREFIX=""
+fi
+
+# Additional PATH entries (Nix paths already set by nix-darwin)
+export PATH="\
+${BREW_PREFIX}/opt/rustup/bin:\
+${HOME}/.go/bin:\
+${HOME}/.bun/bin:\
+${HOME}/.krew/bin:\
+${HOME}/.atuin/bin:\
+${HOME}/.local/bin:\
+${HOME}/.lmstudio/bin:\
+${HOME}/.opencode/bin:\
+./node_modules/.bin:\
+$PATH"
+
+
+##
+## other environment config
+export MANPATH=/usr/local/man:$MANPATH
+export LANG="en_US.UTF-8"
+export ARCHFLAGS="-arch arm64"
+export TERM="xterm-256color"
+export CLICOLOR=1
+export GOPATH="$HOME/.go"
+export BUN_INSTALL="$HOME/.bun"
+export EXA_ICON_SPACING=2
+export FZF_CTRL_R_OPTS="--sort"
+export LSCOLORS=ExFxBxDxCxegedabagacad
+export SSH_AUTH_SOCK="$HOME/.1password/agent.sock"
+export FZF_DEFAULT_OPTS="--color=fg:#f8f8f2,bg:#282a36,hl:#bd93f9 --color=fg+:#f8f8f2,bg+:#44475a,hl+:#bd93f9 --color=info:#ffb86c,prompt:#50fa7b,pointer:#ff79c6 --color=marker:#ff79c6,spinner:#ffb86c,header:#6272a4"
+export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR="/opt/homebrew/share/zsh-syntax-highlighting/highlighters"
+export CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR=1
+export HOMEBREW_DOWNLOAD_CONCURRENCY=auto
+export HOMEBREW_NO_ENV_HINTS=1
+
+export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship/starship.toml"
+export BAT_CONFIG_PATH="$XDG_CONFIG_HOME/bat/bat.conf"
+export CLAUDE_CONFIG_DIR="$XDG_CONFIG_HOME/claude/"
+export SERENA_MANAGED_DIR_IN_HOME="$XDG_CONFIG_HOME/serena"
+export ZCACHEDIR="$XDG_CACHE_HOME/zsh"
+
+##
+## env keys
+export OPENAI_API_KEY="op://Private/OpenAI/API/codex" # codex-specific
+
+
+##
+## default apps
+export EDITOR="nvim"
+export VISUAL="zed"
+export TERMINAL="ghostty"
+export BROWSER="safari"
+export PAGER="less"
+
+
+##
+## history configuration
+HISTSIZE=50000
+SAVEHIST=50000
+
+setopt SHARE_HISTORY          # Share history between all sessions
+setopt HIST_IGNORE_DUPS       # Don't record duplicate commands
+setopt HIST_IGNORE_ALL_DUPS   # Remove all duplicates from history
+setopt HIST_FIND_NO_DUPS      # Don't display duplicates when searching
+setopt HIST_SAVE_NO_DUPS      # Don't save duplicates to history file
+setopt HIST_IGNORE_SPACE      # Don't record commands starting with space
+setopt HIST_REDUCE_BLANKS     # Remove extra whitespace from history entries
+setopt HIST_VERIFY            # Show expanded history before executing
+setopt INC_APPEND_HISTORY     # Write to history file immediately (for atuin)
+
+setopt AUTO_CD                # Change to directory without typing 'cd'
+setopt AUTO_PUSHD             # Automatically push directories to stack
+setopt PUSHD_IGNORE_DUPS      # Don't push duplicate directories to stack
+setopt PUSHD_SILENT           # Don't print directory stack after pushd/popd
+setopt CORRECT                # Offer command corrections for typos
+setopt INTERACTIVE_COMMENTS   # Allow comments in interactive shell (useful for copy/paste)
+setopt PROMPT_SUBST           # Enable parameter expansion in prompts (required for starship)
+
+##
+## preferred editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then export EDITOR='vim'; else export EDITOR='nvim'; fi
+
+
+##
+## completion system
+# autoload -Uz compinit
+
+# completion settings
+zstyle ':completion:*' menu select
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/zcompcache"
+
+##
+## key bindings
+bindkey -e
+bindkey '^[[1;5C' forward-word
+bindkey '^[[1;5D' backward-word
+bindkey '^[[H' beginning-of-line
+bindkey '^[[F' end-of-line
+bindkey '^[[3~' delete-char
+
+## zsh plugins via homebrew (for non-Nix systems)
+if type brew &>/dev/null && [[ ! -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]; then
+  [[ -d "$BREW_PREFIX/share/zsh-completions" ]] && \
+    FPATH="$BREW_PREFIX/share/zsh-completions:$FPATH"
+  [[ -d "$BREW_PREFIX/share/zsh/site-functions" ]] && \
+    FPATH="$BREW_PREFIX/share/zsh/site-functions:$FPATH"
+  [[ -f "$BREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && \
+    source "$BREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+  [[ -f "$BREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && \
+    source "$BREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+fi
+# Note: On Nix systems, plugins are managed by home-manager in modules/shell/zsh.nix
+
+
+##
+## load custom functions and aliases
+for dir in functions aliases; do
+    for file in "${ZDOTDIR}/${dir}"/*.zsh; do
+        [[ -r "$file" ]] && source "$file"
+    done
+done
+
+# completion cache optimization (must run before any compdef calls)
+_update_zcomp "$ZCACHEDIR"
+unfunction _update_zcomp
+
+# Cached completions for faster startup
+_cache_completions \
+    "op" "op completion zsh; compdef _op op" \
+    "gh" "gh completion -s zsh" \
+    "uv" "uv generate-shell-completion zsh" \
+    "kubectl" "kubectl completion zsh; compdef kubectl k" \
+    "helm" "helm completion zsh" \
+    "argocd" "argocd completion zsh" \
+    "bootdev" "bootdev completion zsh" \
+    "docker" "docker completion zsh"
+
+# Essential tools that need immediate loading
+source <(zoxide init zsh)
+source <(fzf --zsh)
+[ -s "/Users/levifig/.bun/_bun" ] && source "/Users/levifig/.bun/_bun"
+# Note: starship and direnv are initialized by home-manager (see modules/shell/starship.nix and profiles/development.nix)
+
+# Bash-style completions
+if command -v terraform &> /dev/null || command -v aws_completer &> /dev/null; then
+    autoload -U +X bashcompinit && bashcompinit
+    command -v terraform &> /dev/null && complete -o nospace -C terraform terraform
+    command -v aws_completer &> /dev/null && complete -C aws_completer aws
+fi
+
+## show boot time
+bootTimeEnd=$(date +%s%N 2>/dev/null)
+bootTimeDuration=$((($bootTimeEnd - $bootTimeStart)/1000000))
+echo -e "\033[35;3mZSH load time: $bootTimeDuration \\bms\033[m"
+
+chuck_cow
+
+echo -e << EOF
+• ▌ ▄ ·. ▄ •▄  ▐ ▄ ▐▄• ▄
+·██ ▐███▪█▌▄▌▪•█▌▐█ █▌█▌▪
+▐█ ▌▐▌▐█·▐▀▀▄·▐█▐▐▌ ·██·
+██ ██▌▐█▌▐█.█▌██▐█▌▪▐█·█▌
+▀▀  █▪▀▀▀·▀  ▀▀▀ █▪•▀▀ ▀▀
+EOF
+
+echo -e "Current time: $(date)"

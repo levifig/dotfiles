@@ -1,2 +1,0 @@
-# ZSH profile - loaded before zshrc
-# Currently empty - using direnv + Nix flakes for project-specific environments
