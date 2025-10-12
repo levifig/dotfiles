@@ -16,7 +16,7 @@
     onActivation = {
       autoUpdate = true;
       upgrade = true;
-      cleanup = ""; 
+      cleanup = "uninstall"; 
     };
 
     # Homebrew taps
