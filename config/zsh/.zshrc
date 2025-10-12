@@ -27,14 +27,13 @@ fi
 
 # Additional PATH entries (Nix paths already set by nix-darwin)
 export PATH="\
-${BREW_PREFIX}/opt/rustup/bin:\
 ${HOME}/.go/bin:\
 ${HOME}/.bun/bin:\
 ${HOME}/.krew/bin:\
 ${HOME}/.atuin/bin:\
 ${HOME}/.local/bin:\
 ${HOME}/.lmstudio/bin:\
-${HOME}/.opencode/bin:\
+${BREW_PREFIX}/opt/rustup/bin:\
 ./node_modules/.bin:\
 $PATH"
 
@@ -63,6 +62,7 @@ export BAT_CONFIG_PATH="$XDG_CONFIG_HOME/bat/bat.conf"
 export CLAUDE_CONFIG_DIR="$XDG_CONFIG_HOME/claude/"
 export SERENA_MANAGED_DIR_IN_HOME="$XDG_CONFIG_HOME/serena"
 export ZCACHEDIR="$XDG_CACHE_HOME/zsh"
+
 
 ##
 ## env keys
@@ -105,7 +105,6 @@ setopt PROMPT_SUBST           # Enable parameter expansion in prompts (required 
 ## preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then export EDITOR='vim'; else export EDITOR='nvim'; fi
 
-
 ##
 ## completion system
 # autoload -Uz compinit
@@ -126,6 +125,7 @@ bindkey '^[[H' beginning-of-line
 bindkey '^[[F' end-of-line
 bindkey '^[[3~' delete-char
 
+##
 ## zsh plugins via homebrew (for non-Nix systems)
 if type brew &>/dev/null && [[ ! -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]; then
   [[ -d "$BREW_PREFIX/share/zsh-completions" ]] && \
@@ -139,14 +139,15 @@ if type brew &>/dev/null && [[ ! -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]
 fi
 # Note: On Nix systems, plugins are managed by home-manager in modules/shell/zsh.nix
 
-
 ##
 ## load custom functions and aliases
+setopt NULL_GLOB  # Don't error on no matches
 for dir in functions aliases; do
     for file in "${ZDOTDIR}/${dir}"/*.zsh; do
         [[ -r "$file" ]] && source "$file"
     done
 done
+unsetopt NULL_GLOB
 
 # completion cache optimization (must run before any compdef calls)
 _update_zcomp "$ZCACHEDIR"
