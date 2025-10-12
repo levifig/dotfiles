@@ -125,29 +125,14 @@ bindkey '^[[H' beginning-of-line
 bindkey '^[[F' end-of-line
 bindkey '^[[3~' delete-char
 
-##
-## zsh plugins via homebrew (for non-Nix systems)
-if type brew &>/dev/null && [[ ! -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]; then
-  [[ -d "$BREW_PREFIX/share/zsh-completions" ]] && \
-    FPATH="$BREW_PREFIX/share/zsh-completions:$FPATH"
-  [[ -d "$BREW_PREFIX/share/zsh/site-functions" ]] && \
-    FPATH="$BREW_PREFIX/share/zsh/site-functions:$FPATH"
-  [[ -f "$BREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && \
-    source "$BREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
-  [[ -f "$BREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && \
-    source "$BREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-fi
-# Note: On Nix systems, plugins are managed by home-manager in modules/shell/zsh.nix
 
 ##
 ## load custom functions and aliases
-setopt NULL_GLOB  # Don't error on no matches
 for dir in functions aliases; do
     for file in "${ZDOTDIR}/${dir}"/*.zsh; do
         [[ -r "$file" ]] && source "$file"
     done
 done
-unsetopt NULL_GLOB
 
 # completion cache optimization (must run before any compdef calls)
 _update_zcomp "$ZCACHEDIR"
