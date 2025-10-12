@@ -58,7 +58,7 @@
     v = "nvim";
     n = "nvim";
     vimdiff = "nvim -d";
-    t = "tmux";
+    t = "tmux -2";
 
     # ============================================
     # Git
@@ -177,8 +177,16 @@
     # ============================================
     # Node.js compatibility (bun can run Node apps)
     # ============================================
-    node = "bun";
-    npm = "bun";
-    npx = "bunx";
+    node = "bun run --bun";
+    npm = "bun run --bun";
+    npx = "bunx --bun";
+
+    # ============================================
+    # Task Master
+    # ============================================
+    tm = "task-master";
+    taskmaster = "task-master";
+
+    # ============================================
   };
 }
