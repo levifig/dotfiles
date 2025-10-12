@@ -20,7 +20,7 @@
     # System & File Operations
     # ============================================
     reload = "source ~/.zshrc";
-    zr = "source ~/.config/zsh/zshrc";
+    zr = "source ~/.config/zsh/.zshrc";
     zshconfig = "nvim ~/.config/zsh/.zshrc";
     nixconfig = "nvim ~/.dotfiles/home-manager/hosts/LFX001.nix";
 
