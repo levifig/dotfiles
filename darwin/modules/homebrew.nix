@@ -16,8 +16,7 @@
     onActivation = {
       autoUpdate = true;
       upgrade = true;
-      cleanup = "uninstall"; # Only remove unused dependencies (safer than "zap")
-      # Note: Change to "zap" after reviewing to remove all undeclared packages
+      cleanup = "zap"; 
     };
 
     # Homebrew taps
