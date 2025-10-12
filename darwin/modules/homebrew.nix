@@ -16,7 +16,7 @@
     onActivation = {
       autoUpdate = true;
       upgrade = true;
-      cleanup = "zap"; 
+      cleanup = ""; 
     };
 
     # Homebrew taps
@@ -32,12 +32,12 @@
       "mas"
 
       # Window management
-      "yabai" # Tiling window manager
-      "jackielii/tap/skhd-zig" # Hotkey daemon (Zig rewrite)
-      "sketchybar" # Custom macOS status bar
+      # "yabai"
+      # "jackielii/tap/skhd-zig"
+      # "sketchybar"
 
       # Development tools
-      "xcodes" # Xcode version management
+      "xcodes"
 
       # Database with service management
       # Using Homebrew for better launchd integration
@@ -52,10 +52,10 @@
       "1password"
       "1password-cli"
       "ableton-live-lite"
-      "aerospace"
-      "alacritty"
+      # "aerospace"
+      # "alacritty"
       "aldente"
-      "alfred"
+      # "alfred"
       "altserver"
       "appcleaner"
       "applite"
@@ -197,7 +197,7 @@
       "vlc"
       "vmware-fusion"
       "wacom-tablet"
-      # "wezterm@nightly"
+      "wezterm"
       "whatsapp"
       "whisky"
       "wifiman"
