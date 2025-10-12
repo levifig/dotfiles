@@ -127,8 +127,8 @@ bindkey '^[[3~' delete-char
 
 
 ##
-## load custom functions and aliases
-for dir in functions aliases; do
+## load custom functions
+for dir in functions; do
     for file in "${ZDOTDIR}/${dir}"/*.zsh; do
         [[ -r "$file" ]] && source "$file"
     done
@@ -152,7 +152,7 @@ _cache_completions \
 # Essential tools that need immediate loading
 source <(zoxide init zsh)
 source <(fzf --zsh)
-[ -s "/Users/levifig/.bun/_bun" ] && source "/Users/levifig/.bun/_bun"
+[ -s "${HOME}/.bun/_bun" ] && source "${HOME}/.bun/_bun"
 # Note: starship and direnv are initialized by home-manager (see modules/shell/starship.nix and profiles/development.nix)
 
 # Bash-style completions
