@@ -32,13 +32,13 @@
     gnugrep
     gnused
     gawk
+    grc
 
     # Essential tools
     curl
     wget
     git
     tmux
-    # Note: neovim is configured via modules/editors/nvim.nix
 
     # Search and file tools
     ripgrep
@@ -50,7 +50,7 @@
 
     # JSON/YAML/Data tools
     jq
-    yq-go # Go implementation of yq
+    yq-go
 
     # Archive tools
     zip

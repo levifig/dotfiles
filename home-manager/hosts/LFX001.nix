@@ -27,11 +27,6 @@
     # macOS specific tools
     m-cli  # Swiss Army Knife for macOS
 
-    # Communication
-    # slack
-    # zoom-us
-    # discord
-
     # Development tools specific to this machine
     gh  # GitHub CLI
     lazydocker  # Docker TUI
@@ -118,17 +113,6 @@
     # 1Password CLI (if using)
     # eval "$(op completion zsh)"; compdef _op op
   '';
-
-  # VS Code settings (if using)
-  # programs.vscode = {
-  #   enable = true;
-  #   userSettings = {
-  #     "editor.fontSize" = 14;
-  #     "editor.fontFamily" = "PragmataPro Liga";
-  #     "editor.fontLigatures" = true;
-  #     "terminal.integrated.fontFamily" = "PragmataPro Liga";
-  #   };
-  # };
 
   # Starship prompt customization for this machine
   programs.starship.settings = {
