@@ -28,7 +28,7 @@ return {
 
   -- fonts
   font = wezterm.font("PragmataPro Liga"),
-  font_size = 20.0,
+  font_size = 18.0,
 
   window_padding = {
     left = 20,

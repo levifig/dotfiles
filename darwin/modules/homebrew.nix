@@ -1,7 +1,4 @@
 {
-  config,
-  pkgs,
-  lib,
   ...
 }:
 
@@ -16,7 +13,7 @@
     onActivation = {
       autoUpdate = true;
       upgrade = true;
-      cleanup = "uninstall"; 
+      cleanup = "uninstall";
     };
 
     # Homebrew taps
@@ -37,7 +34,7 @@
       # "sketchybar"
 
       # Development tools
-      "xcodes"
+      # "xcodes"
 
       # Database with service management
       # Using Homebrew for better launchd integration
@@ -51,7 +48,7 @@
     casks = [
       "1password"
       "1password-cli"
-      "ableton-live-lite"
+      # "ableton-live-lite"
       # "aerospace"
       # "alacritty"
       "aldente"
@@ -63,7 +60,7 @@
       "aws-vault-binary"
       # "bambu-studio"
       "bartender"
-      "beekeeper-studio"
+      # "beekeeper-studio"
       "betterdisplay"
       "bettermouse"
       "bettertouchtool"
@@ -73,7 +70,7 @@
       "brave-browser"
       "calibre"
       "chatgpt"
-      "cinebench"
+      # "cinebench"
       "claude"
       "cleanshot"
       "clop"
@@ -84,7 +81,7 @@
       "daisydisk"
       "darktable"
       "db-browser-for-sqlite"
-      "dbeaver-community"
+      # "dbeaver-community"
       "discord"
       "drawio"
       "dropbox"
@@ -94,7 +91,7 @@
       "figma"
       "firefox@beta"
       "firefox@developer-edition"
-      "foldingtext"
+      # "foldingtext"
       # "font-poppins"
       "geekbench"
       "geekbench-ai"
@@ -102,7 +99,7 @@
       "ghostty"
       "github"
       "github-copilot-for-xcode"
-      "godot"
+      # "godot"
       "google-drive"
       "hammerspoon"
       "handbrake-app"
@@ -114,11 +111,11 @@
       "imazing"
       "iterm2"
       "kaleidoscope"
-      "karabiner-elements"
+      # "karabiner-elements"
       "keeper-password-manager"
       "keymapp"
       "latest"
-      "librewolf"
+      # "librewolf"
       "linear-linear"
       "lm-studio"
       "logos"
@@ -136,14 +133,14 @@
       "ndi-tools"
       "nordvpn"
       # "notesollama"
-      "notion"
+      # "notion"
       "obs"
       "obsidian"
-      "ollama-app"
+      # "ollama-app"
       "openaudible"
       "orbstack"
       "pacifist"
-      "parallels"
+      # "parallels"
       "permute"
       "plexamp"
       "powerphotos"
@@ -152,9 +149,9 @@
       "rapidapi"
       "raspberry-pi-imager"
       "raycast"
-      "reaper"
+      # "reaper"
       "rectangle-pro"
-      "reflex-app"
+      # "reflex-app"
       "remote-desktop-manager"
       # "renamer"
       "rocket"
@@ -168,11 +165,11 @@
       # "sigmaos"
       "slack@beta"
       "sonos"
-      "spitfire-audio"
+      # "spitfire-audio"
       "spotify"
       "stats"
       "steam"
-      "studio-3t-community"
+      # "studio-3t-community"
       "sublime-text"
       "superduper"
       "tailscale-app"
@@ -202,12 +199,12 @@
       "whisky"
       "wifiman"
       "winbox"
-      "xcodes-app"
+      # "xcodes-app"
       "xnapper"
       "yubico-authenticator"
       "zed"
       "zen"
-      "zoom"
+      # "zoom"
     ];
 
     # Mac App Store apps

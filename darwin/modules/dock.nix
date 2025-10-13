@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 # Declarative Dock Management
 # Based on: https://github.com/dustinlyons/nixos-config/blob/main/modules/darwin/dock/default.nix
@@ -9,38 +14,40 @@
 with lib;
 let
   cfg = config.darwin.dock;
-  inherit (pkgs) stdenv dockutil;
+  inherit (pkgs) dockutil;
 in
 {
   options = {
     darwin.dock = {
       enable = mkOption {
         description = "Enable declarative dock management";
-        default = false;  # Disabled by default
+        default = false; # Disabled by default
         type = types.bool;
       };
 
       entries = mkOption {
         description = "Entries on the Dock";
-        type = with types; listOf (submodule {
-          options = {
-            path = lib.mkOption {
-              type = str;
-              description = "Path to the application or folder";
+        type =
+          with types;
+          listOf (submodule {
+            options = {
+              path = lib.mkOption {
+                type = str;
+                description = "Path to the application or folder";
+              };
+              section = lib.mkOption {
+                type = str;
+                default = "apps";
+                description = "Dock section: apps, others, or all";
+              };
+              options = lib.mkOption {
+                type = str;
+                default = "";
+                description = "Additional dockutil options";
+              };
             };
-            section = lib.mkOption {
-              type = str;
-              default = "apps";
-              description = "Dock section: apps, others, or all";
-            };
-            options = lib.mkOption {
-              type = str;
-              default = "";
-              description = "Additional dockutil options";
-            };
-          };
-        });
-        default = [];
+          });
+        default = [ ];
       };
 
       username = mkOption {
@@ -54,19 +61,41 @@ in
   config = mkIf cfg.enable (
     let
       normalize = path: if hasSuffix ".app" path then path + "/" else path;
-      entryURI = path:
+      entryURI =
+        path:
         "file://"
         + (builtins.replaceStrings
-          [ " " "!" "\"" "#" "$" "%" "&" "'" "(" ")" ]
-          [ "%20" "%21" "%22" "%23" "%24" "%25" "%26" "%27" "%28" "%29" ]
+          [
+            " "
+            "!"
+            "\""
+            "#"
+            "$"
+            "%"
+            "&"
+            "'"
+            "("
+            ")"
+          ]
+          [
+            "%20"
+            "%21"
+            "%22"
+            "%23"
+            "%24"
+            "%25"
+            "%26"
+            "%27"
+            "%28"
+            "%29"
+          ]
           (normalize path)
         );
       wantURIs = concatMapStrings (entry: "${entryURI entry.path}\n") cfg.entries;
-      createEntries = concatMapStrings
-        (entry:
-          "${dockutil}/bin/dockutil --no-restart --add '${entry.path}' --section ${entry.section} ${entry.options}\n"
-        )
-        cfg.entries;
+      createEntries = concatMapStrings (
+        entry:
+        "${dockutil}/bin/dockutil --no-restart --add '${entry.path}' --section ${entry.section} ${entry.options}\n"
+      ) cfg.entries;
     in
     {
       system.activationScripts.postActivation.text = ''

@@ -52,7 +52,6 @@ export FZF_CTRL_R_OPTS="--sort"
 export LSCOLORS=ExFxBxDxCxegedabagacad
 export SSH_AUTH_SOCK="$HOME/.1password/agent.sock"
 export FZF_DEFAULT_OPTS="--color=fg:#f8f8f2,bg:#282a36,hl:#bd93f9 --color=fg+:#f8f8f2,bg+:#44475a,hl+:#bd93f9 --color=info:#ffb86c,prompt:#50fa7b,pointer:#ff79c6 --color=marker:#ff79c6,spinner:#ffb86c,header:#6272a4"
-export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR="/opt/homebrew/share/zsh-syntax-highlighting/highlighters"
 export CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR=1
 export HOMEBREW_DOWNLOAD_CONCURRENCY=auto
 export HOMEBREW_NO_ENV_HINTS=1
