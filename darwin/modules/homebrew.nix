@@ -19,7 +19,10 @@
     # Homebrew taps
     # Note: Custom taps are now managed via nix-homebrew in flake.nix
     # This ensures they are immutable and part of the flake inputs
-    taps = [ ];
+    # Listed here to prevent removal during cleanup
+    taps = [
+      "jackielii/tap"
+    ];
 
     # Homebrew formulas (CLI tools)
     # Note: Cross-platform tools are managed via Nix (see home-manager profiles)
@@ -88,6 +91,7 @@
       "element"
       "espanso"
       # "fantastical"
+      "fastmail"
       "figma"
       "firefox@beta"
       "firefox@developer-edition"
@@ -114,6 +118,7 @@
       # "karabiner-elements"
       "keeper-password-manager"
       "keymapp"
+      "kiro"
       "latest"
       # "librewolf"
       "linear-linear"
