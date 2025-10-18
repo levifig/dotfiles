@@ -175,11 +175,11 @@
     ffd = "fastfetch -c examples/25";
 
     # ============================================
-    # Node.js compatibility (bun can run Node apps)
+    # Node.js & Package Management
     # ============================================
-    node = "bun run --bun";
-    npm = "bun run --bun";
-    npx = "bunx --bun";
+    # Note: Using real Node.js for CLI compatibility
+    # Use bun directly for fast package management: `bun install`, `bun run`
+    # node, npm, npx will use system Node.js installation
 
     # ============================================
     # Task Master
