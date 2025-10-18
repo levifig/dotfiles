@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ pkgs, lib, ... }:
 
 {
   imports = [
@@ -33,13 +33,14 @@
     python313Packages.virtualenv
     poetry
     pipenv
-    uv                       # Fast Python package installer (Rust-based pip replacement)
+    uv # Fast Python package installer (Rust-based pip replacement)
 
     # JavaScript runtime
-    bun                      # Fast all-in-one JavaScript runtime, package manager, and bundler
-    # Note: Removed nodejs, pnpm, yarn - bun handles all JS/TS needs
+    bun # Fast all-in-one JavaScript runtime, package manager, and bundler (drop-in Node.js replacement)
+    # Note: Bun provides a node/npm/npx wrapper for compatibility
     # Use `bun install`, `bun run`, `bunx` for package management
-    # For projects requiring Node.js specifically, use direnv + flake.nix
+    # `node` commands will use bun's wrapper (90%+ Node.js API compatibility)
+    # For 100% Node.js compatibility on specific projects, use direnv + flake.nix
 
     # Go
     go
@@ -53,8 +54,8 @@
     clippy
 
     # Nix
-    nixd  # Nix language server
-    nil   # Alternative Nix language server
+    nixd # Nix language server
+    nil # Alternative Nix language server
 
     # Containers
     docker-client
@@ -64,12 +65,14 @@
     skopeo
 
     # Infrastructure as Code
-    (terraform.withPlugins (p: with p; [
-      aws
-      google
-      azurerm
-      kubernetes
-    ]))
+    (terraform.withPlugins (
+      p: with p; [
+        hashicorp_aws
+        hashicorp_google
+        hashicorp_azurerm
+        hashicorp_kubernetes
+      ]
+    ))
     terragrunt
     # terraform-docs  # Build failure in current nixpkgs
     tflint
@@ -84,11 +87,11 @@
     awscli2
     google-cloud-sdk
     azure-cli
-    doctl  # DigitalOcean
+    doctl # DigitalOcean
 
     # Kubernetes & Container Orchestration
     kubectl
-    krew  # kubectl plugin manager
+    krew # kubectl plugin manager
     kubectx
     kubernetes-helm
     helmfile
@@ -100,7 +103,7 @@
     kubeseal
     linkerd
     fluxcd
-    talosctl  # Talos Linux management
+    talosctl # Talos Linux management
 
     # Service Mesh & Networking
     istioctl
@@ -110,7 +113,7 @@
     # CI/CD Tools
     gh
     # gitlab  # Linux-only
-    act  # Run GitHub Actions locally
+    act # Run GitHub Actions locally
     # jenkins  # Not available on aarch64-darwin
     argocd
     tektoncd-cli
@@ -129,7 +132,7 @@
 
     # Secrets Management
     vault
-    kubeseal  # Was: sealed-secrets-kubeseal
+    kubeseal # Was: sealed-secrets-kubeseal
     sops
     age
 
@@ -154,7 +157,7 @@
     netcat
 
     # Cloud Native Tools
-    pack  # Cloud Native Buildpacks
+    pack # Cloud Native Buildpacks
     skaffold
     tilt
 
@@ -213,8 +216,8 @@
     TF_CLI_ARGS_apply = "-parallelism=50";
 
     # Cloud
-    AWS_PAGER = "";  # Disable AWS CLI pager
-    CLOUDSDK_CORE_DISABLE_PROMPTS = "1";  # Disable GCP prompts
+    AWS_PAGER = ""; # Disable AWS CLI pager
+    CLOUDSDK_CORE_DISABLE_PROMPTS = "1"; # Disable GCP prompts
   };
 
   # Enable direnv
