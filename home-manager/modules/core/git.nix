@@ -9,18 +9,19 @@
   programs.git = {
     enable = true;
 
-    # User info - Override in host-specific configs
-    # Default values provided for reference
-    userName = lib.mkDefault "Levi Figueira";
-    userEmail = lib.mkDefault "me@levifig.com";
-
     signing = {
       key = lib.mkDefault "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAA...";
       signByDefault = lib.mkDefault true;
     };
 
     # Core settings
-    extraConfig = {
+    settings = {
+      # User info - Override in host-specific configs
+      # Default values provided for reference
+      user = {
+        name = lib.mkDefault "Levi Figueira";
+        email = lib.mkDefault "me@levifig.com";
+      };
       init.defaultBranch = "master";
 
       core = {
@@ -90,10 +91,9 @@
         status = "auto";
         branch = "auto";
       };
-    };
 
-    # Aliases
-    aliases = {
+      # Aliases
+      alias = {
       # Status
       s = "status -s";
       st = "status";
@@ -152,6 +152,7 @@
 
       # Cleanup
       cleanup = "!git branch --merged | grep -v '\\*\\|master\\|main\\|develop' | xargs -n 1 git branch -d";
+      };
     };
 
     # Global ignores
@@ -173,19 +174,20 @@
       "**/.claude/settings.local.json"
     ];
 
-    # Enable delta for better diffs
-    delta = {
-      enable = true;
-      options = {
-        navigate = true;
-        light = false;
-        line-numbers = true;
-        side-by-side = false;
-      };
-    };
-
     # Enable git LFS
     lfs.enable = true;
+  };
+
+  # Enable delta for better diffs
+  programs.delta = {
+    enable = true;
+    enableGitIntegration = true;
+    options = {
+      navigate = true;
+      light = false;
+      line-numbers = true;
+      side-by-side = false;
+    };
   };
 
   # GitHub CLI

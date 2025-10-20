@@ -16,8 +16,12 @@
   # If you forked this repo, update these values
   # ============================================
   programs.git = {
-    userName = "Levi Figueira";
-    userEmail = "me@levifig.com";
+    settings = {
+      user = {
+        name = "Levi Figueira";
+        email = "me@levifig.com";
+      };
+    };
     signing.key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBT8O1BCE6d5mjzD+k4VLeCyM5hjZ2kWnAr+p7XlMsmy";
   };
   # ============================================

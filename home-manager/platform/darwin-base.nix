@@ -79,7 +79,7 @@
   '';
 
   # Git configuration for macOS
-  programs.git.extraConfig = {
+  programs.git.settings = {
     credential.helper = "osxkeychain";
   };
 
