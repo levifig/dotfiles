@@ -22,6 +22,7 @@
     # Listed here to prevent removal during cleanup
     taps = [
       "jackielii/tap"
+      "dagger/tap"
     ];
 
     # Homebrew formulas (CLI tools)
